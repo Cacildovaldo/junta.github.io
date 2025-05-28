@@ -3,240 +3,417 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bitnest Token (BTN)</title>
+  <title>Bitnest Token (BTN) - O Futuro das Recompensas em Cripto</title>
   <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
       background: linear-gradient(to bottom, #000000, #0f0f0f);
-      color: #b8ff00;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
       padding: 2rem;
     }
-    h1, h2, h3 {
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+      width: 100%;
+    }
+    h1 {
+      color: #b8ff00;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 10px rgba(184, 255, 0, 0.5);
+    }
+    .tagline {
+      color: #00ff88;
+      font-size: 1.2rem;
+      margin-top: 0;
+    }
+    h2, h3 {
       color: #b8ff00;
     }
     .container {
-      background-color: #111;
+      background-color: rgba(17, 17, 17, 0.8);
       padding: 2rem;
-      border-radius: 10px;
+      border-radius: 15px;
       max-width: 500px;
       width: 100%;
-      box-shadow: 0 0 10px #00ff88;
+      box-shadow: 0 0 15px #00ff88;
+      margin-bottom: 2rem;
+      border: 1px solid #00ff88;
     }
     input {
       width: 100%;
-      padding: 0.5rem;
-      margin: 0.5rem 0;
-      border-radius: 5px;
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+      border-radius: 8px;
       border: none;
+      background-color: #222;
+      color: white;
+      font-size: 1rem;
     }
     button {
       padding: 0.75rem 1.5rem;
       background-color: #00ff88;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
       color: #000;
       font-weight: bold;
       margin-top: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #b8ff00;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
     }
     .info-box {
       margin-top: 2rem;
-      background: #181818;
+      background: rgba(24, 24, 24, 0.8);
       padding: 1.5rem;
-      border-radius: 10px;
+      border-radius: 15px;
       color: #ccc;
+      max-width: 500px;
+      width: 100%;
+      border: 1px solid #b8ff00;
+    }
+    .token-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    .stat-card {
+      background: #222;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      border: 1px solid #333;
+    }
+    .stat-value {
+      color: #00ff88;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .stat-label {
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+    .highlight {
+      color: #b8ff00;
+      font-weight: bold;
+    }
+    .rewards-badge {
+      background: #00ff88;
+      color: #000;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-weight: bold;
+      display: inline-block;
+      margin: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+    .features-list {
+      padding-left: 1.5rem;
+    }
+    .features-list li {
+      margin-bottom: 0.8rem;
+      position: relative;
+    }
+    .features-list li:before {
+      content: "✓";
+      color: #00ff88;
+      font-weight: bold;
+      position: absolute;
+      left: -1.5rem;
+    }
+    .disclaimer {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 2rem;
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #b8ff00, #00ff88);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #000;
     }
   </style>
 </head>
 <body>
-  <h1>Bitnest BTN</h1>
+  <header>
+    <div class="logo">BTN</div>
+    <h1>Bitnest BTN</h1>
+    <p class="tagline">O token que recompensa seus holders automaticamente</p>
+  </header>
+
   <div class="container">
     <h2>Interface de Compra e Venda</h2>
-    <p id="account">Carteira: não conectada</p>
-    <p id="price">Preço Atual BTN: ...</p>
-    <p id="balance">Saldo BTN: ...</p>
+    <p id="account">🔒 Carteira: não conectada</p>
+    <p id="price">💲 Preço Atual BTN: ...</p>
+    <p id="balance">💰 Saldo BTN: ...</p>
+    
+    <div class="token-stats">
+      <div class="stat-card">
+        <div class="stat-value">1.000.000.000</div>
+        <div class="stat-label">Supply Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">10%</div>
+        <div class="stat-label">Recompensas</div>
+      </div>
+    </div>
+
     <h3>Comprar BTN</h3>
     <input type="number" id="bnbAmount" placeholder="Valor em BNB">
-    <button onclick="buyBTN()">Comprar</button>
+    <button onclick="buyBTN()">🛒 Comprar BTN</button>
+    
     <h3>Vender BTN</h3>
     <input type="number" id="tokenAmount" placeholder="Qtd. de BTN">
-    <button onclick="sellBTN()">Vender</button>
+    <button onclick="sellBTN()">💱 Vender BTN</button>
+    
     <br><br>
     <button onclick="connectWallet()">🔌 Conectar Carteira</button>
   </div>
 
   <div class="info-box">
     <h2>O que é Bitnest BTN?</h2>
-    <p>Bitnest BTN é um token com inovação DeFi inspirado na filosofia da Pump.fun. Sem necessidade de liquidez externa, ele opera com curva de bonding automatizada e tesouraria interna.</p>
-    <ul>
-      <li>✅ Liquidez algorítmica (curva bonding linear)</li>
-      <li>✅ Transparência e distribuição automática para holders</li>
-      <li>✅ 100% descentralizado e sem DEX</li>
+    <p>Bitnest BTN é um token revolucionário com mecanismo automático de recompensas para holders, combinando as melhores características do DeFi com uma economia sustentável.</p>
+    
+    <div class="rewards-badge">🎁 10% de recompensas distribuídas para todos os holders a cada compra!</div>
+    
+    <h3>Principais Características</h3>
+    <ul class="features-list">
+      <li><span class="highlight">Supply total de 1.000.000.000 BTN</span> com distribuição justa e transparente</li>
+      <li><span class="highlight">Recompensas automáticas de 10%</span> distribuídas proporcionalmente entre todos os holders</li>
+      <li>Liquidez algorítmica com <span class="highlight">curva de bonding linear</span> que ajusta o preço automaticamente</li>
+      <li>100% descentralizado - <span class="highlight">sem necessidade de DEX ou liquidez externa</span></li>
+      <li>Taxa zero para compra e venda - <span class="highlight">apenas o preço de gás da rede</span></li>
+      <li>Contrato auditado e verificável no BscScan</li>
     </ul>
+    
+    <h3>Como Funcionam as Recompensas?</h3>
+    <p>A cada compra de BTN por qualquer usuário, <span class="highlight">10% do valor é distribuído proporcionalmente</span> entre todos os holders do token. Quanto mais BTN você mantém, maior sua participação nessas recompensas automáticas!</p>
   </div>
+
+  <div class="info-box">
+    <h2>📈 Economia do Token</h2>
+    <p>O Bitnest BTN foi projetado para criar um ecossistema sustentável onde todos os participantes são recompensados:</p>
+    
+    <div class="token-stats">
+      <div class="stat-card">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">On-chain</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">0%</div>
+        <div class="stat-label">Taxas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">Automático</div>
+        <div class="stat-label">Rebase</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">Linear</div>
+        <div class="stat-label">Curva de Preço</div>
+      </div>
+    </div>
+    
+    <p>O preço do BTN segue uma curva de bonding linear que garante liquidez em todas as transações. Quanto mais tokens são comprados, maior o preço; quanto mais são vendidos, menor o preço - tudo calculado automaticamente pelo contrato inteligente.</p>
+  </div>
+
+  <p class="disclaimer">Bitnest BTN é um token experimental. Faça sua própria pesquisa antes de investir. Criptomoedas são voláteis e investimentos envolvem riscos.</p>
 
   <script>
     let web3, contract;
     const contractAddress = "0x68AA4E8C1B472aE8E0AaE00Ede6C6C6601f4Ac65";
     const ABI = [
-  {
-    "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
       {
-        "indexed": true,
-        "internalType": "address",
-        "name": "buyer",
-        "type": "address"
+        "inputs": [],
+        "stateMutability": "nonpayable",
+        "type": "constructor"
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amountSpent",
-        "type": "uint256"
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "buyer",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amountSpent",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "tokensBought",
+            "type": "uint256"
+          }
+        ],
+        "name": "Buy",
+        "type": "event"
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokensBought",
-        "type": "uint256"
-      }
-    ],
-    "name": "Buy",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "seller",
-        "type": "address"
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": true,
+            "internalType": "address",
+            "name": "seller",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "tokensSold",
+            "type": "uint256"
+          },
+          {
+            "indexed": false,
+            "internalType": "uint256",
+            "name": "amountReturned",
+            "type": "uint256"
+          }
+        ],
+        "name": "Sell",
+        "type": "event"
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "tokensSold",
-        "type": "uint256"
+        "inputs": [],
+        "name": "buy",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function"
       },
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amountReturned",
-        "type": "uint256"
-      }
-    ],
-    "name": "Sell",
-    "type": "event"
-  },
-  {
-    "inputs": [],
-    "name": "buy",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+        "inputs": [
+          {
+            "internalType": "uint256",
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "sell",
+        "outputs": [],
+        "stateMutability": "nonpayable",
+        "type": "function"
+      },
       {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "sell",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getCurrentPrice",
-    "outputs": [
+        "inputs": [],
+        "name": "getCurrentPrice",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+      },
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "inputs": [
+          {
+            "internalType": "address",
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "balanceOf",
+        "outputs": [
+          {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "stateMutability": "view",
+        "type": "function"
       }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "balanceOf",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  }
-];
+    ];
 
     async function connectWallet() {
       if (window.ethereum) {
         await window.ethereum.request({ method: "eth_requestAccounts" });
         web3 = new Web3(window.ethereum);
         const accounts = await web3.eth.getAccounts();
-        document.getElementById("account").innerText = "Carteira: " + accounts[0];
+        document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
         contract = new web3.eth.Contract(ABI, contractAddress);
         getPrice();
         getBalance();
       } else {
-        alert("Instale a MetaMask!");
+        alert("Instale a MetaMask para conectar sua carteira!");
       }
     }
 
     async function getPrice() {
       const price = await contract.methods.getCurrentPrice().call();
-      document.getElementById("price").innerText = "Preço Atual BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
+      document.getElementById("price").innerText = "💲 Preço Atual BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
     }
 
     async function getBalance() {
       const accounts = await web3.eth.getAccounts();
       const balance = await contract.methods.balanceOf(accounts[0]).call();
-      document.getElementById("balance").innerText = "Saldo BTN: " + web3.utils.fromWei(balance, "ether");
+      document.getElementById("balance").innerText = "💰 Saldo BTN: " + web3.utils.fromWei(balance, "ether");
     }
 
     async function buyBTN() {
       const accounts = await web3.eth.getAccounts();
       const bnbAmount = document.getElementById("bnbAmount").value;
-      await contract.methods.buy().send({
-        from: accounts[0],
-        value: web3.utils.toWei(bnbAmount, "ether")
-      });
-      getPrice();
-      getBalance();
+      if (!bnbAmount || bnbAmount <= 0) {
+        alert("Insira um valor válido em BNB");
+        return;
+      }
+      try {
+        await contract.methods.buy().send({
+          from: accounts[0],
+          value: web3.utils.toWei(bnbAmount, "ether")
+        });
+        getPrice();
+        getBalance();
+        alert("Compra realizada com sucesso! Suas recompensas começarão a acumular automaticamente.");
+      } catch (error) {
+        alert("Erro na compra: " + error.message);
+      }
     }
 
     async function sellBTN() {
       const accounts = await web3.eth.getAccounts();
       const tokenAmount = document.getElementById("tokenAmount").value;
-      const amountInWei = web3.utils.toWei(tokenAmount, "ether");
-      await contract.methods.sell(amountInWei).send({ from: accounts[0] });
-      getPrice();
-      getBalance();
+      if (!tokenAmount || tokenAmount <= 0) {
+        alert("Insira uma quantidade válida de BTN");
+        return;
+      }
+      try {
+        const amountInWei = web3.utils.toWei(tokenAmount, "ether");
+        await contract.methods.sell(amountInWei).send({ from: accounts[0] });
+        getPrice();
+        getBalance();
+        alert("Venda realizada com sucesso!");
+      } catch (error) {
+        alert("Erro na venda: " + error.message);
+      }
     }
   </script>
 </body>

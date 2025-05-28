@@ -1,23 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-  <title>Bitnest BTN Interface</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitnest Token (BTN)</title>
   <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #000000, #0f0f0f);
+      color: #b8ff00;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+    }
+    h1, h2, h3 {
+      color: #b8ff00;
+    }
+    .container {
+      background-color: #111;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 0 10px #00ff88;
+    }
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background-color: #00ff88;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #000;
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+    .info-box {
+      margin-top: 2rem;
+      background: #181818;
+      padding: 1.5rem;
+      border-radius: 10px;
+      color: #ccc;
+    }
+  </style>
 </head>
 <body>
-  <h2>Bitnest Token (BTN) Interface</h2>
-  <button onclick="connectWallet()">🔌 Conectar Carteira</button>
-  <p id="account">Carteira: não conectada</p>
-  <p id="price">Preço Atual BTN: ...</p>
-  <p id="balance">Saldo BTN: ...</p>
+  <h1>Bitnest BTN</h1>
+  <div class="container">
+    <h2>Interface de Compra e Venda</h2>
+    <p id="account">Carteira: não conectada</p>
+    <p id="price">Preço Atual BTN: ...</p>
+    <p id="balance">Saldo BTN: ...</p>
+    <h3>Comprar BTN</h3>
+    <input type="number" id="bnbAmount" placeholder="Valor em BNB">
+    <button onclick="buyBTN()">Comprar</button>
+    <h3>Vender BTN</h3>
+    <input type="number" id="tokenAmount" placeholder="Qtd. de BTN">
+    <button onclick="sellBTN()">Vender</button>
+    <br><br>
+    <button onclick="connectWallet()">🔌 Conectar Carteira</button>
+  </div>
 
-  <h3>🟢 Comprar BTN</h3>
-  <input type="number" id="bnbAmount" placeholder="Valor em BNB">
-  <button onclick="buyBTN()">Comprar</button>
-
-  <h3>🔴 Vender BTN</h3>
-  <input type="number" id="tokenAmount" placeholder="Qtd. de BTN">
-  <button onclick="sellBTN()">Vender</button>
+  <div class="info-box">
+    <h2>O que é Bitnest BTN?</h2>
+    <p>Bitnest BTN é um token com inovação DeFi inspirado na filosofia da Pump.fun. Sem necessidade de liquidez externa, ele opera com curva de bonding automatizada e tesouraria interna.</p>
+    <ul>
+      <li>✅ Liquidez algorítmica (curva bonding linear)</li>
+      <li>✅ Transparência e distribuição automática para holders</li>
+      <li>✅ 100% descentralizado e sem DEX</li>
+    </ul>
+  </div>
 
   <script>
     let web3, contract;

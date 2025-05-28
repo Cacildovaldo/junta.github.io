@@ -1,638 +1,542 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fred Token (FRED) | Polygon MATIC | Presale Live</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        freed: {
-                            primary: '#8247e5',
-                            dark: '#5e35b1',
-                            light: '#b388ff',
-                            accent: '#ff9100',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #8247e5 0%, #b388ff 50%, #ff9100 100%);
-        }
-        
-        .token-card {
-            box-shadow: 0 10px 30px -10px rgba(130, 71, 229, 0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .token-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px -10px rgba(130, 71, 229, 0.4);
-        }
-        
-        .presale-progress {
-            height: 12px;
-            border-radius: 6px;
-        }
-        
-        .presale-progress::-webkit-progress-bar {
-            background-color: #e2e8f0;
-            border-radius: 6px;
-        }
-        
-        .presale-progress::-webkit-progress-value {
-            background: linear-gradient(90deg, #8247e5 0%, #ff9100 100%);
-            border-radius: 6px;
-        }
-        
-        .animate-pulse-slow {
-            animation: pulse 3s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-        }
-        
-        .liquidity-lock {
-            position: relative;
-        }
-        
-        .liquidity-lock::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(130, 71, 229, 0.1) 0%, rgba(255, 145, 0, 0.1) 100%);
-            border-radius: 0.5rem;
-            z-index: -1;
-        }
-    </style>
+  <title>Bitnest BTN Interface</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0 flex items-center">
-                        <div class="w-10 h-10 rounded-full bg-freed-primary flex items-center justify-center text-white font-bold text-xl">F</div>
-                        <span class="ml-3 text-xl font-bold text-gray-900">Fred Token <span class="text-freed-primary">(FRED)</span></span>
-                    </div>
-                </div>
-                <div class="hidden md:ml-6 md:flex md:items-center md:space-x-8">
-                    <a href="#about" class="text-gray-900 hover:text-freed-primary px-3 py-2 text-sm font-medium">About</a>
-                    <a href="#tokenomics" class="text-gray-900 hover:text-freed-primary px-3 py-2 text-sm font-medium">Tokenomics</a>
-                    <a href="#presale" class="text-gray-900 hover:text-freed-primary px-3 py-2 text-sm font-medium">Presale</a>
-                    <a href="#roadmap" class="text-gray-900 hover:text-freed-primary px-3 py-2 text-sm font-medium">Roadmap</a>
-                    <a href="https://pinksale.finance" target="_blank" class="bg-freed-primary text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-freed-dark transition duration-300">
-                        Buy Now <i class="fas fa-external-link-alt ml-1"></i>
-                    </a>
-                </div>
-                <div class="-mr-2 flex items-center md:hidden">
-                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Mobile menu -->
-        <div class="hidden md:hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#about" class="text-gray-900 hover:text-freed-primary block px-3 py-2 text-base font-medium">About</a>
-                <a href="#tokenomics" class="text-gray-900 hover:text-freed-primary block px-3 py-2 text-base font-medium">Tokenomics</a>
-                <a href="#presale" class="text-gray-900 hover:text-freed-primary block px-3 py-2 text-base font-medium">Presale</a>
-                <a href="#roadmap" class="text-gray-900 hover:text-freed-primary block px-3 py-2 text-base font-medium">Roadmap</a>
-                <a href="https://pinksale.finance" target="_blank" class="bg-freed-primary text-white block px-6 py-2 rounded-full text-base font-bold hover:bg-freed-dark transition duration-300 text-center">
-                    Buy Now <i class="fas fa-external-link-alt ml-1"></i>
-                </a>
-            </div>
-        </div>
-    </nav>
+  <h2>Bitnest (BTN) Token Interface</h2>
+  <button onclick="connectWallet()">🔌 Conectar Carteira</button>
+  <p id="account">Carteira: não conectada</p>
+  <p id="price">Preço Atual BTN: ...</p>
+  <p id="balance">Saldo BTN: ...</p>
 
-    <!-- Hero Section -->
-    <section class="gradient-bg text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-6xl font-bold mb-6">Fred Token <span class="text-freed-accent">(FRED)</span></h1>
-                    <p class="text-xl md:text-2xl mb-8 font-medium">The next generation utility token on Polygon MATIC network with sustainable liquidity solutions</p>
-                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="https://pinksale.finance" target="_blank" class="bg-white text-freed-primary px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-100 transition duration-300 text-center">
-                            Join Presale <i class="fas fa-rocket ml-2"></i>
-                        </a>
-                        <a href="#tokenomics" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:text-freed-primary transition duration-300 text-center">
-                            Learn More <i class="fas fa-chevron-down ml-2"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <div class="relative">
-                        <div class="w-64 h-64 md:w-80 md:h-80 bg-white rounded-full flex items-center justify-center shadow-2xl">
-                            <div class="w-56 h-56 md:w-72 md:h-72 bg-freed-light rounded-full flex items-center justify-center animate-pulse-slow">
-                                <div class="w-48 h-48 md:w-64 md:h-64 bg-freed-primary rounded-full flex items-center justify-center">
-                                    <span class="text-white text-6xl md:text-8xl font-bold">F</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="absolute -bottom-6 -left-6 bg-freed-accent text-white px-6 py-2 rounded-full font-bold shadow-lg">
-                            1B Supply
-                        </div>
-                        <div class="absolute -top-6 -right-6 bg-white text-freed-primary px-6 py-2 rounded-full font-bold shadow-lg">
-                            MATIC Network
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <h3>🟢 Comprar BTN</h3>
+  <input type="number" id="bnbAmount" placeholder="Valor em BNB">
+  <button onclick="buyBTN()">Comprar</button>
 
-    <!-- Stats Section -->
-    <section class="bg-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="bg-gray-50 rounded-xl p-6 text-center token-card">
-                    <div class="text-4xl font-bold text-freed-primary mb-2">1B</div>
-                    <div class="text-gray-600">Total Supply</div>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-6 text-center token-card">
-                    <div class="text-4xl font-bold text-freed-primary mb-2">60%</div>
-                    <div class="text-gray-600">Presale Allocation</div>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-6 text-center token-card">
-                    <div class="text-4xl font-bold text-freed-primary mb-2">20%</div>
-                    <div class="text-gray-600">Liquidity Locked</div>
-                </div>
-                <div class="bg-gray-50 rounded-xl p-6 text-center token-card">
-                    <div class="text-4xl font-bold text-freed-primary mb-2">5%</div>
-                    <div class="text-gray-600">Marketing & Development</div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <h3>🔴 Vender BTN</h3>
+  <input type="number" id="tokenAmount" placeholder="Qtd. de BTN">
+  <button onclick="sellBTN()">Vender</button>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">About Fred Token</h2>
-                <div class="w-20 h-1 bg-freed-primary mx-auto"></div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2232&q=80" alt="Polygon Network" class="rounded-xl shadow-lg w-full">
-                </div>
-                <div class="md:w-1/2">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">Built for Sustainable Growth on Polygon</h3>
-                    <p class="text-gray-600 mb-6">
-                        Fred Token (FRED) is a next-generation utility token built on the Polygon MATIC network, designed with long-term sustainability and community growth in mind. With a total supply of 1 billion tokens, Fred Token implements innovative liquidity solutions to ensure price stability and reduce volatility.
-                    </p>
-                    <p class="text-gray-600 mb-6">
-                        Our presale is structured to accumulate sufficient liquidity from the start, with 60% of tokens allocated to the presale and 20% dedicated to locked liquidity. This approach creates a strong foundation for the token's ecosystem.
-                    </p>
-                    <div class="flex flex-wrap gap-4">
-                        <div class="bg-freed-primary bg-opacity-10 text-freed-primary px-4 py-2 rounded-full font-medium">
-                            <i class="fas fa-lock mr-2"></i> Locked Liquidity
-                        </div>
-                        <div class="bg-freed-accent bg-opacity-10 text-freed-accent px-4 py-2 rounded-full font-medium">
-                            <i class="fas fa-chart-line mr-2"></i> Sustainable Growth
-                        </div>
-                        <div class="bg-freed-light bg-opacity-10 text-freed-light px-4 py-2 rounded-full font-medium">
-                            <i class="fab fa-polygon mr-2"></i> Polygon Network
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <script>
+    let web3, contract;
+    const contractAddress = "0x3d15558bE7A2888286bBbA9f8a0e90566Ae85d34";
+    const ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Approval",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "approve",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "buy",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "buyer",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "cost",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fee",
+				"type": "uint256"
+			}
+		],
+		"name": "Buy",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "sell",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "seller",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "refund",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "fee",
+				"type": "uint256"
+			}
+		],
+		"name": "Sell",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "recipient",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "recipient",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "transferFrom",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"stateMutability": "payable",
+		"type": "receive"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "spender",
+				"type": "address"
+			}
+		],
+		"name": "allowance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "BUY_FEE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "bnbAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "calculateBuyAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "calculateSellAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "FEE_WALLET",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getCurrentPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "INITIAL_SUPPLY",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "PRICE_BASE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SELL_FEE",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SELL_FEE_TO_DEV",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "SELL_FEE_TO_LIQUIDITY",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalBNBLiquidity",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
 
-    <!-- Tokenomics Section -->
-    <section id="tokenomics" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Tokenomics</h2>
-                <div class="w-20 h-1 bg-freed-primary mx-auto"></div>
-            </div>
-            
-            <div class="flex flex-col lg:flex-row gap-12">
-                <div class="lg:w-1/2">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Token Distribution</h3>
-                    
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">Presale (60%)</span>
-                                <span class="font-bold">600,000,000 FREED</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-4">
-                                <div class="bg-freed-primary h-4 rounded-full" style="width: 60%"></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">Liquidity (20%)</span>
-                                <span class="font-bold">200,000,000 FREED</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-4">
-                                <div class="bg-freed-accent h-4 rounded-full" style="width: 20%"></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">Marketing & Development (10%)</span>
-                                <span class="font-bold">100,000,000 FREED</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-4">
-                                <div class="bg-freed-light h-4 rounded-full" style="width: 10%"></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">Team (5%)</span>
-                                <span class="font-bold">50,000,000 FREED</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-4">
-                                <div class="bg-freed-dark h-4 rounded-full" style="width: 5%"></div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium">Reserve (5%)</span>
-                                <span class="font-bold">50,000,000 FREED</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-4">
-                                <div class="bg-purple-400 h-4 rounded-full" style="width: 5%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="lg:w-1/2">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-6">Liquidity Strategy</h3>
-                    
-                    <div class="space-y-6">
-                        <div class="p-6 bg-gray-50 rounded-xl liquidity-lock">
-                            <div class="flex items-start">
-                                <div class="bg-freed-primary bg-opacity-10 p-3 rounded-full mr-4">
-                                    <i class="fas fa-lock text-freed-primary text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-lg mb-2">100% Liquidity Lock</h4>
-                                    <p class="text-gray-600">All liquidity raised during presale will be locked for 12 months using PinkSale's locking mechanism, ensuring long-term stability.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-6 bg-gray-50 rounded-xl liquidity-lock">
-                            <div class="flex items-start">
-                                <div class="bg-freed-accent bg-opacity-10 p-3 rounded-full mr-4">
-                                    <i class="fas fa-chart-pie text-freed-accent text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-lg mb-2">Automatic Liquidity Pool</h4>
-                                    <p class="text-gray-600">5% of every transaction is automatically added to the liquidity pool, creating a sustainable ecosystem that grows with volume.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="p-6 bg-gray-50 rounded-xl liquidity-lock">
-                            <div class="flex items-start">
-                                <div class="bg-freed-light bg-opacity-10 p-3 rounded-full mr-4">
-                                    <i class="fas fa-shield-alt text-freed-light text-xl"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-lg mb-2">Anti-Dump Protection</h4>
-                                    <p class="text-gray-600">Our tokenomics include anti-whale measures and transaction limits to prevent large sell-offs that could destabilize the price.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    async function connectWallet() {
+      if (window.ethereum) {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        web3 = new Web3(window.ethereum);
+        const accounts = await web3.eth.getAccounts();
+        document.getElementById("account").innerText = "Carteira: " + accounts[0];
+        contract = new web3.eth.Contract(ABI, contractAddress);
+        getPrice();
+        getBalance();
+      } else {
+        alert("Instale a MetaMask!");
+      }
+    }
 
-    <!-- Presale Section -->
-    <section id="presale" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Presale Details</h2>
-                <div class="w-20 h-1 bg-freed-primary mx-auto"></div>
-            </div>
-            
-            <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
-                <div class="md:flex">
-                    <div class="md:w-1/2 bg-freed-primary p-8 text-white">
-                        <h3 class="text-2xl font-bold mb-6">Presale Progress</h3>
-                        
-                        <div class="mb-8">
-                            <div class="flex justify-between mb-2">
-                                <span>Raised</span>
-                                <span class="font-bold">$250,000 / $1,000,000</span>
-                            </div>
-                            <progress class="presale-progress w-full" value="25" max="100"></progress>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span>Token Price:</span>
-                                <span class="font-bold">1 FREED = $0.001</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Hard Cap:</span>
-                                <span class="font-bold">$1,000,000</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Tokens for Sale:</span>
-                                <span class="font-bold">600,000,000 FREED</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span>Presale Ends:</span>
-                                <span class="font-bold">30 Days Left</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="md:w-1/2 p-8">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-6">How to Participate</h3>
-                        
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-freed-primary bg-opacity-10 text-freed-primary rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">1</div>
-                                <div>
-                                    <h4 class="font-bold mb-1">Connect Wallet</h4>
-                                    <p class="text-gray-600 text-sm">Connect your Polygon-compatible wallet (MetaMask, Trust Wallet, etc.) to PinkSale.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-freed-primary bg-opacity-10 text-freed-primary rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">2</div>
-                                <div>
-                                    <h4 class="font-bold mb-1">Purchase with MATIC</h4>
-                                    <p class="text-gray-600 text-sm">Buy FREED tokens using MATIC at the current presale price.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="bg-freed-primary bg-opacity-10 text-freed-primary rounded-full w-8 h-8 flex items-center justify-center font-bold mr-4 mt-1">3</div>
-                                <div>
-                                    <h4 class="font-bold mb-1">Claim After Presale</h4>
-                                    <p class="text-gray-600 text-sm">Tokens will be distributed after the presale concludes.</p>
-                                </div>
-                            </div>
-                            
-                            <a href="https://pinksale.finance" target="_blank" class="block bg-freed-primary text-white text-center py-3 rounded-lg font-bold hover:bg-freed-dark transition duration-300 mt-8">
-                                Join Presale Now <i class="fas fa-external-link-alt ml-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    async function getPrice() {
+      const price = await contract.methods.getCurrentPrice().call();
+      document.getElementById("price").innerText = "Preço Atual BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
+    }
 
-    <!-- Roadmap Section -->
-    <section id="roadmap" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Roadmap</h2>
-                <div class="w-20 h-1 bg-freed-primary mx-auto"></div>
-            </div>
-            
-            <div class="relative">
-                <!-- Timeline line -->
-                <div class="hidden md:block absolute left-1/2 h-full w-1 bg-freed-light transform -translate-x-1/2"></div>
-                
-                <!-- Timeline items -->
-                <div class="space-y-8 md:space-y-16">
-                    <!-- Phase 1 -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
-                            <div class="bg-freed-primary text-white p-6 rounded-xl shadow-lg">
-                                <h3 class="text-xl font-bold mb-2">Phase 1: Foundation</h3>
-                                <ul class="list-disc list-inside space-y-2 text-sm">
-                                    <li>Token creation and smart contract deployment</li>
-                                    <li>Presale launch on PinkSale platform</li>
-                                    <li>Initial liquidity pool creation</li>
-                                    <li>Community building and marketing</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="hidden md:flex w-16 h-16 absolute left-1/2 transform -translate-x-1/2 bg-freed-primary rounded-full items-center justify-center text-white font-bold border-4 border-white shadow-lg">Q1</div>
-                        <div class="md:w-1/2 md:pl-16"></div>
-                    </div>
-                    
-                    <!-- Phase 2 -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-16"></div>
-                        <div class="hidden md:flex w-16 h-16 absolute left-1/2 transform -translate-x-1/2 bg-freed-accent rounded-full items-center justify-center text-white font-bold border-4 border-white shadow-lg">Q2</div>
-                        <div class="md:w-1/2 md:pl-16 mb-8 md:mb-0">
-                            <div class="bg-freed-accent text-white p-6 rounded-xl shadow-lg">
-                                <h3 class="text-xl font-bold mb-2">Phase 2: Growth</h3>
-                                <ul class="list-disc list-inside space-y-2 text-sm">
-                                    <li>CEX listings (Tier 2 exchanges)</li>
-                                    <li>Partnerships with Polygon projects</li>
-                                    <li>Community governance implementation</li>
-                                    <li>Additional liquidity pool creation</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Phase 3 -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-16 mb-8 md:mb-0 md:text-right">
-                            <div class="bg-freed-light text-white p-6 rounded-xl shadow-lg">
-                                <h3 class="text-xl font-bold mb-2">Phase 3: Expansion</h3>
-                                <ul class="list-disc list-inside space-y-2 text-sm">
-                                    <li>Top-tier CEX listings</li>
-                                    <li>Utility development (staking, farming)</li>
-                                    <li>Cross-chain bridge implementation</li>
-                                    <li>Ecosystem expansion</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="hidden md:flex w-16 h-16 absolute left-1/2 transform -translate-x-1/2 bg-freed-light rounded-full items-center justify-center text-white font-bold border-4 border-white shadow-lg">Q3</div>
-                        <div class="md:w-1/2 md:pl-16"></div>
-                    </div>
-                    
-                    <!-- Phase 4 -->
-                    <div class="relative flex flex-col md:flex-row items-center">
-                        <div class="md:w-1/2 md:pr-16"></div>
-                        <div class="hidden md:flex w-16 h-16 absolute left-1/2 transform -translate-x-1/2 bg-freed-dark rounded-full items-center justify-center text-white font-bold border-4 border-white shadow-lg">Q4</div>
-                        <div class="md:w-1/2 md:pl-16 mb-8 md:mb-0">
-                            <div class="bg-freed-dark text-white p-6 rounded-xl shadow-lg">
-                                <h3 class="text-xl font-bold mb-2">Phase 4: Maturity</h3>
-                                <ul class="list-disc list-inside space-y-2 text-sm">
-                                    <li>Full ecosystem deployment</li>
-                                    <li>Mainstream adoption initiatives</li>
-                                    <li>Long-term liquidity strategies</li>
-                                    <li>Sustainable tokenomics refinement</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    async function getBalance() {
+      const accounts = await web3.eth.getAccounts();
+      const balance = await contract.methods.balanceOf(accounts[0]).call();
+      document.getElementById("balance").innerText = "Saldo BTN: " + web3.utils.fromWei(balance, "ether");
+    }
 
-    <!-- CTA Section -->
-    <section class="py-20 gradient-bg text-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Join the Fred Token Revolution?</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">Be part of a sustainable token with strong liquidity foundations on the Polygon network.</p>
-            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
-                <a href="https://pinksale.finance" target="_blank" class="bg-white text-freed-primary px-8 py-4 rounded-full text-lg font-bold hover:bg-gray-100 transition duration-300">
-                    Buy Now <i class="fas fa-external-link-alt ml-2"></i>
-                </a>
-                <a href="#" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-full text-lg font-bold hover:bg-white hover:text-freed-primary transition duration-300">
-                    Join Community <i class="fab fa-telegram ml-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+    async function buyBTN() {
+      const accounts = await web3.eth.getAccounts();
+      const bnbAmount = document.getElementById("bnbAmount").value;
+      await contract.methods.buy().send({
+        from: accounts[0],
+        value: web3.utils.toWei(bnbAmount, "ether")
+      });
+      getPrice();
+      getBalance();
+    }
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div>
-                    <div class="flex items-center mb-4">
-                        <div class="w-10 h-10 rounded-full bg-freed-primary flex items-center justify-center text-white font-bold text-xl">F</div>
-                        <span class="ml-3 text-xl font-bold">Fred Token</span>
-                    </div>
-                    <p class="text-gray-400">The sustainable token on Polygon MATIC network with innovative liquidity solutions.</p>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About</a></li>
-                        <li><a href="#tokenomics" class="text-gray-400 hover:text-white transition">Tokenomics</a></li>
-                        <li><a href="#presale" class="text-gray-400 hover:text-white transition">Presale</a></li>
-                        <li><a href="#roadmap" class="text-gray-400 hover:text-white transition">Roadmap</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Resources</h3>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Whitepaper</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Smart Contract</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">Audit Report</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">PinkSale Link</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="text-lg font-bold mb-4">Community</h3>
-                    <div class="flex space-x-4 mb-4">
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-freed-primary transition">
-                            <i class="fab fa-telegram"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-freed-primary transition">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-freed-primary transition">
-                            <i class="fab fa-discord"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-freed-primary transition">
-                            <i class="fab fa-medium"></i>
-                        </a>
-                    </div>
-                    <p class="text-gray-400">Contract Address:</p>
-                    <p class="text-freed-light text-sm font-mono break-all">0xB424aeB2CdeFC95a8dE6171c6E41E6A9c419648F</p>
-                </div>
-            </div>
-            
-            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-                <p>© 2025 Fred Token (FRED). All rights reserved.</p>
-                <p class="mt-2 text-sm">Disclaimer: Cryptocurrency investments involve risk. Please do your own research before investing.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-        // Mobile menu toggle
-        document.getElementById('mobile-menu-button').addEventListener('click', function() {
-            const menu = document.getElementById('mobile-menu');
-            if (menu.classList.contains('hidden')) {
-                menu.classList.remove('hidden');
-            } else {
-                menu.classList.add('hidden');
-            }
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    const mobileMenu = document.getElementById('mobile-menu');
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
-                    }
-                }
-            });
-        });
-
-        // Animate progress bar on scroll
-        function animateProgressBar() {
-            const progressBar = document.querySelector('.presale-progress');
-            const position = progressBar.getBoundingClientRect().top;
-            const screenPosition = window.innerHeight / 1.3;
-            
-            if (position < screenPosition) {
-                progressBar.style.transition = 'width 2s ease-out';
-                progressBar.style.width = progressBar.getAttribute('value') + '%';
-            }
-        }
-
-        window.addEventListener('scroll', animateProgressBar);
-        window.addEventListener('load', animateProgressBar);
-    </script>
+    async function sellBTN() {
+      const accounts = await web3.eth.getAccounts();
+      const tokenAmount = document.getElementById("tokenAmount").value;
+      const amountInWei = web3.utils.toWei(tokenAmount, "ether");
+      await contract.methods.sell(amountInWei).send({ from: accounts[0] });
+      getPrice();
+      getBalance();
+    }
+  </script>
 </body>
 </html>

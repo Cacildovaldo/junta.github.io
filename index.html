@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bitnest Token (BTN) - O Futuro das Recompensas em Cripto</title>
+  <!-- Adicione o link da sua favicon aqui -->
+  <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -154,6 +156,20 @@
       font-weight: bold;
       color: #000;
     }
+    .contract-address {
+      background: #222;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-family: monospace;
+      word-break: break-all;
+      margin: 1rem 0;
+      text-align: center;
+      border: 1px solid #333;
+    }
+    .add-token-btn {
+      background-color: #b8ff00;
+      margin-bottom: 1rem;
+    }
   </style>
 </head>
 <body>
@@ -190,6 +206,12 @@
     
     <br><br>
     <button onclick="connectWallet()">🔌 Conectar Carteira</button>
+    <button onclick="addTokenToWallet()" class="add-token-btn">➕ Adicionar BTN à Carteira</button>
+    
+    <div class="contract-address">
+      <strong>Contrato BTN:</strong><br>
+      0x68AA4E8C1B472aE8E0AaE00Ede6C6C6601f4Ac65
+    </div>
   </div>
 
   <div class="info-box">
@@ -364,6 +386,38 @@
         getBalance();
       } else {
         alert("Instale a MetaMask para conectar sua carteira!");
+      }
+    }
+
+    async function addTokenToWallet() {
+      if (!window.ethereum) {
+        alert("MetaMask não está instalado!");
+        return;
+      }
+
+      try {
+        // Verifica se a carteira está conectada
+        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+        if (accounts.length === 0) {
+          await connectWallet();
+        }
+
+        // Adiciona o token à carteira
+        await window.ethereum.request({
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: {
+              address: "0x68AA4E8C1B472aE8E0AaE00Ede6C6C6601f4Ac65",
+              symbol: 'BTN',
+              decimals: 18,
+              image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png', // Adicione uma URL de imagem para o token se desejar
+            },
+          },
+        });
+      } catch (error) {
+        console.error(error);
+        alert("Erro ao adicionar token: " + error.message);
       }
     }
 

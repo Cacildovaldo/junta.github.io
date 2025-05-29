@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bitnest Token (BTN) - O Futuro das Recompensas em Cripto</title>
-  <!-- Adicione o link da sua favicon aqui -->
+  <title>Bitnest Token (BTN) - The Future of Crypto Rewards</title>
+  <!-- Add your favicon link here -->
   <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -176,67 +176,67 @@
   <header>
     <div class="logo">BTN</div>
     <h1>Bitnest BTN</h1>
-    <p class="tagline">O token que recompensa seus holders automaticamente</p>
+    <p class="tagline">The token that automatically rewards its holders</p>
   </header>
 
   <div class="container">
-    <h2>Interface de Compra e Venda</h2>
-    <p id="account">🔒 Carteira: não conectada</p>
-    <p id="price">💲 Preço Atual BTN: ...</p>
-    <p id="balance">💰 Saldo BTN: ...</p>
+    <h2>Buy/Sell Interface</h2>
+    <p id="account">🔒 Wallet: not connected</p>
+    <p id="price">💲 Current BTN Price: ...</p>
+    <p id="balance">💰 BTN Balance: ...</p>
     
     <div class="token-stats">
       <div class="stat-card">
-        <div class="stat-value">1.000.000.000</div>
-        <div class="stat-label">Supply Total</div>
+        <div class="stat-value">1,000,000,000</div>
+        <div class="stat-label">Total Supply</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">10%</div>
-        <div class="stat-label">Recompensas</div>
+        <div class="stat-label">Rewards</div>
       </div>
     </div>
 
-    <h3>Comprar BTN</h3>
-    <input type="number" id="bnbAmount" placeholder="Valor em BNB">
-    <button onclick="buyBTN()">🛒 Comprar BTN</button>
+    <h3>Buy BTN</h3>
+    <input type="number" id="bnbAmount" placeholder="Amount in BNB">
+    <button onclick="buyBTN()">🛒 Buy BTN</button>
     
-    <h3>Vender BTN</h3>
-    <input type="number" id="tokenAmount" placeholder="Qtd. de BTN">
-    <button onclick="sellBTN()">💱 Vender BTN</button>
+    <h3>Sell BTN</h3>
+    <input type="number" id="tokenAmount" placeholder="Amount of BTN">
+    <button onclick="sellBTN()">💱 Sell BTN</button>
     
     <br><br>
-    <button onclick="connectWallet()">🔌 Conectar Carteira</button>
-    <button onclick="addTokenToWallet()" class="add-token-btn">➕ Adicionar BTN à Carteira</button>
+    <button onclick="connectWallet()">🔌 Connect Wallet</button>
+    <button onclick="addTokenToWallet()" class="add-token-btn">➕ Add BTN to Wallet</button>
     
     <div class="contract-address">
-      <strong>Contrato BTN:</strong><br>
-      0x68AA4E8C1B472aE8E0AaE00Ede6C6C6601f4Ac65
+      <strong>BTN Contract:</strong><br>
+      0x98e30AC086ba850A81A24ABbdc46dE693f0719ED
     </div>
   </div>
 
   <div class="info-box">
-    <h2>O que é Bitnest BTN?</h2>
-    <p>Bitnest BTN é um token revolucionário com mecanismo automático de recompensas para holders, combinando as melhores características do DeFi com uma economia sustentável.</p>
+    <h2>What is Bitnest BTN?</h2>
+    <p>Bitnest BTN is a revolutionary token with an automatic reward mechanism for holders, combining the best features of DeFi with a sustainable economy.</p>
     
-    <div class="rewards-badge">🎁 10% de recompensas distribuídas para todos os holders a cada compra!</div>
+    <div class="rewards-badge">🎁 10% rewards distributed to all holders with every purchase!</div>
     
-    <h3>Principais Características</h3>
+    <h3>Key Features</h3>
     <ul class="features-list">
-      <li><span class="highlight">Supply total de 1.000.000.000 BTN</span> com distribuição justa e transparente</li>
-      <li><span class="highlight">Recompensas automáticas de 10%</span> distribuídas proporcionalmente entre todos os holders</li>
-      <li>Liquidez algorítmica com <span class="highlight">curva de bonding linear</span> que ajusta o preço automaticamente</li>
-      <li>100% descentralizado - <span class="highlight">sem necessidade de DEX ou liquidez externa</span></li>
-      <li>Taxa zero para compra e venda - <span class="highlight">apenas o preço de gás da rede</span></li>
-      <li>Contrato auditado e verificável no BscScan</li>
+      <li><span class="highlight">Total supply of 1,000,000,000 BTN</span> with fair and transparent distribution</li>
+      <li><span class="highlight">Automatic 10% rewards</span> distributed proportionally among all holders</li>
+      <li>Algorithmic liquidity with <span class="highlight">linear bonding curve</span> that adjusts price automatically</li>
+      <li>100% decentralized - <span class="highlight">no need for DEX or external liquidity</span></li>
+      <li>Zero fees for buying and selling - <span class="highlight">only network gas fees</span></li>
+      <li>Audited and verifiable contract on BscScan</li>
     </ul>
     
-    <h3>Como Funcionam as Recompensas?</h3>
-    <p>A cada compra de BTN por qualquer usuário, <span class="highlight">10% do valor é distribuído proporcionalmente</span> entre todos os holders do token. Quanto mais BTN você mantém, maior sua participação nessas recompensas automáticas!</p>
+    <h3>How Do Rewards Work?</h3>
+    <p>With every BTN purchase by any user, <span class="highlight">10% of the value is distributed proportionally</span> among all token holders. The more BTN you hold, the greater your share in these automatic rewards!</p>
   </div>
 
   <div class="info-box">
-    <h2>📈 Economia do Token</h2>
-    <p>O Bitnest BTN foi projetado para criar um ecossistema sustentável onde todos os participantes são recompensados:</p>
+    <h2>📈 Token Economy</h2>
+    <p>Bitnest BTN was designed to create a sustainable ecosystem where all participants are rewarded:</p>
     
     <div class="token-stats">
       <div class="stat-card">
@@ -245,26 +245,26 @@
       </div>
       <div class="stat-card">
         <div class="stat-value">0%</div>
-        <div class="stat-label">Taxas</div>
+        <div class="stat-label">Fees</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">Automático</div>
+        <div class="stat-value">Automatic</div>
         <div class="stat-label">Rebase</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">Linear</div>
-        <div class="stat-label">Curva de Preço</div>
+        <div class="stat-label">Price Curve</div>
       </div>
     </div>
     
-    <p>O preço do BTN segue uma curva de bonding linear que garante liquidez em todas as transações. Quanto mais tokens são comprados, maior o preço; quanto mais são vendidos, menor o preço - tudo calculado automaticamente pelo contrato inteligente.</p>
+    <p>The BTN price follows a linear bonding curve that ensures liquidity in all transactions. The more tokens are bought, the higher the price; the more are sold, the lower the price - all calculated automatically by the smart contract.</p>
   </div>
 
-  <p class="disclaimer">Bitnest BTN é um token experimental. Faça sua própria pesquisa antes de investir. Criptomoedas são voláteis e investimentos envolvem riscos.</p>
+  <p class="disclaimer">Bitnest BTN is an experimental token. Do your own research before investing. Cryptocurrencies are volatile and investments involve risks.</p>
 
   <script>
     let web3, contract;
-    const contractAddress = "0x68AA4E8C1B472aE8E0AaE00Ede6C6C6601f4Ac65";
+    const contractAddress = "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED";
     const ABI = [
       {
         "inputs": [],
@@ -380,29 +380,29 @@
         await window.ethereum.request({ method: "eth_requestAccounts" });
         web3 = new Web3(window.ethereum);
         const accounts = await web3.eth.getAccounts();
-        document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+        document.getElementById("account").innerText = "🔓 Wallet: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
         contract = new web3.eth.Contract(ABI, contractAddress);
         getPrice();
         getBalance();
       } else {
-        alert("Instale a MetaMask para conectar sua carteira!");
+        alert("Install MetaMask to connect your wallet!");
       }
     }
 
     async function addTokenToWallet() {
       if (!window.ethereum) {
-        alert("MetaMask não está instalado!");
+        alert("MetaMask is not installed!");
         return;
       }
 
       try {
-        // Verifica se a carteira está conectada
+        // Check if wallet is connected
         const accounts = await window.ethereum.request({ method: 'eth_accounts' });
         if (accounts.length === 0) {
           await connectWallet();
         }
 
-        // Adiciona o token à carteira
+        // Add token to wallet
         await window.ethereum.request({
           method: 'wallet_watchAsset',
           params: {
@@ -411,32 +411,32 @@
               address: "0x68AA4E8C1B472aE8E0AaE00Ede6C6C6601f4Ac65",
               symbol: 'BTN',
               decimals: 18,
-              image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png', // Adicione uma URL de imagem para o token se desejar
+              image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png', // Add a token image URL if desired
             },
           },
         });
       } catch (error) {
         console.error(error);
-        alert("Erro ao adicionar token: " + error.message);
+        alert("Error adding token: " + error.message);
       }
     }
 
     async function getPrice() {
       const price = await contract.methods.getCurrentPrice().call();
-      document.getElementById("price").innerText = "💲 Preço Atual BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
+      document.getElementById("price").innerText = "💲 Current BTN Price: " + web3.utils.fromWei(price, "ether") + " BNB";
     }
 
     async function getBalance() {
       const accounts = await web3.eth.getAccounts();
       const balance = await contract.methods.balanceOf(accounts[0]).call();
-      document.getElementById("balance").innerText = "💰 Saldo BTN: " + web3.utils.fromWei(balance, "ether");
+      document.getElementById("balance").innerText = "💰 BTN Balance: " + web3.utils.fromWei(balance, "ether");
     }
 
     async function buyBTN() {
       const accounts = await web3.eth.getAccounts();
       const bnbAmount = document.getElementById("bnbAmount").value;
       if (!bnbAmount || bnbAmount <= 0) {
-        alert("Insira um valor válido em BNB");
+        alert("Enter a valid BNB amount");
         return;
       }
       try {
@@ -446,9 +446,9 @@
         });
         getPrice();
         getBalance();
-        alert("Compra realizada com sucesso! Suas recompensas começarão a acumular automaticamente.");
+        alert("Purchase successful! Your rewards will start accumulating automatically.");
       } catch (error) {
-        alert("Erro na compra: " + error.message);
+        alert("Purchase error: " + error.message);
       }
     }
 
@@ -456,7 +456,7 @@
       const accounts = await web3.eth.getAccounts();
       const tokenAmount = document.getElementById("tokenAmount").value;
       if (!tokenAmount || tokenAmount <= 0) {
-        alert("Insira uma quantidade válida de BTN");
+        alert("Enter a valid amount of BTN");
         return;
       }
       try {
@@ -464,9 +464,9 @@
         await contract.methods.sell(amountInWei).send({ from: accounts[0] });
         getPrice();
         getBalance();
-        alert("Venda realizada com sucesso!");
+        alert("Sale successful!");
       } catch (error) {
-        alert("Erro na venda: " + error.message);
+        alert("Sale error: " + error.message);
       }
     }
   </script>

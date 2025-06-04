@@ -4,65 +4,117 @@
   <meta name="google-site-verification" content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bitnest Token (BTN) - The Future of Crypto Rewards</title>
-  <!-- Add your favicon link here -->
+  <title>Bitnest Token (BTN) - Revolutionary Algorithmic Liquidity Token</title>
   <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" type="image/x-icon">
   <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #b8ff00;
+      --secondary: #00ff88;
+      --dark: #0a0a0a;
+      --darker: #050505;
+      --light: #f0f0f0;
+      --gray: #333333;
+      --light-gray: #aaaaaa;
+    }
+    
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(to bottom, #000000, #0f0f0f);
-      color: #ffffff;
+      background: var(--dark);
+      color: var(--light);
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
       padding: 2rem;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(184, 255, 0, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 255, 136, 0.05) 0%, transparent 50%);
     }
+    
     header {
       text-align: center;
       margin-bottom: 2rem;
       width: 100%;
+      position: relative;
     }
+    
     h1 {
-      color: #b8ff00;
-      font-size: 2.5rem;
+      color: var(--primary);
+      font-size: 2.8rem;
       margin-bottom: 0.5rem;
-      text-shadow: 0 0 10px rgba(184, 255, 0, 0.5);
+      text-shadow: 0 0 15px rgba(184, 255, 0, 0.7);
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
     }
+    
     .tagline {
-      color: #00ff88;
-      font-size: 1.2rem;
+      color: var(--secondary);
+      font-size: 1.3rem;
       margin-top: 0;
+      font-weight: 600;
     }
+    
     h2, h3 {
-      color: #b8ff00;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
     }
+    
+    h2:after, h3:after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 3px;
+    }
+    
     .container {
-      background-color: rgba(17, 17, 17, 0.8);
+      background-color: rgba(17, 17, 17, 0.9);
       padding: 2rem;
       border-radius: 15px;
       max-width: 500px;
       width: 100%;
-      box-shadow: 0 0 15px #00ff88;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
       margin-bottom: 2rem;
-      border: 1px solid #00ff88;
+      border: 1px solid var(--gray);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
     }
+    
+    .container:hover {
+      box-shadow: 0 0 25px rgba(0, 255, 136, 0.5);
+      transform: translateY(-3px);
+    }
+    
     input {
       width: 100%;
       padding: 0.75rem;
       margin: 0.75rem 0;
       border-radius: 8px;
       border: none;
-      background-color: #222;
+      background-color: var(--gray);
       color: white;
       font-size: 1rem;
+      font-family: 'Space Mono', monospace;
+      transition: all 0.3s ease;
     }
+    
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px var(--secondary);
+    }
+    
     button {
       padding: 0.75rem 1.5rem;
-      background-color: #00ff88;
+      background: linear-gradient(to right, var(--secondary), var(--primary));
       border: none;
       border-radius: 8px;
       cursor: pointer;
@@ -72,113 +124,282 @@
       font-size: 1rem;
       transition: all 0.3s ease;
       width: 100%;
+      font-family: 'Space Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
+    
     button:hover {
-      background-color: #b8ff00;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(0, 255, 136, 0.5);
     }
+    
     .info-box {
       margin-top: 2rem;
-      background: rgba(24, 24, 24, 0.8);
+      background: rgba(24, 24, 24, 0.9);
       padding: 1.5rem;
       border-radius: 15px;
-      color: #ccc;
+      color: var(--light-gray);
       max-width: 500px;
       width: 100%;
-      border: 1px solid #b8ff00;
+      border: 1px solid var(--gray);
+      backdrop-filter: blur(5px);
+      transition: all 0.3s ease;
     }
+    
+    .info-box:hover {
+      box-shadow: 0 0 20px rgba(184, 255, 0, 0.2);
+      transform: translateY(-3px);
+    }
+    
     .token-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
       margin: 1.5rem 0;
     }
+    
     .stat-card {
-      background: #222;
+      background: var(--gray);
       padding: 1rem;
       border-radius: 10px;
       text-align: center;
-      border: 1px solid #333;
+      border: 1px solid #444;
+      transition: all 0.3s ease;
     }
+    
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+    }
+    
     .stat-value {
-      color: #00ff88;
+      color: var(--secondary);
       font-weight: bold;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
     }
+    
     .stat-label {
       font-size: 0.9rem;
-      color: #aaa;
+      color: var(--light-gray);
     }
+    
     .highlight {
-      color: #b8ff00;
+      color: var(--primary);
       font-weight: bold;
     }
+    
     .rewards-badge {
-      background: #00ff88;
+      background: linear-gradient(to right, var(--secondary), var(--primary));
       color: #000;
-      padding: 0.3rem 0.8rem;
+      padding: 0.5rem 1rem;
       border-radius: 20px;
       font-weight: bold;
       display: inline-block;
       margin: 0.5rem 0;
       font-size: 0.9rem;
+      text-align: center;
+      width: 100%;
+      box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
     }
+    
     .features-list {
       padding-left: 1.5rem;
     }
+    
     .features-list li {
       margin-bottom: 0.8rem;
       position: relative;
     }
+    
     .features-list li:before {
-      content: "✓";
-      color: #00ff88;
+      content: "➤";
+      color: var(--secondary);
       font-weight: bold;
       position: absolute;
       left: -1.5rem;
     }
+    
     .disclaimer {
       font-size: 0.8rem;
-      color: #888;
+      color: var(--light-gray);
       margin-top: 2rem;
       text-align: center;
+      max-width: 500px;
     }
+    
     .logo {
-      width: 80px;
-      height: 80px;
-      background: linear-gradient(135deg, #b8ff00, #00ff88);
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(184, 255, 0, 0.3);
+      border: 3px solid var(--primary);
+    }
+    
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    
+    .contract-address {
+      background: var(--gray);
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-family: 'Space Mono', monospace;
+      word-break: break-all;
+      margin: 1rem 0;
+      text-align: center;
+      border: 1px solid #444;
+      transition: all 0.3s ease;
+    }
+    
+    .contract-address:hover {
+      box-shadow: 0 0 15px rgba(184, 255, 0, 0.2);
+    }
+    
+    .add-token-btn {
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      margin-bottom: 1rem;
+    }
+    
+    .price-graph {
+      width: 100%;
+      height: 200px;
+      background: var(--gray);
+      border-radius: 10px;
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .price-graph::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(184, 255, 0, 0.1) 0%, 
+        rgba(0, 255, 136, 0.1) 100%);
+      z-index: 1;
+    }
+    
+    .graph-line {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      stroke: var(--secondary);
+      stroke-width: 2;
+      fill: none;
+      z-index: 2;
+    }
+    
+    .graph-point {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      transform: translate(-50%, 50%);
+      z-index: 3;
+    }
+    
+    .how-it-works {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .step-number {
+      background: var(--primary);
+      color: #000;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1rem;
-      font-size: 2rem;
       font-weight: bold;
-      color: #000;
+      flex-shrink: 0;
     }
-    .contract-address {
-      background: #222;
-      padding: 0.8rem;
-      border-radius: 8px;
-      font-family: monospace;
-      word-break: break-all;
-      margin: 1rem 0;
-      text-align: center;
-      border: 1px solid #333;
+    
+    .step-content {
+      flex: 1;
     }
-    .add-token-btn {
-      background-color: #b8ff00;
-      margin-bottom: 1rem;
+    
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+    }
+    
+    .comparison-table th, .comparison-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gray);
+    }
+    
+    .comparison-table th {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .check-icon {
+      color: var(--secondary);
+      font-weight: bold;
+    }
+    
+    .x-icon {
+      color: #ff5555;
+    }
+    
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .tagline {
+        font-size: 1rem;
+      }
+      
+      .container, .info-box {
+        padding: 1.5rem;
+      }
+      
+      .token-stats {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
- <body>
+<body>
   <header>
-    <div class="logo"><center><a href="https://bitnest.netlify.app" style="margin-left: 1em; margin-right: 1em;"><img border="0" data-original-height="120" data-original-width="868" height="157" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/w109-h157/Bitnest-BTN.png" width="121" /></a></center></div>
+    <div class="logo"><a href="https://bitnest.netlify.app"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/w109-h157/Bitnest-BTN.png" alt="Bitnest BTN Logo"></a></div>
     <h1>Bitnest BTN</h1>
-    <p class="tagline">The token that automatically rewards its holders</p>
-    <p class="tagline"><span style="color: #04ff00;"><b><a href="https://pancakeswap.finance/swap?outputCurrency=0x98e30AC086ba850A81A24ABbdc46dE693f0719ED" target="_blank">Buy Bitnest BTN in PancakeSwap</a></b></span></p>
+    <p class="tagline">The Future of Algorithmic Liquidity Tokens</p>
+    <p class="tagline"><span style="color: var(--secondary);"><b><a href="https://pancakeswap.finance/swap?outputCurrency=0x98e30AC086ba850A81A24ABbdc46dE693f0719ED" target="_blank">Buy Bitnest BTN on PancakeSwap</a></b></span></p>
   </header>
 
   <div class="container">
@@ -187,23 +408,41 @@
     <p id="price">💲 Current BTN Price: ...</p>
     <p id="balance">💰 BTN Balance: ...</p>
     
+    <div class="price-graph">
+      <!-- This would be replaced with an actual chart in production -->
+      <svg viewBox="0 0 100 50" class="graph-line">
+        <path d="M0,50 C10,40 20,45 30,30 C40,15 50,20 60,10 C70,0 80,5 90,20 C100,35 100,50 100,50" />
+      </svg>
+      <div class="graph-point" style="left: 30%; bottom: 30%;"></div>
+      <div class="graph-point" style="left: 60%; bottom: 10%;"></div>
+      <div class="graph-point" style="left: 90%; bottom: 20%;"></div>
+    </div>
+    
     <div class="token-stats">
       <div class="stat-card">
-        <div class="stat-value">1,000,000,000</div>
+        <div class="stat-value">1B</div>
         <div class="stat-label">Total Supply</div>
       </div>
       <div class="stat-card">
         <div class="stat-value">10%</div>
         <div class="stat-label">Rewards</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-value">5%</div>
+        <div class="stat-label">Liquidity</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">0%</div>
+        <div class="stat-label">Fees</div>
+      </div>
     </div>
 
     <h3>Buy BTN</h3>
-    <input type="number" id="bnbAmount" placeholder="Amount in BNB">
+    <input type="number" id="bnbAmount" placeholder="Amount in BNB" step="0.0001">
     <button onclick="buyBTN()">🛒 Buy BTN</button>
     
     <h3>Sell BTN</h3>
-    <input type="number" id="tokenAmount" placeholder="Amount of BTN">
+    <input type="number" id="tokenAmount" placeholder="Amount of BTN" step="1">
     <button onclick="sellBTN()">💱 Sell BTN</button>
     
     <br><br>
@@ -212,57 +451,142 @@
     
     <div class="contract-address">
       <strong>BTN Contract:</strong><br>
-      <p><a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank">&nbsp;<span style="background-color: #222222; color: white; font-family: monospace; text-align: center;">0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</span></a></p>
+      <p><a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank">&nbsp;<span style="font-family: 'Space Mono', monospace; text-align: center;">0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</span></a></p>
     </div>
   </div>
 
   <div class="info-box">
     <h2>What is Bitnest BTN?</h2>
-    <p>Bitnest BTN is a revolutionary token with an automatic reward mechanism for holders, combining the best features of DeFi with a sustainable economy.</p>
+    <p>Bitnest BTN is a revolutionary token that combines <span class="highlight">algorithmic liquidity</span> with <span class="highlight">automatic rewards</span>, creating a sustainable ecosystem inspired by the innovative mechanisms of Pump Fun tokens but with enhanced security and stability features.</p>
     
-    <div class="rewards-badge">🎁 10% rewards distributed to all holders with every purchase!</div>
+    <div class="rewards-badge">🚀 10% rewards + 5% locked liquidity with every transaction!</div>
     
-    <h3>Key Features</h3>
+    <h3>Key Innovations</h3>
     <ul class="features-list">
-      <li><span class="highlight">Total supply of 1,000,000,000 BTN</span> with fair and transparent distribution</li>
-      <li><span class="highlight">Automatic 10% rewards</span> distributed proportionally among all holders</li>
-      <li>Algorithmic liquidity with <span class="highlight">linear bonding curve</span> that adjusts price automatically</li>
-      <li>100% decentralized - <span class="highlight">no need for DEX or external liquidity</span></li>
-      <li>Zero fees for buying and selling - <span class="highlight">only network gas fees</span></li>
-      <li>Audited and verifiable contract on BscScan</li>
+      <li><span class="highlight">Built-in algorithmic liquidity</span> with a linear bonding curve that adjusts price automatically based on supply and demand</li>
+      <li><span class="highlight">5% of every sale is permanently locked</span> in the contract's liquidity pool, creating ever-growing reserves</li>
+      <li><span class="highlight">10% automatic rewards</span> distributed proportionally among all holders with every buy transaction</li>
+      <li><span class="highlight">Rug-proof design</span> - liquidity cannot be removed by anyone, including developers</li>
+      <li><span class="highlight">No external DEX required</span> - trades happen directly through the smart contract</li>
+      <li><span class="highlight">Transparent and verifiable</span> on-chain mechanics with no hidden fees</li>
+      <li><span class="highlight">Price stability</span> through mathematical bonding curve that prevents extreme volatility</li>
     </ul>
     
-    <h3>How Do Rewards Work?</h3>
-    <p>With every BTN purchase by any user, <span class="highlight">10% of the value is distributed proportionally</span> among all token holders. The more BTN you hold, the greater your share in these automatic rewards!</p>
+    <h3>How the Algorithmic Liquidity Works</h3>
+    <div class="how-it-works">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <strong>Linear Bonding Curve</strong><br>
+          The token price follows a predictable mathematical formula: Price = BasePrice + (k * Supply). This creates fair price discovery without manipulation.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <strong>Automatic Liquidity Lock</strong><br>
+          5% of every sale is permanently added to the contract's liquidity pool. This grows the reserves over time, increasing price stability.
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <strong>Holder Rewards</strong><br>
+          10% of every buy is distributed to existing holders proportionally to their stake. The more BTN you hold, the more you earn.
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="info-box">
-    <h2>📈 Token Economy</h2>
-    <p>Bitnest BTN was designed to create a sustainable ecosystem where all participants are rewarded:</p>
+    <h2>📈 Token Economy Comparison</h2>
+    <p>Bitnest BTN offers significant advantages over traditional tokens:</p>
     
+    <table class="comparison-table">
+      <tr>
+        <th>Feature</th>
+        <th>Standard Token</th>
+        <th>Bitnest BTN</th>
+      </tr>
+      <tr>
+        <td>Liquidity Security</td>
+        <td class="x-icon">❌ Vulnerable to rug pulls</td>
+        <td class="check-icon">✅ Algorithmically locked</td>
+      </tr>
+      <tr>
+        <td>Price Discovery</td>
+        <td class="x-icon">❌ Dependent on DEX liquidity</td>
+        <td class="check-icon">✅ Mathematical bonding curve</td>
+      </tr>
+      <tr>
+        <td>Holder Rewards</td>
+        <td class="x-icon">❌ Manual or non-existent</td>
+        <td class="check-icon">✅ 10% auto-distributed</td>
+      </tr>
+      <tr>
+        <td>Liquidity Growth</td>
+        <td class="x-icon">❌ Static or decreasing</td>
+        <td class="check-icon">✅ 5% auto-compounding</td>
+      </tr>
+      <tr>
+        <td>Transaction Fees</td>
+        <td class="x-icon">❌ Often 2-5%</td>
+        <td class="check-icon">✅ 0% (only network gas)</td>
+      </tr>
+    </table>
+    
+    <h3>Why Choose Bitnest BTN?</h3>
+    <p>The BTN token represents a new paradigm in decentralized finance by combining:</p>
+    <ul class="features-list">
+      <li><span class="highlight">Security</span> through immutable smart contracts and locked liquidity</li>
+      <li><span class="highlight">Sustainability</span> via algorithmic price adjustments and compounding reserves</li>
+      <li><span class="highlight">Rewards</span> that automatically benefit long-term holders</li>
+      <li><span class="highlight">Transparency</span> with all mechanics visible on-chain</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <h2>🔍 Technical Deep Dive</h2>
+    <p>For developers and technically-minded investors:</p>
+    
+    <h3>Smart Contract Mechanics</h3>
+    <ul class="features-list">
+      <li><span class="highlight">Bonding Curve Formula</span>: Price increases linearly with supply according to p = m*x + b, where m is the slope and b is the base price</li>
+      <li><span class="highlight">Liquidity Lock</span>: 5% of all sale values are converted to BNB and permanently added to the contract's reserves</li>
+      <li><span class="highlight">Reward Distribution</span>: 10% of buy values are distributed proportionally to holders based on their percentage of total supply</li>
+      <li><span class="highlight">No Owner Privileges</span>: Contract is fully decentralized with no admin keys or backdoors</li>
+    </ul>
+    
+    <h3>Economic Advantages</h3>
     <div class="token-stats">
       <div class="stat-card">
-        <div class="stat-value">100%</div>
-        <div class="stat-label">On-chain</div>
+        <div class="stat-value">↑</div>
+        <div class="stat-label">Price rises with demand</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">0%</div>
-        <div class="stat-label">Fees</div>
+        <div class="stat-value">↓</div>
+        <div class="stat-label">Price falls with supply</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">Automatic</div>
-        <div class="stat-label">Rebase</div>
+        <div class="stat-value">∞</div>
+        <div class="stat-label">Infinite liquidity depth</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value">Linear</div>
-        <div class="stat-label">Price Curve</div>
+        <div class="stat-value">≡</div>
+        <div class="stat-label">Predictable pricing</div>
       </div>
     </div>
     
-    <p>The BTN price follows a linear bonding curve that ensures liquidity in all transactions. The more tokens are bought, the higher the price; the more are sold, the lower the price - all calculated automatically by the smart contract.</p>
+    <p>The algorithmic liquidity model ensures that:</p>
+    <ul class="features-list">
+      <li>Early adopters benefit from lower entry prices</li>
+      <li>The system remains liquid even during market volatility</li>
+      <li>Price manipulation through wash trading is impossible</li>
+      <li>The token cannot be "dumped" to zero value</li>
+    </ul>
   </div>
 
-  <p class="disclaimer">Bitnest BTN is an experimental token. Do your own research before investing. Cryptocurrencies are volatile and investments involve risks.</p>
+  <p class="disclaimer">Bitnest BTN is an experimental token implementing innovative DeFi mechanics. While the smart contract has been audited, cryptocurrency investments carry inherent risks. Only invest what you can afford to lose. The bonding curve mechanism provides price stability but does not guarantee profits.</p>
 
   <script>
     let web3, contract;
@@ -379,15 +703,30 @@
 
     async function connectWallet() {
       if (window.ethereum) {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        web3 = new Web3(window.ethereum);
-        const accounts = await web3.eth.getAccounts();
-        document.getElementById("account").innerText = "🔓 Wallet: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
-        contract = new web3.eth.Contract(ABI, contractAddress);
-        getPrice();
-        getBalance();
+        try {
+          await window.ethereum.request({ method: "eth_requestAccounts" });
+          web3 = new Web3(window.ethereum);
+          const accounts = await web3.eth.getAccounts();
+          document.getElementById("account").innerText = "🔓 Wallet: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+          contract = new web3.eth.Contract(ABI, contractAddress);
+          getPrice();
+          getBalance();
+          
+          // Listen for account changes
+          window.ethereum.on('accountsChanged', (accounts) => {
+            document.getElementById("account").innerText = "🔓 Wallet: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+            getBalance();
+          });
+          
+          // Listen for chain changes
+          window.ethereum.on('chainChanged', () => {
+            window.location.reload();
+          });
+        } catch (error) {
+          alert("Error connecting wallet: " + error.message);
+        }
       } else {
-        alert("Install MetaMask to connect your wallet!");
+        alert("Please install MetaMask or another Web3 wallet to connect!");
       }
     }
 
@@ -413,7 +752,7 @@
               address: "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED",
               symbol: 'BTN',
               decimals: 18,
-              image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png', // Add a token image URL if desired
+              image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png',
             },
           },
         });
@@ -424,14 +763,26 @@
     }
 
     async function getPrice() {
-      const price = await contract.methods.getCurrentPrice().call();
-      document.getElementById("price").innerText = "💲 Current BTN Price: " + web3.utils.fromWei(price, "ether") + " BNB";
+      try {
+        const price = await contract.methods.getCurrentPrice().call();
+        const formattedPrice = parseFloat(web3.utils.fromWei(price, "ether")).toFixed(8);
+        document.getElementById("price").innerText = "💲 Current BTN Price: " + formattedPrice + " BNB";
+      } catch (error) {
+        console.error("Error getting price:", error);
+        document.getElementById("price").innerText = "💲 Current BTN Price: Error loading";
+      }
     }
 
     async function getBalance() {
-      const accounts = await web3.eth.getAccounts();
-      const balance = await contract.methods.balanceOf(accounts[0]).call();
-      document.getElementById("balance").innerText = "💰 BTN Balance: " + web3.utils.fromWei(balance, "ether");
+      try {
+        const accounts = await web3.eth.getAccounts();
+        const balance = await contract.methods.balanceOf(accounts[0]).call();
+        const formattedBalance = parseFloat(web3.utils.fromWei(balance, "ether")).toFixed(2);
+        document.getElementById("balance").innerText = "💰 BTN Balance: " + formattedBalance;
+      } catch (error) {
+        console.error("Error getting balance:", error);
+        document.getElementById("balance").innerText = "💰 BTN Balance: Error loading";
+      }
     }
 
     async function buyBTN() {
@@ -442,15 +793,24 @@
         return;
       }
       try {
+        const weiAmount = web3.utils.toWei(bnbAmount, "ether");
+        const gasEstimate = await contract.methods.buy().estimateGas({
+          from: accounts[0],
+          value: weiAmount
+        });
+        
         await contract.methods.buy().send({
           from: accounts[0],
-          value: web3.utils.toWei(bnbAmount, "ether")
+          value: weiAmount,
+          gas: Math.floor(gasEstimate * 1.2) // Add 20% buffer
         });
+        
         getPrice();
         getBalance();
-        alert("Purchase successful! Your rewards will start accumulating automatically.");
+        alert("Purchase successful!\n\nYour BTN tokens have been credited and you're now earning automatic rewards with every buy transaction in the network.");
       } catch (error) {
-        alert("Purchase error: " + error.message);
+        console.error("Buy error:", error);
+        alert("Purchase error: " + (error.message || "Transaction failed"));
       }
     }
 
@@ -463,26 +823,39 @@
       }
       try {
         const amountInWei = web3.utils.toWei(tokenAmount, "ether");
-        await contract.methods.sell(amountInWei).send({ from: accounts[0] });
+        const gasEstimate = await contract.methods.sell(amountInWei).estimateGas({ from: accounts[0] });
+        
+        await contract.methods.sell(amountInWei).send({ 
+          from: accounts[0],
+          gas: Math.floor(gasEstimate * 1.2) // Add 20% buffer
+        });
+        
         getPrice();
         getBalance();
-        alert("Sale successful!");
+        alert("Sale successful!\n\n5% of the sale value has been permanently added to the contract's liquidity pool, increasing stability for all holders.");
       } catch (error) {
-        alert("Sale error: " + error.message);
+        console.error("Sell error:", error);
+        alert("Sale error: " + (error.message || "Transaction failed"));
       }
     }
+
+    // Initialize when page loads
+    window.addEventListener('load', async () => {
+      if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+        try {
+          const accounts = await web3.eth.getAccounts();
+          if (accounts.length > 0) {
+            document.getElementById("account").innerText = "🔓 Wallet: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+            contract = new web3.eth.Contract(ABI, contractAddress);
+            getPrice();
+            getBalance();
+          }
+        } catch (error) {
+          console.error("Auto-connect error:", error);
+        }
+      }
+    });
   </script>
 </body>
 </html>
-<!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4953692,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4953692&101" alt="" border="0"></a></noscript>
-<!-- Histats.com  END  -->

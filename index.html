@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
 <meta content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" name="google-site-verification"/>
@@ -9,434 +8,329 @@
 <link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVgY8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMsMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" rel="icon" type="image/x-icon"/>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+:root {
+    --bg: #0d0d2b;
+    --card: #1b1b3a;
+    --primary: #4fc3f7;
+    --accent: #f50057;
+    --text-light: #ffffff;
+    --text-muted: #a0aec0;
+    --border: rgba(255, 255, 255, 0.1);
+}
 
-        :root {
-            --primary-color: #6a0dad; /* Roxo Profundo */
-            --secondary-color: #ffd700; /* Ouro */
-            --accent-color-1: #00bcd4; /* Ciano */
-            --accent-color-2: #ff4081; /* Rosa Vibrante */
-            --dark-bg: #1a1a2e; /* Azul-Roxo Escuro para contraste */
-            --light-bg: #e0f2f7; /* Azul-Cinza Claro */
-            --text-color-light: #f0f0f0;
-            --text-color-dark: #333;
-            --card-bg: #2e2e4a; /* Um pouco mais claro para cards */
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, var(--dark-bg), #2c003e); /* Gradiente escuro */
-            color: var(--text-color-light);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            overflow-x: hidden; /* Previne scroll horizontal de animações */
-        }
-
-        /* --- Animações e Efeitos Globais --- */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at top left, var(--accent-color-1) 0%, transparent 20%),
-                        radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 20%);
-            opacity: 0.1;
-            pointer-events: none;
-            z-index: -1;
-            animation: backgroundShift 20s infinite alternate;
-        }
-
-        @keyframes backgroundShift {
-            0% { transform: scale(1); opacity: 0.1; }
-            50% { transform: scale(1.05); opacity: 0.15; }
-            100% { transform: scale(1); opacity: 0.1; }
-        }
-
-        .section, header {
-            position: relative;
-            z-index: 1; /* Garante que o conteúdo fique acima dos efeitos de fundo */
-        }
-
-        /* --- Cabeçalho --- */
-        header {
-            background: linear-gradient(45deg, var(--primary-color), #8a2be2); /* Roxo mais vibrante */
-            color: var(--text-color-light);
-            text-align: center;
-            padding: 4em 2em;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-            animation: headerEntrance 1s ease-out;
-        }
-
-        @keyframes headerEntrance {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(45deg);
-            animation: sparkle 15s infinite linear;
-        }
-
-        @keyframes sparkle {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 3.5em;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            letter-spacing: 2px;
-            animation: textGlow 2s infinite alternate;
-        }
-
-        @keyframes textGlow {
-            from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), 0 0 5px var(--secondary-color); }
-            to { text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px var(--secondary-color); }
-        }
-
-        header p {
-            font-size: 1.4em;
-            margin-top: 10px;
-            color: var(--light-bg);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        /* --- Seções --- */
-        .section {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        }
-
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-        }
-
-        .section h2 {
-            color: var(--secondary-color);
-            border-bottom: 3px solid var(--accent-color-1);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-        }
-
-        /* --- Botões --- */
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
-            margin: 10px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            font-size: 1em;
-            border: none; /* Remove a borda padrão do botão */
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-buy {
-            background-color: var(--accent-color-1);
-            color: var(--dark-bg);
-        }
-        .btn-buy:hover {
-            background-color: #00e5ff;
-        }
-
-        .btn-sell {
-            background-color: var(--accent-color-2);
-            color: var(--text-color-light);
-        }
-        .btn-sell:hover {
-            background-color: #ff6091;
-        }
-
-        .btn-connect {
-            background-color: var(--primary-color);
-            color: var(--text-color-light);
-        }
-        .btn-connect:hover {
-            background-color: #7d26c9;
-        }
-
-        /* --- Estatísticas / Passos / Itens de Economia --- */
-        .stats, .steps, .economy {
-            display: flex;
-            justify-content: center; /* Centraliza os itens para melhor fluxo */
-            flex-wrap: wrap;
-            gap: 20px; /* Espaçamento entre os itens */
-            margin-top: 20px;
-        }
-
-        .stat, .step, .economy-item {
-            background-color: var(--dark-bg); /* Fundo escuro para os itens */
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            flex: 1;
-            min-width: 220px; /* Largura mínima para evitar quebras estranhas */
-            max-width: 28%; /* Para 3 itens por linha em telas maiores */
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .stat:hover, .step:hover, .economy-item:hover {
-            transform: translateY(-8px) scale(1.02);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
-            background-color: #3f3f6e; /* Levemente mais claro no hover */
-        }
-
-        .stat h3, .step h3 {
-            color: var(--secondary-color);
-            font-size: 2.2em;
-            margin-bottom: 5px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        .step h3 {
-            font-size: 3em; /* Tamanho maior para os números dos passos */
-            color: var(--accent-color-1);
-        }
-
-        .step h4 {
-            color: var(--text-color-light);
-            margin-top: 10px;
-            font-size: 1.3em;
-        }
-
-        .economy-item {
-            background: linear-gradient(45deg, #4b0082, #8a2be2); /* Gradiente para itens de economia */
-            color: var(--text-color-light);
-            font-weight: bold;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        /* --- Tabela --- */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-            border-radius: 10px;
-            overflow: hidden; /* Garante que as bordas arredondadas funcionem */
-        }
-        table th, table td {
-            padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: left;
-        }
-        table th {
-            background-color: var(--primary-color);
-            color: var(--text-color-light);
-            font-size: 1.1em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        table td {
-            background-color: var(--card-bg);
-            color: var(--text-color-light);
-        }
-        table tr:nth-child(even) td {
-            background-color: #383858; /* Um tom ligeiramente diferente para linhas pares */
-        }
-
-        /* --- Listas --- */
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-        ul li {
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 10px;
-            padding: 12px 15px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.2s ease;
-        }
-        ul li:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        ul li::before {
-            content: '✨'; /* Ícone de brilho */
-            margin-right: 10px;
-            color: var(--secondary-color);
-        }
-
-        /* --- Inputs --- */
-        input {
-            width: calc(100% - 22px); /* Ajusta para padding e borda */
-            padding: 12px;
-            margin: 15px 0;
-            border-radius: 8px;
-            border: 2px solid var(--accent-color-1);
-            background-color: var(--dark-bg);
-            color: var(--text-color-light);
-            font-size: 1.1em;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        input:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-        }
-
-        /* --- Rodapé --- */
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: linear-gradient(90deg, #1a1a2e, #2c003e);
-            color: var(--text-color-light);
-            margin-top: 40px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9em;
-        }
-
-        /* --- Responsividade --- */
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5em;
-            }
-            header p {
-                font-size: 1.1em;
-            }
-            .container {
-                padding: 0 15px;
-            }
-            .stat, .step, .economy-item {
-                flex-basis: 45%; /* Duas colunas em telas menores */
-                max-width: 48%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .btn {
-                display: block; /* Botões em bloco para telas muito pequenas */
-                width: calc(100% - 20px);
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .stat, .step, .economy-item {
-                flex-basis: 95%; /* Uma coluna em telas muito pequenas */
-                max-width: 95%;
-            }
-        }
-
-        /* --- Animações para Conteúdo --- */
-        .section p, .section ul, .section table {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-    </style>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/><style>
 body {
-    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-    color: #f1f1f1;
-    font-family: 'Orbitron', sans-serif;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text-light);
     margin: 0;
     padding: 0;
+    overflow-x: hidden; /* Adicionado para evitar scroll horizontal por elementos de animação */
 }
-header, footer {
-    background-color: rgba(0, 0, 0, 0.6);
-    padding: 1em;
+
+header {
+    background: linear-gradient(45deg, #151542, #3f51b5);
+    padding: 3rem 2rem;
     text-align: center;
-    border-bottom: 2px solid #00ffe7;
-}
-h1, h2, h3 {
-    color: #00ffe7;
-    text-shadow: 0 0 10px #00ffe7;
-}
-button, input[type="submit"] {
-    background: linear-gradient(90deg, #ff416c, #ff4b2b);
-    border: none;
     color: white;
-    padding: 0.75em 1.5em;
-    text-transform: uppercase;
-    font-weight: bold;
-    cursor: pointer;
+    position: relative;
+    overflow: hidden; /* Garante que as partículas não saiam da área do cabeçalho */
+}
+
+/* Efeitos de fundo para o cabeçalho */
+header::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
+    animation: pulse 15s infinite linear;
+    z-index: 0;
+}
+
+header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234fc3f7' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    opacity: 0.3;
+    z-index: 0;
+}
+
+@keyframes pulse {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.header-content {
+    position: relative;
+    z-index: 1; /* Garante que o conteúdo do cabeçalho fique acima dos efeitos */
+}
+
+header h1 {
+    font-size: 3rem;
+    margin: 0;
+    text-shadow: 0 0 10px rgba(79, 195, 247, 0.5); /* Sombra para o texto */
+    animation: glow 2s ease-in-out infinite alternate; /* Animação de brilho para o título */
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px rgba(79, 195, 247, 0.5); }
+    to { text-shadow: 0 0 15px rgba(79, 195, 247, 0.8), 0 0 20px rgba(79, 195, 247, 0.6); }
+}
+
+header p {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    color: var(--text-muted);
+}
+
+header .btn {
+    margin-top: 2rem;
+    background: var(--primary);
+    color: #000;
+    padding: 0.75rem 1.5rem;
     border-radius: 8px;
-    box-shadow: 0 0 10px #ff416c;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
 }
-button:hover, input[type="submit"]:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px #ff416c;
-}
-input, select, textarea {
-    border: none;
-    padding: 0.6em;
-    border-radius: 6px;
+
+header .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
     width: 100%;
-    margin: 0.5em 0;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: 0.5s;
+    z-index: -1;
 }
+
+header .btn:hover::before {
+    left: 100%;
+}
+
+header .btn:hover {
+    background: #81d4fa;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 195, 247, 0.4);
+}
+
 .container {
-    padding: 2em;
-    max-width: 1000px;
+    max-width: 1100px;
     margin: auto;
+    padding: 2rem;
 }
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 2em;
-    margin: 1em 0;
-    border-radius: 15px;
-    box-shadow: 0 0 15px rgba(0, 255, 231, 0.2);
-    transition: transform 0.3s ease;
+
+.section {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.1);
 }
-.card:hover {
+
+.section h2 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.section h3 {
+    color: var(--accent);
+    margin-top: 2rem;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: #111132;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.btn:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
+    }
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
+    }
+}
+
+.btn:hover {
+    background: #ff4081;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
+}
+
+.stats, .steps, .economy {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.stat, .step, .economy-item {
+    background: #111132;
+    padding: 1rem;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255,255,255,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat:hover, .step:hover, .economy-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 25px rgba(0, 255, 231, 0.5);
+    box-shadow: 0 5px 15px rgba(79, 195, 247, 0.2);
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    color: white;
+}
+
+table th, table td {
+    padding: 1rem;
+    border: 1px solid var(--border);
+}
+
+table th {
+    background: var(--primary);
+    color: #000;
+}
+
+ul {
+    padding-left: 1rem;
+}
+
 footer {
-    border-top: 2px solid #00ffe7;
-    font-size: 0.9em;
+    background: #151542;
+    color: #ccc;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.85rem;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
 }
-</style></head>
+
+footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+footer::after {
+    content: "";
+    position: absolute;
+    bottom: -50%;
+    right: -50%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
+    z-index: 0;
+}
+
+.footer-content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Efeito de partículas no cabeçalho */
+.particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.particle {
+    position: absolute;
+    background: rgba(79, 195, 247, 0.5);
+    border-radius: 50%;
+    animation: float linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0) translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-1000px) translateX(200px);
+        opacity: 0;
+    }
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+</head>
 <body>
 <header>
-<h1>Bitnest BTN</h1>
-<p>O Futuro dos Tokens de Liquidez Algorítmica</p>
-<a class="btn btn-buy" href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank">Contrato no BscScan</a>
+    <div class="particles" id="particles-js"></div>
+    <div class="header-content">
+        <h1>Bitnest BTN</h1>
+        <p>O Futuro dos Tokens de Liquidez Algorítmica</p>
+        <a class="btn btn-buy" href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" rel="noopener" target="_blank">Contrato no BscScan</a>
+    </div>
 </header>
 <div class="container">
 <div class="section">
@@ -580,7 +474,9 @@ footer {
 </ul>
 </div>
 <footer>
-<p>O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
+    <div class="footer-content">
+        <p>O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
+    </div>
 </footer>
 </div>
 <script>
@@ -695,6 +591,38 @@ footer {
                 "type": "function"
             }
         ];
+
+        // Função para criar partículas
+        function createParticles() {
+            const container = document.getElementById('particles-js');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Tamanho aleatório entre 2px e 5px
+                const size = Math.random() * 3 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Posição inicial aleatória
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Opacidade aleatória
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // Duração da animação aleatória
+                const duration = Math.random() * 20 + 10;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // Atraso inicial aleatório
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                container.appendChild(particle);
+            }
+        }
 
         async function connectWallet() {
             if (window.ethereum) {
@@ -818,6 +746,8 @@ footer {
         }
 
         window.addEventListener('load', async () => {
+            createParticles(); /* Chamada para criar as partículas */
+            
             if (window.ethereum) {
                 web3 = new Web3(window.ethereum);
                 contract = new web3.eth.Contract(ABI, contractAddress);

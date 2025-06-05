@@ -1,13 +1,14 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-    <meta name="google-site-verification" content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bitnest BTN</title>
-    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVgY8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMsMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" type="image/x-icon">
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
-    <style>
+<meta content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" name="google-site-verification"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bitnest BTN</title>
+<link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVgY8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMsMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" rel="icon" type="image/x-icon"/>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+<style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         :root {
@@ -366,170 +367,223 @@
         }
 
     </style>
-</head>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/><style>
+body {
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    color: #f1f1f1;
+    font-family: 'Orbitron', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+header, footer {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 1em;
+    text-align: center;
+    border-bottom: 2px solid #00ffe7;
+}
+h1, h2, h3 {
+    color: #00ffe7;
+    text-shadow: 0 0 10px #00ffe7;
+}
+button, input[type="submit"] {
+    background: linear-gradient(90deg, #ff416c, #ff4b2b);
+    border: none;
+    color: white;
+    padding: 0.75em 1.5em;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #ff416c;
+    transition: all 0.3s ease;
+}
+button:hover, input[type="submit"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #ff416c;
+}
+input, select, textarea {
+    border: none;
+    padding: 0.6em;
+    border-radius: 6px;
+    width: 100%;
+    margin: 0.5em 0;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+.container {
+    padding: 2em;
+    max-width: 1000px;
+    margin: auto;
+}
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 2em;
+    margin: 1em 0;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 255, 231, 0.2);
+    transition: transform 0.3s ease;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(0, 255, 231, 0.5);
+}
+footer {
+    border-top: 2px solid #00ffe7;
+    font-size: 0.9em;
+}
+</style></head>
 <body>
-    <header>
-        <h1>Bitnest BTN</h1>
-        <p>O Futuro dos Tokens de Liquidez Algorítmica</p>
-        <a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank" class="btn btn-buy">Contrato no BscScan</a>
-    </header>
-
-    <div class="container">
-        <div class="section">
-            <h2>Interface de Compra/Venda</h2>
-            <p id="account">🔒 Carteira: não conectada</p>
-            <p id="price">💲 Preço Atual do BTN: ...</p>
-            <p id="balance">💰 Saldo de BTN: ...</p>
-            <div class="stats">
-                <div class="stat">
-                    <h3>1B</h3>
-                    <p>Oferta Total</p>
-                </div>
-                <div class="stat">
-                    <h3>10%</h3>
-                    <p>Recompensas</p>
-                </div>
-                <div class="stat">
-                    <h3>10%</h3>
-                    <p>Liquidez</p>
-                </div>
-                <div class="stat">
-                    <h3>0%</h3>
-                    <p>Taxas</p>
-                </div>
-            </div>
-            <h3>Comprar BTN</h3>
-            <input type="number" id="bnbAmount" placeholder="Quantia em BNB">
-            <a href="javascript:buyBTN()" class="btn btn-buy">🛒 Comprar BTN</a>
-            
-            <h3>Vender BTN</h3>
-            <input type="number" id="tokenAmount" placeholder="Quantia de BTN">
-            <a href="javascript:sellBTN()" class="btn btn-sell">💱 Vender BTN</a>
-            
-            <a href="javascript:connectWallet()" class="btn btn-connect">🔌 Conectar Carteira</a>
-            <a href="javascript:addTokenToWallet()" class="btn btn-connect">➕ Adicionar BTN à Carteira</a>
-            <p><strong>Contrato BTN:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
-        </div>
-
-        <div class="section">
-            <h2>O que é Bitnest BTN?</h2>
-            <p>O Bitnest BTN é um token revolucionário que combina liquidez algorítmica com recompensas automáticas, criando um ecossistema sustentável inspirado nos mecanismos inovadores dos tokens Pump Fun, mas com recursos aprimorados de segurança e estabilidade.</p>
-            <p>🚀 10% de recompensas + 10% de liquidez bloqueada em cada transação!</p>
-        </div>
-
-        <div class="section">
-            <h2>Inovações Chave</h2>
-            <ul>
-                <li>Liquidez algorítmica integrada com uma curva de ligação linear que ajusta o preço automaticamente com base na oferta e demanda</li>
-                <li>10% de cada venda é permanentemente bloqueado no pool de liquidez do contrato, criando reservas sempre crescentes</li>
-                <li>10% de recompensas automáticas distribuídas proporcionalmente entre todos os detentores em cada transação de compra</li>
-                <li>Design à prova de rug pulls - a liquidez não pode ser removida por ninguém, incluindo desenvolvedores</li>
-                <li>Sem necessidade de DEX externa - as negociações ocorrem diretamente pelo contrato inteligente</li>
-                <li>Mecânica transparente e verificável na blockchain sem taxas ocultas</li>
-                <li>Estabilidade de preço por meio de uma curva de ligação matemática que previne volatilidade extrema</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>Como Funciona a Liquidez Algorítmica</h2>
-            <div class="steps">
-                <div class="step">
-                    <h3>1</h3>
-                    <h4>Curva de Ligação Linear</h4>
-                    <p>O preço do token segue uma fórmula matemática previsível: Preço = Preço Base + (k * Oferta). Isso cria uma descoberta de preço justa sem manipulação.</p>
-                </div>
-                <div class="step">
-                    <h3>2</h3>
-                    <h4>Bloqueio Automático de Liquidez</h4>
-                    <p>10% de cada venda é permanentemente adicionado ao pool de liquidez do contrato. Isso aumenta as reservas ao longo do tempo, melhorando a estabilidade de preço.</p>
-                </div>
-                <div class="step">
-                    <h3>3</h3>
-                    <h4>Recompensas aos Detentores</h4>
-                    <p>10% de cada compra é distribuído aos detentores existentes proporcionalmente à sua participação. Quanto mais BTN você possui, mais você ganha.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📈 Comparação da Economia do Token</h2>
-            <p>O Bitnest BTN oferece vantagens significativas sobre tokens tradicionais:</p>
-            <table>
-                <tr>
-                    <th>Característica</th>
-                    <th>Token Padrão</th>
-                    <th>Bitnest BTN</th>
-                </tr>
-                <tr>
-                    <td>Segurança de Liquidez</td>
-                    <td>❌ Vulnerável a rug pulls</td>
-                    <td>✅ Bloqueado algoritmicamente</td>
-                </tr>
-                <tr>
-                    <td>Descoberta de Preço</td>
-                    <td>❌ Dependente da liquidez DEX</td>
-                    <td>✅ Curva de ligação matemática</td>
-                </tr>
-                <tr>
-                    <td>Recompensas aos Detentores</td>
-                    <td>❌ Manuais ou inexistentes</td>
-                    <td>✅ 10% distribuído automaticamente</td>
-                </tr>
-                <tr>
-                    <td>Crescimento de Liquidez</td>
-                    <td>❌ Estático ou decrescente</td>
-                    <td>✅ 10% auto-composto</td>
-                </tr>
-                <tr>
-                    <td>Taxas de Transação</td>
-                    <td>❌ Geralmente 2-5%</td>
-                    <td>✅ 0% (apenas gás da rede)</td>
-                </tr>
-            </table>
-        </div>
-
-        <div class="section">
-            <h2>Por que Escolher o Bitnest BTN?</h2>
-            <p>O token BTN representa um novo paradigma em finanças descentralizadas ao combinar:</p>
-            <ul>
-                <li>Segurança por meio de contratos inteligentes imutáveis e liquidez bloqueada</li>
-                <li>Sustentabilidade via ajustes algorítmicos de preço e reservas compostas</li>
-                <li>Recompensas que beneficiam automaticamente os detentores de longo prazo</li>
-                <li>Transparência com todas as mecânicas visíveis na blockchain</li>
-            </ul>
-        </div>
-
-        <div class="section">
-            <h2>🔍 Análise Técnica</h2>
-            <h3>Mecânica do Contrato Inteligente</h3>
-            <ul>
-                <li>Fórmula da Curva de Ligação: O preço aumenta linearmente com a oferta segundo p = m*x + b, onde m é a inclinação e b é o preço base</li>
-                <li>Bloqueio de Liquidez: 10% de todos os valores de venda são convertidos em BNB e permanentemente adicionados às reservas do contrato</li>
-                <li>Distribuição de Recompensas: 10% dos valores de compra são distribuídos proporcionalmente aos detentores com base em sua porcentagem da oferta total</li>
-                <li>Sem Privilégios de Proprietário: O contrato é totalmente descentralizado, sem chaves de administrador ou backdoors</li>
-            </ul>
-            <h3>Vantagens Econômicas</h3>
-            <div class="economy">
-                <div class="economy-item">↑ Preço sobe com a demanda</div>
-                <div class="economy-item">↓ Preço cai com a oferta</div>
-                <div class="economy-item">∞ Profundidade de liquidez infinita</div>
-                <div class="economy-item">≡ Preços previsíveis</div>
-            </div>
-            <p>O modelo de liquidez algorítmica garante que:</p>
-            <ul>
-                <li>Adotantes iniciais se beneficiam de preços de entrada mais baixos</li>
-                <li>O sistema permanece líquido mesmo durante volatilidade de mercado</li>
-                <li>Manipulação de preço por meio de wash trading é impossível</li>
-                <li>O token não pode ser "despejado" a valor zero</li>
-            </ul>
-        </div>
-
-        <footer>
-            <p>O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
-        </footer>
-    </div>
-
-    <script>
+<header>
+<h1>Bitnest BTN</h1>
+<p>O Futuro dos Tokens de Liquidez Algorítmica</p>
+<a class="btn btn-buy" href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank">Contrato no BscScan</a>
+</header>
+<div class="container">
+<div class="section">
+<h2>Interface de Compra/Venda</h2>
+<p id="account">🔒 Carteira: não conectada</p>
+<p id="price">💲 Preço Atual do BTN: ...</p>
+<p id="balance">💰 Saldo de BTN: ...</p>
+<div class="stats">
+<div class="stat">
+<h3>1B</h3>
+<p>Oferta Total</p>
+</div>
+<div class="stat">
+<h3>10%</h3>
+<p>Recompensas</p>
+</div>
+<div class="stat">
+<h3>10%</h3>
+<p>Liquidez</p>
+</div>
+<div class="stat">
+<h3>0%</h3>
+<p>Taxas</p>
+</div>
+</div>
+<h3>Comprar BTN</h3>
+<input id="bnbAmount" placeholder="Quantia em BNB" type="number"/>
+<a class="btn btn-buy" href="javascript:buyBTN()">🛒 Comprar BTN</a>
+<h3>Vender BTN</h3>
+<input id="tokenAmount" placeholder="Quantia de BTN" type="number"/>
+<a class="btn btn-sell" href="javascript:sellBTN()">💱 Vender BTN</a>
+<a class="btn btn-connect" href="javascript:connectWallet()">🔌 Conectar Carteira</a>
+<a class="btn btn-connect" href="javascript:addTokenToWallet()">➕ Adicionar BTN à Carteira</a>
+<p><strong>Contrato BTN:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
+</div>
+<div class="section">
+<h2>O que é Bitnest BTN?</h2>
+<p>O Bitnest BTN é um token revolucionário que combina liquidez algorítmica com recompensas automáticas, criando um ecossistema sustentável inspirado nos mecanismos inovadores dos tokens Pump Fun, mas com recursos aprimorados de segurança e estabilidade.</p>
+<p>🚀 10% de recompensas + 10% de liquidez bloqueada em cada transação!</p>
+</div>
+<div class="section">
+<h2>Inovações Chave</h2>
+<ul>
+<li>Liquidez algorítmica integrada com uma curva de ligação linear que ajusta o preço automaticamente com base na oferta e demanda</li>
+<li>10% de cada venda é permanentemente bloqueado no pool de liquidez do contrato, criando reservas sempre crescentes</li>
+<li>10% de recompensas automáticas distribuídas proporcionalmente entre todos os detentores em cada transação de compra</li>
+<li>Design à prova de rug pulls - a liquidez não pode ser removida por ninguém, incluindo desenvolvedores</li>
+<li>Sem necessidade de DEX externa - as negociações ocorrem diretamente pelo contrato inteligente</li>
+<li>Mecânica transparente e verificável na blockchain sem taxas ocultas</li>
+<li>Estabilidade de preço por meio de uma curva de ligação matemática que previne volatilidade extrema</li>
+</ul>
+</div>
+<div class="section">
+<h2>Como Funciona a Liquidez Algorítmica</h2>
+<div class="steps">
+<div class="step">
+<h3>1</h3>
+<h4>Curva de Ligação Linear</h4>
+<p>O preço do token segue uma fórmula matemática previsível: Preço = Preço Base + (k * Oferta). Isso cria uma descoberta de preço justa sem manipulação.</p>
+</div>
+<div class="step">
+<h3>2</h3>
+<h4>Bloqueio Automático de Liquidez</h4>
+<p>10% de cada venda é permanentemente adicionado ao pool de liquidez do contrato. Isso aumenta as reservas ao longo do tempo, melhorando a estabilidade de preço.</p>
+</div>
+<div class="step">
+<h3>3</h3>
+<h4>Recompensas aos Detentores</h4>
+<p>10% de cada compra é distribuído aos detentores existentes proporcionalmente à sua participação. Quanto mais BTN você possui, mais você ganha.</p>
+</div>
+</div>
+</div>
+<div class="section">
+<h2>📈 Comparação da Economia do Token</h2>
+<p>O Bitnest BTN oferece vantagens significativas sobre tokens tradicionais:</p>
+<table>
+<tr>
+<th>Característica</th>
+<th>Token Padrão</th>
+<th>Bitnest BTN</th>
+</tr>
+<tr>
+<td>Segurança de Liquidez</td>
+<td>❌ Vulnerável a rug pulls</td>
+<td>✅ Bloqueado algoritmicamente</td>
+</tr>
+<tr>
+<td>Descoberta de Preço</td>
+<td>❌ Dependente da liquidez DEX</td>
+<td>✅ Curva de ligação matemática</td>
+</tr>
+<tr>
+<td>Recompensas aos Detentores</td>
+<td>❌ Manuais ou inexistentes</td>
+<td>✅ 10% distribuído automaticamente</td>
+</tr>
+<tr>
+<td>Crescimento de Liquidez</td>
+<td>❌ Estático ou decrescente</td>
+<td>✅ 10% auto-composto</td>
+</tr>
+<tr>
+<td>Taxas de Transação</td>
+<td>❌ Geralmente 2-5%</td>
+<td>✅ 0% (apenas gás da rede)</td>
+</tr>
+</table>
+</div>
+<div class="section">
+<h2>Por que Escolher o Bitnest BTN?</h2>
+<p>O token BTN representa um novo paradigma em finanças descentralizadas ao combinar:</p>
+<ul>
+<li>Segurança por meio de contratos inteligentes imutáveis e liquidez bloqueada</li>
+<li>Sustentabilidade via ajustes algorítmicos de preço e reservas compostas</li>
+<li>Recompensas que beneficiam automaticamente os detentores de longo prazo</li>
+<li>Transparência com todas as mecânicas visíveis na blockchain</li>
+</ul>
+</div>
+<div class="section">
+<h2>🔍 Análise Técnica</h2>
+<h3>Mecânica do Contrato Inteligente</h3>
+<ul>
+<li>Fórmula da Curva de Ligação: O preço aumenta linearmente com a oferta segundo p = m*x + b, onde m é a inclinação e b é o preço base</li>
+<li>Bloqueio de Liquidez: 10% de todos os valores de venda são convertidos em BNB e permanentemente adicionados às reservas do contrato</li>
+<li>Distribuição de Recompensas: 10% dos valores de compra são distribuídos proporcionalmente aos detentores com base em sua porcentagem da oferta total</li>
+<li>Sem Privilégios de Proprietário: O contrato é totalmente descentralizado, sem chaves de administrador ou backdoors</li>
+</ul>
+<h3>Vantagens Econômicas</h3>
+<div class="economy">
+<div class="economy-item">↑ Preço sobe com a demanda</div>
+<div class="economy-item">↓ Preço cai com a oferta</div>
+<div class="economy-item">∞ Profundidade de liquidez infinita</div>
+<div class="economy-item">≡ Preços previsíveis</div>
+</div>
+<p>O modelo de liquidez algorítmica garante que:</p>
+<ul>
+<li>Adotantes iniciais se beneficiam de preços de entrada mais baixos</li>
+<li>O sistema permanece líquido mesmo durante volatilidade de mercado</li>
+<li>Manipulação de preço por meio de wash trading é impossível</li>
+<li>O token não pode ser "despejado" a valor zero</li>
+</ul>
+</div>
+<footer>
+<p>O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
+</footer>
+</div>
+<script>
         let web3, contract;
         const contractAddress = "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED";
         const ABI = [
@@ -797,7 +851,7 @@
 
     </script>
 </body>
-    <script type="text/javascript">var _Hasync= _Hasync|| [];
+<script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,4953692,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
 _Hasync.push(['Histats.track_hits', '']);
@@ -806,5 +860,5 @@ var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async
 hs.src = ('//s10.histats.com/js15_as.js');
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
 })();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4953692&101" alt="" border="0"></a></noscript>
+<noscript><a href="/" target="_blank"><img alt="" border="0" src="//sstatic1.histats.com/0.gif?4953692&amp;101"/></a></noscript>
 </html>

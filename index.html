@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta name="google-site-verification" content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitnest BTN</title>
-      <!-- Add your favicon link here -->
-  <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" type="image/x-icon">
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -113,21 +112,31 @@
             color: white;
             margin-top: 20px;
         }
+        /* Adicionado estilos para os campos de input */
+        input {
+            width: calc(100% - 20px); /* Ajusta para padding */
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 1em;
+            box-sizing: border-box; /* Inclui padding na largura */
+        }
     </style>
 </head>
 <body>
     <header>
         <h1>Bitnest BTN</h1>
         <p>O Futuro dos Tokens de Liquidez Algorítmica</p>
-        <a href="https://pancakeswap.finance" class="btn btn-buy">Comprar Bitnest BTN no PancakeSwap</a>
+        <a href="https://pancakeswap.finance/swap?outputCurrency=0x98e30AC086ba850A81A24ABbdc46dE693f0719ED" target="_blank" class="btn btn-buy">Comprar Bitnest BTN no PancakeSwap</a>
     </header>
 
     <div class="container">
         <div class="section">
             <h2>Interface de Compra/Venda</h2>
-            <p>🔒 Carteira: não conectada</p>
-            <p>💲 Preço Atual do BTN: ...</p>
-            <p>💰 Saldo de BTN: ...</p>
+            <p id="account">🔒 Carteira: não conectada</p>
+            <p id="price">💲 Preço Atual do BTN: ...</p>
+            <p id="balance">💰 Saldo de BTN: ...</p>
             <div class="stats">
                 <div class="stat">
                     <h3>1B</h3>
@@ -146,14 +155,16 @@
                     <p>Taxas</p>
                 </div>
             </div>
-            <div>
-                <a href="javascript:buyBTN()" class="btn btn-buy">🛒 Comprar BTN</a>
-                <a href="javascript:sellBTN()" class="btn btn-sell">💱 Vender BTN</a>
-            </div>
-            <div>
-                <a href="javascript:connectWallet()" class="btn btn-connect">🔌 Conectar Carteira</a>
-                <a href="javascript:addBTNToWallet()" class="btn btn-connect">➕ Adicionar BTN à Carteira</a>
-            </div>
+            <h3>Comprar BTN</h3>
+            <input type="number" id="bnbAmount" placeholder="Quantia em BNB">
+            <a href="javascript:buyBTN()" class="btn btn-buy">🛒 Comprar BTN</a>
+            
+            <h3>Vender BTN</h3>
+            <input type="number" id="tokenAmount" placeholder="Quantia de BTN">
+            <a href="javascript:sellBTN()" class="btn btn-sell">💱 Vender BTN</a>
+            
+            <a href="javascript:connectWallet()" class="btn btn-connect">🔌 Conectar Carteira</a>
+            <a href="javascript:addTokenToWallet()" class="btn btn-connect">➕ Adicionar BTN à Carteira</a>
             <p><strong>Contrato BTN:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
         </div>
 
@@ -276,26 +287,285 @@
     </div>
 
     <script>
-        // Funções de interação com a carteira e transações
-        function connectWallet() {
-            // Lógica para conectar a carteira
-            alert("Conectar Carteira - Função a ser implementada");
+        let web3, contract;
+        // Endereço do contrato do Bitnest Token
+        const contractAddress = "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED";
+        // ABI (Application Binary Interface) do contrato, necessário para interagir com ele
+        const ABI = [
+            {
+                "inputs": [],
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "buyer",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "amountSpent",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "tokensBought",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Buy",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "seller",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "tokensSold",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "amountReturned",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "Sell",
+                "type": "event"
+            },
+            {
+                "inputs": [],
+                "name": "buy",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "amount",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "sell",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getCurrentPrice",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "account",
+                        "type": "address"
+                    }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ];
+
+        // Função para conectar a carteira (MetaMask)
+        async function connectWallet() {
+            if (window.ethereum) {
+                try {
+                    await window.ethereum.request({ method: "eth_requestAccounts" });
+                    web3 = new Web3(window.ethereum);
+                    const accounts = await web3.eth.getAccounts();
+                    document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    contract = new web3.eth.Contract(ABI, contractAddress);
+                    getPrice(); // Atualiza o preço após conectar
+                    getBalance(); // Atualiza o saldo após conectar
+                } catch (error) {
+                    alert("Erro ao conectar a carteira: " + error.message);
+                }
+            } else {
+                alert("Por favor, instale o MetaMask para conectar sua carteira!");
+            }
         }
 
-        function buyBTN() {
-            // Lógica para comprar BTN
-            alert("Comprar BTN - Função a ser implementada");
+        // Função para adicionar o token à carteira MetaMask
+        async function addTokenToWallet() {
+            if (!window.ethereum) {
+                alert("MetaMask não está instalado!");
+                return;
+            }
+
+            try {
+                // Verifica se a carteira está conectada, se não estiver, tenta conectar
+                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                if (accounts.length === 0) {
+                    await connectWallet();
+                }
+
+                // Adiciona o token à carteira
+                await window.ethereum.request({
+                    method: 'wallet_watchAsset',
+                    params: {
+                        type: 'ERC20',
+                        options: {
+                            address: "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED",
+                            symbol: 'BTN',
+                            decimals: 18,
+                            image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png', // URL da imagem do token
+                        },
+                    },
+                });
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao adicionar o token: " + error.message);
+            }
         }
 
-        function sellBTN() {
-            // Lógica para vender BTN
-            alert("Vender BTN - Função a ser implementada");
+        // Função para obter e exibir o preço atual do token
+        async function getPrice() {
+            if (!contract) return; // Garante que o contrato está inicializado
+            try {
+                const price = await contract.methods.getCurrentPrice().call();
+                document.getElementById("price").innerText = "💲 Preço Atual do BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
+            } catch (error) {
+                console.error("Erro ao obter o preço:", error);
+                document.getElementById("price").innerText = "💲 Preço Atual do BTN: Erro ao carregar";
+            }
         }
 
-        function addBTNToWallet() {
-            // Lógica para adicionar BTN à carteira
-            alert("Adicionar BTN à Carteira - Função a ser implementada");
+        // Função para obter e exibir o saldo de BTN do usuário
+        async function getBalance() {
+            if (!web3 || !contract) return; // Garante que web3 e contract estão inicializados
+            try {
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length === 0) {
+                    document.getElementById("balance").innerText = "💰 Saldo de BTN: Conecte sua carteira";
+                    return;
+                }
+                const balance = await contract.methods.balanceOf(accounts[0]).call();
+                document.getElementById("balance").innerText = "💰 Saldo de BTN: " + web3.utils.fromWei(balance, "ether") + " BTN";
+            } catch (error) {
+                console.error("Erro ao obter o saldo:", error);
+                document.getElementById("balance").innerText = "💰 Saldo de BTN: Erro ao carregar";
+            }
         }
+
+        // Função para comprar BTN
+        async function buyBTN() {
+            if (!web3 || !contract) {
+                alert("Por favor, conecte sua carteira primeiro.");
+                return;
+            }
+            const accounts = await web3.eth.getAccounts();
+            const bnbAmount = document.getElementById("bnbAmount").value;
+            if (!bnbAmount || bnbAmount <= 0) {
+                alert("Digite uma quantia válida em BNB.");
+                return;
+            }
+            try {
+                await contract.methods.buy().send({
+                    from: accounts[0],
+                    value: web3.utils.toWei(bnbAmount, "ether")
+                });
+                alert("Compra realizada com sucesso! Suas recompensas começarão a acumular automaticamente.");
+                getPrice(); // Atualiza o preço
+                getBalance(); // Atualiza o saldo
+            } catch (error) {
+                alert("Erro na compra: " + error.message);
+            }
+        }
+
+        // Função para vender BTN
+        async function sellBTN() {
+            if (!web3 || !contract) {
+                alert("Por favor, conecte sua carteira primeiro.");
+                return;
+            }
+            const accounts = await web3.eth.getAccounts();
+            const tokenAmount = document.getElementById("tokenAmount").value;
+            if (!tokenAmount || tokenAmount <= 0) {
+                alert("Digite uma quantia válida de BTN.");
+                return;
+            }
+            try {
+                const amountInWei = web3.utils.toWei(tokenAmount, "ether");
+                await contract.methods.sell(amountInWei).send({ from: accounts[0] });
+                alert("Venda realizada com sucesso!");
+                getPrice(); // Atualiza o preço
+                getBalance(); // Atualiza o saldo
+            } catch (error) {
+                alert("Erro na venda: " + error.message);
+            }
+        }
+
+        // Adiciona um listener para atualizar o preço e o saldo quando a página carregar
+        window.addEventListener('load', async () => {
+            if (window.ethereum) {
+                web3 = new Web3(window.ethereum);
+                contract = new web3.eth.Contract(ABI, contractAddress);
+                getPrice();
+                
+                // Tenta conectar automaticamente se já houver contas conectadas
+                const accounts = await web3.eth.getAccounts();
+                if (accounts.length > 0) {
+                    document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    getBalance();
+                }
+            } else {
+                document.getElementById("price").innerText = "💲 Preço Atual do BTN: Instale MetaMask para ver";
+                document.getElementById("balance").innerText = "💰 Saldo de BTN: Instale MetaMask para ver";
+            }
+        });
+
+        // Opcional: Adiciona listener para recarregar informações da carteira se a conta mudar no MetaMask
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length > 0) {
+                    document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    getBalance();
+                } else {
+                    document.getElementById("account").innerText = "🔒 Carteira: não conectada";
+                    document.getElementById("balance").innerText = "💰 Saldo de BTN: Conecte sua carteira";
+                }
+            });
+            window.ethereum.on('chainChanged', (chainId) => {
+                // Recarrega a página ou reconecta para garantir que a rede correta está sendo usada
+                window.location.reload(); 
+            });
+        }
+
     </script>
 </body>
 </html>

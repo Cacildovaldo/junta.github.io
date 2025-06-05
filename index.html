@@ -5,124 +5,366 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bitnest BTN</title>
-    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" type="image/x-icon">
+    <link rel="icon" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVgY8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMsMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #6a0dad; /* Roxo Profundo */
+            --secondary-color: #ffd700; /* Ouro */
+            --accent-color-1: #00bcd4; /* Ciano */
+            --accent-color-2: #ff4081; /* Rosa Vibrante */
+            --dark-bg: #1a1a2e; /* Azul-Roxo Escuro para contraste */
+            --light-bg: #e0f2f7; /* Azul-Cinza Claro */
+            --text-color-light: #f0f0f0;
+            --text-color-dark: #333;
+            --card-bg: #2e2e4a; /* Um pouco mais claro para cards */
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            color: #333;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg), #2c003e); /* Gradiente escuro */
+            color: var(--text-color-light);
             margin: 0;
             padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden; /* Previne scroll horizontal de animações */
         }
+
+        /* --- Animações e Efeitos Globais --- */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, var(--accent-color-1) 0%, transparent 20%),
+                        radial-gradient(circle at bottom right, var(--secondary-color) 0%, transparent 20%);
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+            animation: backgroundShift 20s infinite alternate;
+        }
+
+        @keyframes backgroundShift {
+            0% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.05); opacity: 0.15; }
+            100% { transform: scale(1); opacity: 0.1; }
+        }
+
+        .section, header {
+            position: relative;
+            z-index: 1; /* Garante que o conteúdo fique acima dos efeitos de fundo */
+        }
+
+        /* --- Cabeçalho --- */
         header {
-            background: linear-gradient(135deg, #4a90e2, #50c9c3);
-            color: white;
+            background: linear-gradient(45deg, var(--primary-color), #8a2be2); /* Roxo mais vibrante */
+            color: var(--text-color-light);
             text-align: center;
-            padding: 2em;
+            padding: 4em 2em;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            animation: headerEntrance 1s ease-out;
         }
+
+        @keyframes headerEntrance {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.05);
+            transform: rotate(45deg);
+            animation: sparkle 15s infinite linear;
+        }
+
+        @keyframes sparkle {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 3.5em;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            letter-spacing: 2px;
+            animation: textGlow 2s infinite alternate;
         }
+
+        @keyframes textGlow {
+            from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), 0 0 5px var(--secondary-color); }
+            to { text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5), 0 0 15px var(--secondary-color); }
+        }
+
         header p {
-            font-size: 1.2em;
+            font-size: 1.4em;
+            margin-top: 10px;
+            color: var(--light-bg);
         }
+
         .container {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
+
+        /* --- Seções --- */
         .section {
-            background-color: #ffffff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
+
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
         .section h2 {
-            color: #4a90e2;
-            border-bottom: 2px solid #50c9c3;
-            padding-bottom: 10px;
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--accent-color-1);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
+
+        /* --- Botões --- */
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 25px;
             margin: 10px;
-            border-radius: 5px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            font-size: 1em;
+            border: none; /* Remove a borda padrão do botão */
+            cursor: pointer;
         }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
         .btn-buy {
-            background-color: #50c9c3;
-            color: white;
+            background-color: var(--accent-color-1);
+            color: var(--dark-bg);
         }
         .btn-buy:hover {
-            background-color: #3a9c96;
+            background-color: #00e5ff;
         }
+
         .btn-sell {
-            background-color: #ff6b6b;
-            color: white;
+            background-color: var(--accent-color-2);
+            color: var(--text-color-light);
         }
         .btn-sell:hover {
-            background-color: #e55a5a;
+            background-color: #ff6091;
         }
+
         .btn-connect {
-            background-color: #4a90e2;
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--text-color-light);
         }
         .btn-connect:hover {
-            background-color: #357abd;
+            background-color: #7d26c9;
         }
+
+        /* --- Estatísticas / Passos / Itens de Economia --- */
         .stats, .steps, .economy {
             display: flex;
-            justify-content: space-around;
+            justify-content: center; /* Centraliza os itens para melhor fluxo */
             flex-wrap: wrap;
+            gap: 20px; /* Espaçamento entre os itens */
+            margin-top: 20px;
         }
+
         .stat, .step, .economy-item {
-            background-color: #e6f0fa;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 10px;
+            background-color: var(--dark-bg); /* Fundo escuro para os itens */
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
             flex: 1;
-            min-width: 200px;
+            min-width: 220px; /* Largura mínima para evitar quebras estranhas */
+            max-width: 28%; /* Para 3 itens por linha em telas maiores */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
+
+        .stat:hover, .step:hover, .economy-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+            background-color: #3f3f6e; /* Levemente mais claro no hover */
+        }
+
+        .stat h3, .step h3 {
+            color: var(--secondary-color);
+            font-size: 2.2em;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .step h3 {
+            font-size: 3em; /* Tamanho maior para os números dos passos */
+            color: var(--accent-color-1);
+        }
+
+        .step h4 {
+            color: var(--text-color-light);
+            margin-top: 10px;
+            font-size: 1.3em;
+        }
+
+        .economy-item {
+            background: linear-gradient(45deg, #4b0082, #8a2be2); /* Gradiente para itens de economia */
+            color: var(--text-color-light);
+            font-weight: bold;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* --- Tabela --- */
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 25px;
+            border-radius: 10px;
+            overflow: hidden; /* Garante que as bordas arredondadas funcionem */
         }
         table th, table td {
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: left;
         }
         table th {
-            background-color: #4a90e2;
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--text-color-light);
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         table td {
-            background-color: #f9f9f9;
+            background-color: var(--card-bg);
+            color: var(--text-color-light);
         }
+        table tr:nth-child(even) td {
+            background-color: #383858; /* Um tom ligeiramente diferente para linhas pares */
+        }
+
+        /* --- Listas --- */
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            background: rgba(255, 255, 255, 0.05);
+            margin-bottom: 10px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+        ul li:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        ul li::before {
+            content: '✨'; /* Ícone de brilho */
+            margin-right: 10px;
+            color: var(--secondary-color);
+        }
+
+        /* --- Inputs --- */
+        input {
+            width: calc(100% - 22px); /* Ajusta para padding e borda */
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid var(--accent-color-1);
+            background-color: var(--dark-bg);
+            color: var(--text-color-light);
+            font-size: 1.1em;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* --- Rodapé --- */
         footer {
             text-align: center;
-            padding: 20px;
-            background-color: #4a90e2;
-            color: white;
-            margin-top: 20px;
+            padding: 30px;
+            background: linear-gradient(90deg, #1a1a2e, #2c003e);
+            color: var(--text-color-light);
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9em;
         }
-        /* Adicionado estilos para os campos de input */
-        input {
-            width: calc(100% - 20px); /* Ajusta para padding */
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            font-size: 1em;
-            box-sizing: border-box; /* Inclui padding na largura */
+
+        /* --- Responsividade --- */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+            header p {
+                font-size: 1.1em;
+            }
+            .container {
+                padding: 0 15px;
+            }
+            .stat, .step, .economy-item {
+                flex-basis: 45%; /* Duas colunas em telas menores */
+                max-width: 48%;
+            }
         }
+
+        @media (max-width: 480px) {
+            .btn {
+                display: block; /* Botões em bloco para telas muito pequenas */
+                width: calc(100% - 20px);
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .stat, .step, .economy-item {
+                flex-basis: 95%; /* Uma coluna em telas muito pequenas */
+                max-width: 95%;
+            }
+        }
+
+        /* --- Animações para Conteúdo --- */
+        .section p, .section ul, .section table {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
     </style>
 </head>
 <body>
@@ -289,9 +531,7 @@
 
     <script>
         let web3, contract;
-        // Endereço do contrato do Bitnest Token
         const contractAddress = "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED";
-        // ABI (Application Binary Interface) do contrato, necessário para interagir com ele
         const ABI = [
             {
                 "inputs": [],
@@ -402,7 +642,6 @@
             }
         ];
 
-        // Função para conectar a carteira (MetaMask)
         async function connectWallet() {
             if (window.ethereum) {
                 try {
@@ -411,8 +650,8 @@
                     const accounts = await web3.eth.getAccounts();
                     document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
                     contract = new web3.eth.Contract(ABI, contractAddress);
-                    getPrice(); // Atualiza o preço após conectar
-                    getBalance(); // Atualiza o saldo após conectar
+                    getPrice();
+                    getBalance();
                 } catch (error) {
                     alert("Erro ao conectar a carteira: " + error.message);
                 }
@@ -421,7 +660,6 @@
             }
         }
 
-        // Função para adicionar o token à carteira MetaMask
         async function addTokenToWallet() {
             if (!window.ethereum) {
                 alert("MetaMask não está instalado!");
@@ -429,13 +667,11 @@
             }
 
             try {
-                // Verifica se a carteira está conectada, se não estiver, tenta conectar
                 const accounts = await window.ethereum.request({ method: 'eth_accounts' });
                 if (accounts.length === 0) {
                     await connectWallet();
                 }
 
-                // Adiciona o token à carteira
                 await window.ethereum.request({
                     method: 'wallet_watchAsset',
                     params: {
@@ -444,7 +680,7 @@
                             address: "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED",
                             symbol: 'BTN',
                             decimals: 18,
-                            image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png', // URL da imagem do token
+                            image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgVPPc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png',
                         },
                     },
                 });
@@ -454,9 +690,8 @@
             }
         }
 
-        // Função para obter e exibir o preço atual do token
         async function getPrice() {
-            if (!contract) return; // Garante que o contrato está inicializado
+            if (!contract) return;
             try {
                 const price = await contract.methods.getCurrentPrice().call();
                 document.getElementById("price").innerText = "💲 Preço Atual do BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
@@ -466,9 +701,8 @@
             }
         }
 
-        // Função para obter e exibir o saldo de BTN do usuário
         async function getBalance() {
-            if (!web3 || !contract) return; // Garante que web3 e contract estão inicializados
+            if (!web3 || !contract) return;
             try {
                 const accounts = await web3.eth.getAccounts();
                 if (accounts.length === 0) {
@@ -483,7 +717,6 @@
             }
         }
 
-        // Função para comprar BTN
         async function buyBTN() {
             if (!web3 || !contract) {
                 alert("Por favor, conecte sua carteira primeiro.");
@@ -501,14 +734,13 @@
                     value: web3.utils.toWei(bnbAmount, "ether")
                 });
                 alert("Compra realizada com sucesso! Suas recompensas começarão a acumular automaticamente.");
-                getPrice(); // Atualiza o preço
-                getBalance(); // Atualiza o saldo
+                getPrice();
+                getBalance();
             } catch (error) {
                 alert("Erro na compra: " + error.message);
             }
         }
 
-        // Função para vender BTN
         async function sellBTN() {
             if (!web3 || !contract) {
                 alert("Por favor, conecte sua carteira primeiro.");
@@ -524,21 +756,19 @@
                 const amountInWei = web3.utils.toWei(tokenAmount, "ether");
                 await contract.methods.sell(amountInWei).send({ from: accounts[0] });
                 alert("Venda realizada com sucesso!");
-                getPrice(); // Atualiza o preço
-                getBalance(); // Atualiza o saldo
+                getPrice();
+                getBalance();
             } catch (error) {
                 alert("Erro na venda: " + error.message);
             }
         }
 
-        // Adiciona um listener para atualizar o preço e o saldo quando a página carregar
         window.addEventListener('load', async () => {
             if (window.ethereum) {
                 web3 = new Web3(window.ethereum);
                 contract = new web3.eth.Contract(ABI, contractAddress);
                 getPrice();
                 
-                // Tenta conectar automaticamente se já houver contas conectadas
                 const accounts = await web3.eth.getAccounts();
                 if (accounts.length > 0) {
                     document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
@@ -550,7 +780,6 @@
             }
         });
 
-        // Opcional: Adiciona listener para recarregar informações da carteira se a conta mudar no MetaMask
         if (window.ethereum) {
             window.ethereum.on('accountsChanged', (accounts) => {
                 if (accounts.length > 0) {
@@ -562,15 +791,13 @@
                 }
             });
             window.ethereum.on('chainChanged', (chainId) => {
-                // Recarrega a página ou reconecta para garantir que a rede correta está sendo usada
                 window.location.reload(); 
             });
         }
 
     </script>
 </body>
-    <!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
+    <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,4953692,4,0,0,0,00010000']);
 _Hasync.push(['Histats.fasi', '1']);
 _Hasync.push(['Histats.track_hits', '']);
@@ -580,5 +807,4 @@ hs.src = ('//s10.histats.com/js15_as.js');
 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
 })();</script>
 <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4953692&101" alt="" border="0"></a></noscript>
-<!-- Histats.com  END  -->
 </html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Bitnest BTN</title>
-<link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVgY8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMsMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/s320/Bitnest-BTN.png" rel="icon" type="image/x-icon"/>
+<link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgviurbc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png" rel="icon" type="image/x-icon"/>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <style>
 :root {
@@ -353,162 +353,283 @@ footer::after {
         opacity: 0;
     }
 }
+
+/* Estilos para o seletor de idioma */
+.language-selector {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.language-selector label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.language-selector select {
+    background: var(--card);
+    color: var(--text-light);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.5rem;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.language-selector select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.3);
+}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
 </head>
 <body>
 <header>
     <div class="particles" id="particles-js"></div>
-    <div class="trading-graph"></div> <div class="header-content">
+    <div class="trading-graph"></div>
+    <div class="header-content">
+        <div class="language-selector">
+            <label for="language-select">Language:</label>
+            <select id="language-select">
+                <option value="pt-BR">Português</option>
+                <option value="en">English</option>
+            </select>
+        </div>
         <h1>Bitnest BTN</h1>
-        <p>O Futuro dos Tokens de Liquidez Algorítmica</p>
+        <p data-lang="pt-BR">O Futuro dos Tokens de Liquidez Algorítmica</p>
+        <p data-lang="en" style="display: none;">The Future of Algorithmic Liquidity Tokens</p>
         <a class="btn btn-buy" href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" rel="noopener" target="_blank">Contrato no BscScan</a>
+        <a class="btn btn-buy" href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" rel="noopener" target="_blank" data-lang="en" style="display: none;">Contract on BscScan</a>
     </div>
 </header>
 <div class="container">
 <div class="section">
-<h2>Interface de Compra/Venda</h2>
-<p id="account">🔒 Carteira: não conectada</p>
-<p id="price">💲 Preço Atual do BTN: ...</p>
-<p id="balance">💰 Saldo de BTN: ...</p>
+<h2 data-lang="pt-BR">Interface de Compra/Venda</h2>
+<h2 data-lang="en" style="display: none;">Buy/Sell Interface</h2>
+<p id="account" data-lang="pt-BR">🔒 Carteira: não conectada</p>
+<p id="account_en" data-lang="en" style="display: none;">🔒 Wallet: not connected</p>
+<p id="price" data-lang="pt-BR">💲 Preço Atual do BTN: ...</p>
+<p id="price_en" data-lang="en" style="display: none;">💲 Current BTN Price: ...</p>
+<p id="balance" data-lang="pt-BR">💰 Saldo de BTN: ...</p>
+<p id="balance_en" data-lang="en" style="display: none;">💰 BTN Balance: ...</p>
 <div class="stats">
 <div class="stat">
 <h3>1B</h3>
-<p>Oferta Total</p>
+<p data-lang="pt-BR">Oferta Total</p>
+<p data-lang="en" style="display: none;">Total Supply</p>
 </div>
 <div class="stat">
 <h3>10%</h3>
-<p>Recompensas</p>
+<p data-lang="pt-BR">Recompensas</p>
+<p data-lang="en" style="display: none;">Rewards</p>
 </div>
 <div class="stat">
 <h3>10%</h3>
-<p>Liquidez</p>
+<p data-lang="pt-BR">Liquidez</p>
+<p data-lang="en" style="display: none;">Liquidity</p>
 </div>
 <div class="stat">
 <h3>0%</h3>
-<p>Taxas</p>
+<p data-lang="pt-BR">Taxas</p>
+<p data-lang="en" style="display: none;">Fees</p>
 </div>
 </div>
-<h3>Comprar BTN</h3>
+<h3 data-lang="pt-BR">Comprar BTN</h3>
+<h3 data-lang="en" style="display: none;">Buy BTN</h3>
 <input id="bnbAmount" placeholder="Quantia em BNB" type="number"/>
-<a class="btn btn-buy" href="javascript:buyBTN()">🛒 Comprar BTN</a>
-<h3>Vender BTN</h3>
+<a class="btn btn-buy" href="javascript:buyBTN()" data-lang="pt-BR">🛒 Comprar BTN</a>
+<a class="btn btn-buy" href="javascript:buyBTN()" data-lang="en" style="display: none;">🛒 Buy BTN</a>
+<h3 data-lang="pt-BR">Vender BTN</h3>
+<h3 data-lang="en" style="display: none;">Sell BTN</h3>
 <input id="tokenAmount" placeholder="Quantia de BTN" type="number"/>
-<a class="btn btn-sell" href="javascript:sellBTN()">💱 Vender BTN</a>
-<a class="btn btn-connect" href="javascript:connectWallet()">🔌 Conectar Carteira</a>
-<a class="btn btn-connect" href="javascript:addTokenToWallet()">➕ Adicionar BTN à Carteira</a>
-<p><strong>Contrato BTN:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
+<a class="btn btn-sell" href="javascript:sellBTN()" data-lang="pt-BR">💱 Vender BTN</a>
+<a class="btn btn-sell" href="javascript:sellBTN()" data-lang="en" style="display: none;">💱 Sell BTN</a>
+<a class="btn btn-connect" href="javascript:connectWallet()" data-lang="pt-BR">🔌 Conectar Carteira</a>
+<a class="btn btn-connect" href="javascript:connectWallet()" data-lang="en" style="display: none;">🔌 Connect Wallet</a>
+<a class="btn btn-connect" href="javascript:addTokenToWallet()" data-lang="pt-BR">➕ Adicionar BTN à Carteira</a>
+<a class="btn btn-connect" href="javascript:addTokenToWallet()" data-lang="en" style="display: none;">➕ Add BTN to Wallet</a>
+<p data-lang="pt-BR"><strong>Contrato BTN:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
+<p data-lang="en" style="display: none;"><strong>BTN Contract:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
 </div>
 <div class="section">
-<h2>O que é Bitnest BTN?</h2>
-<p>O Bitnest BTN é um token revolucionário que combina liquidez algorítmica com recompensas automáticas, criando um ecossistema sustentável inspirado nos mecanismos inovadores dos tokens Pump Fun, mas com recursos aprimorados de segurança e estabilidade.</p>
-<p>🚀 10% de recompensas + 10% de liquidez bloqueada em cada transação!</p>
+<h2 data-lang="pt-BR">O que é Bitnest BTN?</h2>
+<h2 data-lang="en" style="display: none;">What is Bitnest BTN?</h2>
+<p data-lang="pt-BR">O Bitnest BTN é um token revolucionário que combina liquidez algorítmica com recompensas automáticas, criando um ecossistema sustentável inspirado nos mecanismos inovadores dos tokens Pump Fun, mas com recursos aprimorados de segurança e estabilidade.</p>
+<p data-lang="en" style="display: none;">Bitnest BTN is a revolutionary token that combines algorithmic liquidity with automatic rewards, creating a sustainable ecosystem inspired by the innovative mechanisms of Pump Fun tokens, but with enhanced security and stability features.</p>
+<p data-lang="pt-BR">🚀 10% de recompensas + 10% de liquidez bloqueada em cada transação!</p>
+<p data-lang="en" style="display: none;">🚀 10% rewards + 10% locked liquidity on each transaction!</p>
 </div>
 <div class="section">
-<h2>Inovações Chave</h2>
+<h2 data-lang="pt-BR">Inovações Chave</h2>
+<h2 data-lang="en" style="display: none;">Key Innovations</h2>
 <ul>
-<li>Liquidez algorítmica integrada com uma curva de ligação linear que ajusta o preço automaticamente com base na oferta e demanda</li>
-<li>10% de cada venda é permanentemente bloqueado no pool de liquidez do contrato, criando reservas sempre crescentes</li>
-<li>10% de recompensas automáticas distribuídas proporcionalmente entre todos os detentores em cada transação de compra</li>
-<li>Design à prova de rug pulls - a liquidez não pode ser removida por ninguém, incluindo desenvolvedores</li>
-<li>Sem necessidade de DEX externa - as negociações ocorrem diretamente pelo contrato inteligente</li>
-<li>Mecânica transparente e verificável na blockchain sem taxas ocultas</li>
-<li>Estabilidade de preço por meio de uma curva de ligação matemática que previne volatilidade extrema</li>
+<li data-lang="pt-BR">Liquidez algorítmica integrada com uma curva de ligação linear que ajusta o preço automaticamente com base na oferta e demanda</li>
+<li data-lang="en" style="display: none;">Algorithmic liquidity integrated with a linear bonding curve that automatically adjusts the price based on supply and demand</li>
+<li data-lang="pt-BR">10% de cada venda é permanentemente bloqueado no pool de liquidez do contrato, criando reservas sempre crescentes</li>
+<li data-lang="en" style="display: none;">10% of each sale is permanently locked in the contract's liquidity pool, creating ever-increasing reserves</li>
+<li data-lang="pt-BR">10% de recompensas automáticas distribuídas proporcionalmente entre todos os detentores em cada transação de compra</li>
+<li data-lang="en" style="display: none;">10% automatic rewards distributed proportionally among all holders on each buy transaction</li>
+<li data-lang="pt-BR">Design à prova de rug pulls - a liquidez não pode ser removida por ninguém, incluindo desenvolvedores</li>
+<li data-lang="en" style="display: none;">Rug-pull proof design - liquidity cannot be removed by anyone, including developers</li>
+<li data-lang="pt-BR">Sem necessidade de DEX externa - as negociações ocorrem diretamente pelo contrato inteligente</li>
+<li data-lang="en" style="display: none;">No external DEX required - trades occur directly through the smart contract</li>
+<li data-lang="pt-BR">Mecânica transparente e verificável na blockchain sem taxas ocultas</li>
+<li data-lang="en" style="display: none;">Transparent and verifiable mechanics on the blockchain with no hidden fees</li>
+<li data-lang="pt-BR">Estabilidade de preço por meio de uma curva de ligação matemática que previne volatilidade extrema</li>
+<li data-lang="en" style="display: none;">Price stability through a mathematical bonding curve that prevents extreme volatility</li>
 </ul>
 </div>
 <div class="section">
-<h2>Como Funciona a Liquidez Algorítmica</h2>
+<h2 data-lang="pt-BR">Como Funciona a Liquidez Algorítmica</h2>
+<h2 data-lang="en" style="display: none;">How Algorithmic Liquidity Works</h2>
 <div class="steps">
 <div class="step">
-<h3>1</h3>
-<h4>Curva de Ligação Linear</h4>
-<p>O preço do token segue uma fórmula matemática previsível: Preço = Preço Base + (k * Oferta). Isso cria uma descoberta de preço justa sem manipulação.</p>
+<h3 data-lang="pt-BR">1</h3>
+<h3 data-lang="en" style="display: none;">1</h3>
+<h4 data-lang="pt-BR">Curva de Ligação Linear</h4>
+<h4 data-lang="en" style="display: none;">Linear Bonding Curve</h4>
+<p data-lang="pt-BR">O preço do token segue uma fórmula matemática previsível: Preço = Preço Base + (k * Oferta). Isso cria uma descoberta de preço justa sem manipulação.</p>
+<p data-lang="en" style="display: none;">The token price follows a predictable mathematical formula: Price = Base Price + (k * Supply). This creates fair price discovery without manipulation.</p>
 </div>
 <div class="step">
-<h3>2</h3>
-<h4>Bloqueio Automático de Liquidez</h4>
-<p>10% de cada venda é permanentemente adicionado ao pool de liquidez do contrato. Isso aumenta as reservas ao longo do tempo, melhorando a estabilidade de preço.</p>
+<h3 data-lang="pt-BR">2</h3>
+<h3 data-lang="en" style="display: none;">2</h3>
+<h4 data-lang="pt-BR">Bloqueio Automático de Liquidez</h4>
+<h4 data-lang="en" style="display: none;">Automatic Liquidity Lock</h4>
+<p data-lang="pt-BR">10% de cada venda é permanentemente adicionado ao pool de liquidez do contrato. Isso aumenta as reservas ao longo do tempo, melhorando a estabilidade de preço.</p>
+<p data-lang="en" style="display: none;">10% of each sale is permanently added to the contract's liquidity pool. This increases reserves over time, improving price stability.</p>
 </div>
 <div class="step">
-<h3>3</h3>
-<h4>Recompensas aos Detentores</h4>
-<p>10% de cada compra é distribuído aos detentores existentes proporcionalmente à sua participação. Quanto mais BTN você possui, mais você ganha.</p>
+<h3 data-lang="pt-BR">3</h3>
+<h3 data-lang="en" style="display: none;">3</h3>
+<h4 data-lang="pt-BR">Recompensas aos Detentores</h4>
+<h4 data-lang="en" style="display: none;">Rewards for Holders</h4>
+<p data-lang="pt-BR">10% de cada compra é distribuído aos detentores existentes proporcionalmente à sua participação. Quanto mais BTN você possui, mais você ganha.</p>
+<p data-lang="en" style="display: none;">10% of each purchase is distributed to existing holders proportionally to their share. The more BTN you own, the more you earn.</p>
 </div>
 </div>
 </div>
 <div class="section">
-<h2>📈 Comparação da Economia do Token</h2>
-<p>O Bitnest BTN oferece vantagens significativas sobre tokens tradicionais:</p>
+<h2 data-lang="pt-BR">📈 Comparação da Economia do Token</h2>
+<h2 data-lang="en" style="display: none;">📈 Token Economy Comparison</h2>
+<p data-lang="pt-BR">O Bitnest BTN oferece vantagens significativas sobre tokens tradicionais:</p>
+<p data-lang="en" style="display: none;">Bitnest BTN offers significant advantages over traditional tokens:</p>
 <table>
 <tr>
-<th>Característica</th>
-<th>Token Padrão</th>
-<th>Bitnest BTN</th>
+<th data-lang="pt-BR">Característica</th>
+<th data-lang="en" style="display: none;">Feature</th>
+<th data-lang="pt-BR">Token Padrão</th>
+<th data-lang="en" style="display: none;">Standard Token</th>
+<th data-lang="pt-BR">Bitnest BTN</th>
+<th data-lang="en" style="display: none;">Bitnest BTN</th>
 </tr>
 <tr>
-<td>Segurança de Liquidez</td>
-<td>❌ Vulnerável a rug pulls</td>
-<td>✅ Bloqueado algoritmicamente</td>
+<td data-lang="pt-BR">Segurança de Liquidez</td>
+<td data-lang="en" style="display: none;">Liquidity Security</td>
+<td data-lang="pt-BR">❌ Vulnerável a rug pulls</td>
+<td data-lang="en" style="display: none;">❌ Vulnerable to rug pulls</td>
+<td data-lang="pt-BR">✅ Bloqueado algoritmicamente</td>
+<td data-lang="en" style="display: none;">✅ Algorithmically locked</td>
 </tr>
 <tr>
-<td>Descoberta de Preço</td>
-<td>❌ Dependente da liquidez DEX</td>
-<td>✅ Curva de ligação matemática</td>
+<td data-lang="pt-BR">Descoberta de Preço</td>
+<td data-lang="en" style="display: none;">Price Discovery</td>
+<td data-lang="pt-BR">❌ Dependente da liquidez DEX</td>
+<td data-lang="en" style="display: none;">❌ Dependent on DEX liquidity</td>
+<td data-lang="pt-BR">✅ Curva de ligação matemática</td>
+<td data-lang="en" style="display: none;">✅ Mathematical bonding curve</td>
 </tr>
 <tr>
-<td>Recompensas aos Detentores</td>
-<td>❌ Manuais ou inexistentes</td>
-<td>✅ 10% distribuído automaticamente</td>
+<td data-lang="pt-BR">Recompensas aos Detentores</td>
+<td data-lang="en" style="display: none;">Rewards for Holders</td>
+<td data-lang="pt-BR">❌ Manuais ou inexistentes</td>
+<td data-lang="en" style="display: none;">❌ Manual or non-existent</td>
+<td data-lang="pt-BR">✅ 10% distribuído automaticamente</td>
+<td data-lang="en" style="display: none;">✅ 10% distributed automatically</td>
 </tr>
 <tr>
-<td>Crescimento de Liquidez</td>
-<td>❌ Estático ou decrescente</td>
-<td>✅ 10% auto-composto</td>
+<td data-lang="pt-BR">Crescimento de Liquidez</td>
+<td data-lang="en" style="display: none;">Liquidity Growth</td>
+<td data-lang="pt-BR">❌ Estático ou decrescente</td>
+<td data-lang="en" style="display: none;">❌ Static or decreasing</td>
+<td data-lang="pt-BR">✅ 10% auto-composto</td>
+<td data-lang="en" style="display: none;">✅ 10% auto-compounding</td>
 </tr>
 <tr>
-<td>Taxas de Transação</td>
-<td>❌ Geralmente 2-5%</td>
-<td>✅ 0% (apenas gás da rede)</td>
+<td data-lang="pt-BR">Taxas de Transação</td>
+<td data-lang="en" style="display: none;">Transaction Fees</td>
+<td data-lang="pt-BR">❌ Geralmente 2-5%</td>
+<td data-lang="en" style="display: none;">❌ Usually 2-5%</td>
+<td data-lang="pt-BR">✅ 0% (apenas gás da rede)</td>
+<td data-lang="en" style="display: none;">✅ 0% (network gas only)</td>
 </tr>
 </table>
 </div>
 <div class="section">
-<h2>Por que Escolher o Bitnest BTN?</h2>
-<p>O token BTN representa um novo paradigma em finanças descentralizadas ao combinar:</p>
+<h2 data-lang="pt-BR">Por que Escolher o Bitnest BTN?</h2>
+<h2 data-lang="en" style="display: none;">Why Choose Bitnest BTN?</h2>
+<p data-lang="pt-BR">O token BTN representa um novo paradigma em finanças descentralizadas ao combinar:</p>
+<p data-lang="en" style="display: none;">The BTN token represents a new paradigm in decentralized finance by combining:</p>
 <ul>
-<li>Segurança por meio de contratos inteligentes imutáveis e liquidez bloqueada</li>
-<li>Sustentabilidade via ajustes algorítmicos de preço e reservas compostas</li>
-<li>Recompensas que beneficiam automaticamente os detentores de longo prazo</li>
-<li>Transparência com todas as mecânicas visíveis na blockchain</li>
+<li data-lang="pt-BR">Segurança por meio de contratos inteligentes imutáveis e liquidez bloqueada</li>
+<li data-lang="en" style="display: none;">Security through immutable smart contracts and locked liquidity</li>
+<li data-lang="pt-BR">Sustentabilidade via ajustes algorítmicos de preço e reservas compostas</li>
+<li data-lang="en" style="display: none;">Sustainability via algorithmic price adjustments and compounded reserves</li>
+<li data-lang="pt-BR">Recompensas que beneficiam automaticamente os detentores de longo prazo</li>
+<li data-lang="en" style="display: none;">Rewards that automatically benefit long-term holders</li>
+<li data-lang="pt-BR">Transparência com todas as mecânicas visíveis na blockchain</li>
+<li data-lang="en" style="display: none;">Transparency with all mechanics visible on the blockchain</li>
 </ul>
 </div>
 <div class="section">
-<h2>🔍 Análise Técnica</h2>
-<h3>Mecânica do Contrato Inteligente</h3>
+<h2 data-lang="pt-BR">🔍 Análise Técnica</h2>
+<h2 data-lang="en" style="display: none;">🔍 Technical Analysis</h2>
+<h3 data-lang="pt-BR">Mecânica do Contrato Inteligente</h3>
+<h3 data-lang="en" style="display: none;">Smart Contract Mechanics</h3>
 <ul>
-<li>Fórmula da Curva de Ligação: O preço aumenta linearmente com a oferta segundo p = m*x + b, onde m é a inclinação e b é o preço base</li>
-<li>Bloqueio de Liquidez: 10% de todos os valores de venda são convertidos em BNB e permanentemente adicionados às reservas do contrato</li>
-<li>Distribuição de Recompensas: 10% dos valores de compra são distribuídos proporcionalmente aos detentores com base em sua porcentagem da oferta total</li>
-<li>Sem Privilégios de Proprietário: O contrato é totalmente descentralizado, sem chaves de administrador ou backdoors</li>
+<li data-lang="pt-BR">Fórmula da Curva de Ligação: O preço aumenta linearmente com a oferta segundo p = m*x + b, onde m é a inclinação e b é o preço base</li>
+<li data-lang="en" style="display: none;">Bonding Curve Formula: Price increases linearly with supply according to p = m*x + b, where m is the slope and b is the base price</li>
+<li data-lang="pt-BR">Bloqueio de Liquidez: 10% de todos os valores de venda são convertidos em BNB e permanentemente adicionados às reservas do contrato</li>
+<li data-lang="en" style="display: none;">Liquidity Lock: 10% of all sale values are converted to BNB and permanently added to the contract's reserves</li>
+<li data-lang="pt-BR">Distribuição de Recompensas: 10% dos valores de compra são distribuídos proporcionalmente aos detentores com base em sua porcentagem da oferta total</li>
+<li data-lang="en" style="display: none;">Reward Distribution: 10% of purchase values are distributed proportionally to holders based on their percentage of the total supply</li>
+<li data-lang="pt-BR">Sem Privilégios de Proprietário: O contrato é totalmente descentralizado, sem chaves de administrador ou backdoors</li>
+<li data-lang="en" style="display: none;">No Owner Privileges: The contract is fully decentralized, with no admin keys or backdoors</li>
 </ul>
-<h3>Vantagens Econômicas</h3>
+<h3 data-lang="pt-BR">Vantagens Econômicas</h3>
+<h3 data-lang="en" style="display: none;">Economic Advantages</h3>
 <div class="economy">
-<div class="economy-item">↑ Preço sobe com a demanda</div>
-<div class="economy-item">↓ Preço cai com a oferta</div>
-<div class="economy-item">∞ Profundidade de liquidez infinita</div>
-<div class="economy-item">≡ Preços previsíveis</div>
+<div class="economy-item" data-lang="pt-BR">↑ Preço sobe com a demanda</div>
+<div class="economy-item" data-lang="en" style="display: none;">↑ Price increases with demand</div>
+<div class="economy-item" data-lang="pt-BR">↓ Preço cai com a oferta</div>
+<div class="economy-item" data-lang="en" style="display: none;">↓ Price decreases with supply</div>
+<div class="economy-item" data-lang="pt-BR">∞ Profundidade de liquidez infinita</div>
+<div class="economy-item" data-lang="en" style="display: none;">∞ Infinite liquidity depth</div>
+<div class="economy-item" data-lang="pt-BR">≡ Preços previsíveis</div>
+<div class="economy-item" data-lang="en" style="display: none;">≡ Predictable prices</div>
 </div>
-<p>O modelo de liquidez algorítmica garante que:</p>
+<p data-lang="pt-BR">O modelo de liquidez algorítmica garante que:</p>
+<p data-lang="en" style="display: none;">The algorithmic liquidity model ensures that:</p>
 <ul>
-<li>Adotantes iniciais se beneficiam de preços de entrada mais baixos</li>
-<li>O sistema permanece líquido mesmo durante volatilidade de mercado</li>
-<li>Manipulação de preço por meio de wash trading é impossível</li>
-<li>O token não pode ser "despejado" a valor zero</li>
+<li data-lang="pt-BR">Adotantes iniciais se beneficiam de preços de entrada mais baixos</li>
+<li data-lang="en" style="display: none;">Early adopters benefit from lower entry prices</li>
+<li data-lang="pt-BR">O sistema permanece líquido mesmo durante volatilidade de mercado</li>
+<li data-lang="en" style="display: none;">The system remains liquid even during market volatility</li>
+<li data-lang="pt-BR">Manipulação de preço por meio de wash trading é impossível</li>
+<li data-lang="en" style="display: none;">Price manipulation through wash trading is impossible</li>
+<li data-lang="pt-BR">O token não pode ser "despejado" a valor zero</li>
+<li data-lang="en" style="display: none;">The token cannot be "dumped" to zero value</li>
 </ul>
 </div>
 <footer>
     <div class="footer-content">
-        <p>O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
+        <p data-lang="pt-BR">O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
+        <p data-lang="en" style="display: none;">Bitnest BTN is a token that implements innovative DeFi mechanics. While the smart contract has been audited, cryptocurrency investments involve inherent risks. Invest only what you can afford to lose. The bonding curve mechanism provides price stability but does not guarantee profits.</p>
     </div>
 </footer>
 </div>
@@ -663,7 +784,12 @@ footer::after {
                     await window.ethereum.request({ method: "eth_requestAccounts" });
                     web3 = new Web3(window.ethereum);
                     const accounts = await web3.eth.getAccounts();
-                    document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    document.getElementById("account").innerText = "🔓 Carteira: " + shortAccount;
+                    // Update English version if exists
+                    const accountEn = document.getElementById("account_en");
+                    if (accountEn) accountEn.innerText = "🔓 Wallet: " + shortAccount;
+
                     contract = new web3.eth.Contract(ABI, contractAddress);
                     getPrice();
                     getBalance();
@@ -709,10 +835,15 @@ footer::after {
             if (!contract) return;
             try {
                 const price = await contract.methods.getCurrentPrice().call();
-                document.getElementById("price").innerText = "💲 Preço Atual do BTN: " + web3.utils.fromWei(price, "ether") + " BNB";
+                const formattedPrice = web3.utils.fromWei(price, "ether") + " BNB";
+                document.getElementById("price").innerText = "💲 Preço Atual do BTN: " + formattedPrice;
+                const priceEn = document.getElementById("price_en");
+                if (priceEn) priceEn.innerText = "💲 Current BTN Price: " + formattedPrice;
             } catch (error) {
                 console.error("Erro ao obter o preço:", error);
                 document.getElementById("price").innerText = "💲 Preço Atual do BTN: Erro ao carregar";
+                const priceEn = document.getElementById("price_en");
+                if (priceEn) priceEn.innerText = "💲 Current BTN Price: Error loading";
             }
         }
 
@@ -722,13 +853,20 @@ footer::after {
                 const accounts = await web3.eth.getAccounts();
                 if (accounts.length === 0) {
                     document.getElementById("balance").innerText = "💰 Saldo de BTN: Conecte sua carteira";
+                    const balanceEn = document.getElementById("balance_en");
+                    if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Connect your wallet";
                     return;
                 }
                 const balance = await contract.methods.balanceOf(accounts[0]).call();
-                document.getElementById("balance").innerText = "💰 Saldo de BTN: " + web3.utils.fromWei(balance, "ether") + " BTN";
+                const formattedBalance = web3.utils.fromWei(balance, "ether") + " BTN";
+                document.getElementById("balance").innerText = "💰 Saldo de BTN: " + formattedBalance;
+                const balanceEn = document.getElementById("balance_en");
+                if (balanceEn) balanceEn.innerText = "💰 BTN Balance: " + formattedBalance;
             } catch (error) {
                 console.error("Erro ao obter o saldo:", error);
                 document.getElementById("balance").innerText = "💰 Saldo de BTN: Erro ao carregar";
+                const balanceEn = document.getElementById("balance_en");
+                if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Error loading";
             }
         }
 
@@ -790,9 +928,48 @@ footer::after {
             }
         }
 
+        // Language selection function
+        function setLanguage(lang) {
+            document.documentElement.lang = lang; // Set HTML lang attribute
+            localStorage.setItem('preferredLanguage', lang); // Store preference
+
+            document.querySelectorAll('[data-lang]').forEach(element => {
+                if (element.getAttribute('data-lang') === lang) {
+                    element.style.display = ''; // Show elements for the selected language
+                } else {
+                    element.style.display = 'none'; // Hide elements for other languages
+                }
+            });
+
+            // Specific updates for dynamically changing text with IDs (if any)
+            // For example, if you have elements like <p id="greeting">Hello</p>
+            // and you want to change its text, you would do:
+            // if (lang === 'en') {
+            //     document.getElementById('someId').innerText = 'English text';
+            // } else if (lang === 'pt-BR') {
+            //     document.getElementById('someId').innerText = 'Texto em Português';
+            // }
+            // Note: For 'account', 'price', 'balance' which are updated by wallet functions,
+            // the update logic is added directly within those functions.
+        }
+
         window.addEventListener('load', async () => {
             createParticles(); /* Chamada para criar as partículas */
             
+            // Language initialization
+            const languageSelect = document.getElementById('language-select');
+            if (languageSelect) {
+                // Set initial language based on localStorage or default to pt-BR
+                const savedLanguage = localStorage.getItem('preferredLanguage') || 'pt-BR';
+                languageSelect.value = savedLanguage;
+                setLanguage(savedLanguage); // Apply the saved language immediately on load
+
+                // Add event listener for language selector
+                languageSelect.addEventListener('change', (event) => {
+                    setLanguage(event.target.value);
+                });
+            }
+
             if (window.ethereum) {
                 web3 = new Web3(window.ethereum);
                 contract = new web3.eth.Contract(ABI, contractAddress);
@@ -800,23 +977,38 @@ footer::after {
                 
                 const accounts = await web3.eth.getAccounts();
                 if (accounts.length > 0) {
-                    document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    document.getElementById("account").innerText = "🔓 Carteira: " + shortAccount;
+                    const accountEn = document.getElementById("account_en");
+                    if (accountEn) accountEn.innerText = "🔓 Wallet: " + shortAccount;
                     getBalance();
                 }
             } else {
                 document.getElementById("price").innerText = "💲 Preço Atual do BTN: Instale MetaMask para ver";
+                const priceEn = document.getElementById("price_en");
+                if (priceEn) priceEn.innerText = "💲 Current BTN Price: Install MetaMask to view";
+
                 document.getElementById("balance").innerText = "💰 Saldo de BTN: Instale MetaMask para ver";
+                const balanceEn = document.getElementById("balance_en");
+                if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Install MetaMask to view";
             }
         });
 
         if (window.ethereum) {
             window.ethereum.on('accountsChanged', (accounts) => {
                 if (accounts.length > 0) {
-                    document.getElementById("account").innerText = "🔓 Carteira: " + accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                    document.getElementById("account").innerText = "🔓 Carteira: " + shortAccount;
+                    const accountEn = document.getElementById("account_en");
+                    if (accountEn) accountEn.innerText = "🔓 Wallet: " + shortAccount;
                     getBalance();
                 } else {
                     document.getElementById("account").innerText = "🔒 Carteira: não conectada";
+                    const accountEn = document.getElementById("account_en");
+                    if (accountEn) accountEn.innerText = "🔒 Wallet: not connected";
                     document.getElementById("balance").innerText = "💰 Saldo de BTN: Conecte sua carteira";
+                    const balanceEn = document.getElementById("balance_en");
+                    if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Connect your wallet";
                 }
             });
             window.ethereum.on('chainChanged', (chainId) => {

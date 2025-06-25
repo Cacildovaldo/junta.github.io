@@ -828,7 +828,7 @@ footer::after {
                 });
             } catch (error) {
                 console.error(error);
-                alert("Erro ao adicionar o token: " + error.message);
+                alert("Error adding token: " + error.message);
             }
         }
 
@@ -873,13 +873,13 @@ footer::after {
 
         async function buyBTN() {
             if (!web3 || !contract) {
-                alert("Por favor, conecte sua carteira primeiro.");
+                alert("Please connect your wallet first.");
                 return;
             }
             const accounts = await web3.eth.getAccounts();
             const bnbAmount = document.getElementById("bnbAmount").value;
             if (!bnbAmount || bnbAmount <= 0) {
-                alert("Digite uma quantia válida em BNB.");
+                alert("Enter a valid amount in BNB.");
                 return;
             }
             try {
@@ -887,42 +887,42 @@ footer::after {
                     from: accounts[0],
                     value: web3.utils.toWei(bnbAmount, "ether")
                 });
-                alert("Compra realizada com sucesso! Suas recompensas começarão a acumular automaticamente.");
+                alert("Purchase successful! Your rewards will start accumulating automatically.");
                 getPrice();
                 getBalance();
             } catch (error) {
                     if (error.code === 4001) { // User rejected transaction
-                        alert("Transação rejeitada pelo usuário.");
+                        alert("Transaction rejected by user.");
                     } else if (error.message.includes("insufficient funds")) {
-                        alert("Fundos insuficientes para esta transação.");
+                        alert("Insufficient funds for this transaction.");
                     } else {
-                        alert("Erro na compra: " + error.message);
+                        alert("Purchase error: " + error.message);
                     }
             }
         }
 
         async function sellBTN() {
             if (!web3 || !contract) {
-                alert("Por favor, conecte sua carteira primeiro.");
+                alert("Please connect your wallet first.");
                 return;
             }
             const accounts = await web3.eth.getAccounts();
             const tokenAmount = document.getElementById("tokenAmount").value;
             if (!tokenAmount || tokenAmount <= 0) {
-                alert("Digite uma quantia válida de BTN.");
+                alert("Enter a valid BTN amount.");
                 return;
             }
             try {
                 const amountInWei = web3.utils.toWei(tokenAmount, "ether");
                 await contract.methods.sell(amountInWei).send({ from: accounts[0] });
-                alert("Venda realizada com sucesso!");
+                alert("Sale completed successfully!");
                 getPrice();
                 getBalance();
             } catch (error) {
                  if (error.code === 4001) { // User rejected transaction
-                        alert("Transação rejeitada pelo usuário.");
+                        alert("Transaction rejected by user.");
                     } else if (error.message.includes("ERC20: transfer amount exceeds balance")) {
-                        alert("Saldo de BTN insuficiente para esta venda.");
+                        alert("Insufficient BTN balance for this sale.");
                     } else {
                         alert("Erro na venda: " + error.message);
                     }

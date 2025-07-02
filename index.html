@@ -447,7 +447,7 @@ footer::after {
 <a class="btn btn-buy" href="javascript:buyBTN()" data-lang="en" style="display: none;">🛒 Buy BTN</a>
 <h3 data-lang="pt-BR">Vender BTN</h3>
 <h3 data-lang="en" style="display: none;">Sell BTN</h3>
-<input id="tokenAmount" placeholder="Quantia de BTN" type="number"/>
+<input id="tokenAmount" placeholder="BTN amount" type="number"/>
 <a class="btn btn-sell" href="javascript:sellBTN()" data-lang="pt-BR">💱 Vender BTN</a>
 <a class="btn btn-sell" href="javascript:sellBTN()" data-lang="en" style="display: none;">💱 Sell BTN</a>
 <a class="btn btn-connect" href="javascript:connectWallet()" data-lang="pt-BR">🔌 Conectar Carteira</a>
@@ -816,16 +816,16 @@ footer::after {
                     getPrice();
                     getBalance();
                 } catch (error) {
-                    alert("Erro ao conectar a carteira: " + error.message);
+                    alert("Error connecting wallet: " + error.message);
                 }
             } else {
-                alert("Por favor, instale o MetaMask para conectar sua carteira!");
+                alert("Please install MetaMask to connect your wallet!");
             }
         }
 
         async function addTokenToWallet() {
             if (!window.ethereum) {
-                alert("MetaMask não está instalado!");
+                alert("MetaMask is not installed!");
                 return;
             }
 

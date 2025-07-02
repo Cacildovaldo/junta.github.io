@@ -1,1053 +1,1961 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta name="google-site-verification" content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" />
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bitnest BTN</title>
+<title>Bitnest BTN - O Futuro dos Tokens de Liquidez Algorítmica</title>
 <link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/w109-h157/Bitnest-BTN.png" rel="icon" type="image/x-icon"/>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
 :root {
     --bg: #0d0d2b;
     --card: #1b1b3a;
     --primary: #4fc3f7;
     --accent: #f50057;
+    --success: #00e676;
+    --warning: #ffab00;
     --text-light: #ffffff;
     --text-muted: #a0aec0;
     --border: rgba(255, 255, 255, 0.1);
+    --gradient-primary: linear-gradient(135deg, #4fc3f7 0%, #29b6f6 100%);
+    --gradient-accent: linear-gradient(135deg, #f50057 0%, #e91e63 100%);
+    --gradient-success: linear-gradient(135deg, #00e676 0%, #00c853 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text-light);
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden; /* Adicionado para evitar scroll horizontal por elementos de animação */
+    line-height: 1.6;
+    overflow-x: hidden;
 }
 
-header {
-    background: linear-gradient(45deg, #151542, #3f51b5);
-    padding: 3rem 2rem;
-    text-align: center;
-    color: white;
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, #0d0d2b 0%, #1a1a3a 50%, #2d1b69 100%);
+    min-height: 100vh;
     position: relative;
-    overflow: hidden; /* Garante que as partículas e o gráfico não saiam da área do cabeçalho */
-}
-
-/* Efeitos de fundo para o cabeçalho (mantido para base) */
-header::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
-    animation: pulse 15s infinite linear;
-    z-index: 0;
-}
-
-header::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234fc3f7' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
-    opacity: 0.3;
-    z-index: 0;
-}
-
-@keyframes pulse {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
-/* Novo efeito de gráfico de corretora */
-.trading-graph {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    background: 
-        repeating-linear-gradient(
-            -45deg,
-            rgba(79, 195, 247, 0.05),
-            rgba(79, 195, 247, 0.05) 5px,
-            transparent 5px,
-            transparent 10px
-        ),
-        repeating-linear-gradient(
-            45deg,
-            rgba(245, 0, 87, 0.05),
-            rgba(245, 0, 87, 0.05) 5px,
-            transparent 5px,
-            transparent 10px
-        );
-    background-size: 20px 20px;
-    animation: moveGraph 30s linear infinite;
-    opacity: 0.7;
-}
-
-@keyframes moveGraph {
-    0% { background-position: 0 0; }
-    100% { background-position: 2000px 2000px; } /* Ajuste este valor para a velocidade e direção */
-}
-
-
-.header-content {
-    position: relative;
-    z-index: 1; /* Garante que o conteúdo do cabeçalho fique acima dos efeitos */
-}
-
-header h1 {
-    font-size: 3rem;
-    margin: 0;
-    text-shadow: 0 0 10px rgba(79, 195, 247, 0.5); /* Sombra para o texto */
-    animation: glow 2s ease-in-out infinite alternate; /* Animação de brilho para o título */
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 5px rgba(79, 195, 247, 0.5); }
-    to { text-shadow: 0 0 15px rgba(79, 195, 247, 0.8), 0 0 20px rgba(79, 195, 247, 0.6); }
-}
-
-header p {
-    font-size: 1.25rem;
-    margin-top: 1rem;
-    color: var(--text-muted);
-}
-
-header .btn {
-    margin-top: 2rem;
-    background: var(--primary);
-    color: #000;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    text-decoration: none;
-    display: inline-block;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-header .btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: 0.5s;
-    z-index: -1;
-}
-
-header .btn:hover::before {
-    left: 100%;
-}
-
-header .btn:hover {
-    background: #81d4fa;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(79, 195, 247, 0.4);
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 2rem;
-}
-
-.section {
-    background: var(--card);
-    padding: 2rem;
-    border-radius: 12px;
-    margin-bottom: 2rem;
-    box-shadow: 0 0 20px rgba(79, 195, 247, 0.1);
-}
-
-.section h2 {
-    color: var(--primary);
-    margin-bottom: 1rem;
-}
-
-.section h3 {
-    color: var(--accent);
-    margin-top: 2rem;
-}
-
-input[type="number"] {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: #111132;
-    color: white;
-    margin-bottom: 1rem;
-}
-
-.btn {
-    background: var(--accent);
-    color: white;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 8px;
-    font-weight: bold;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: inline-block;
-    margin-top: 0.5rem;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%);
-    transform-origin: 50% 50%;
-}
-
-.btn:focus:not(:active)::after {
-    animation: ripple 1s ease-out;
-}
-
-@keyframes ripple {
-    0% {
-        transform: scale(0, 0);
-        opacity: 0.5;
-    }
-    100% {
-        transform: scale(20, 20);
-        opacity: 0;
-    }
-}
-
-.btn:hover {
-    background: #ff4081;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(245, 0, 87, 0.4);
-}
-
-.stats, .steps, .economy {
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: space-between;
-}
-
-.stat, .step, .economy-item {
-    background: #111132;
-    padding: 1rem;
-    border-radius: 8px;
-    flex: 1;
-    min-width: 200px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(255,255,255,0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.stat:hover, .step:hover, .economy-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(79, 195, 247, 0.2);
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    color: white;
-}
-
-table th, table td {
-    padding: 1rem;
-    border: 1px solid var(--border);
-}
-
-table th {
-    background: var(--primary);
-    color: #000;
-}
-
-ul {
-    padding-left: 1rem;
-}
-
-footer {
-    background: #151542;
-    color: #ccc;
-    text-align: center;
-    padding: 2rem;
-    font-size: 0.85rem;
-    margin-top: 2rem;
-    position: relative;
+    align-items: center;
     overflow: hidden;
 }
 
-footer::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-}
-
-footer::after {
-    content: "";
-    position: absolute;
-    bottom: -50%;
-    right: -50%;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(79, 195, 247, 0.1) 0%, transparent 70%);
-    z-index: 0;
-}
-
-.footer-content {
-    position: relative;
-    z-index: 1;
-}
-
-/* Efeito de partículas no cabeçalho */
-.particles {
+.hero-bg-animation {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    overflow: hidden;
-    z-index: 0;
-}
-
-.particle {
-    position: absolute;
-    background: rgba(79, 195, 247, 0.5);
-    border-radius: 50%;
-    animation: float linear infinite;
+    background: radial-gradient(circle at 20% 50%, rgba(79, 195, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(245, 0, 87, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(0, 230, 118, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
 }
 
 @keyframes float {
-    0% {
-        transform: translateY(0) translateX(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-1000px) translateX(200px);
-        opacity: 0;
-    }
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(1deg); }
+    66% { transform: translateY(10px) rotate(-1deg); }
 }
 
-/* Estilos para o seletor de idioma */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-text {
+    animation: slideInLeft 1s ease-out;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    font-weight: 900;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 30px rgba(79, 195, 247, 0.3);
+}
+
+.hero-text .subtitle {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.hero-stat {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hero-stat h3 {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.hero-ctas {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.cta-primary, .cta-secondary {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.cta-primary {
+    background: var(--gradient-primary);
+    color: #000;
+    box-shadow: 0 10px 30px rgba(79, 195, 247, 0.4);
+}
+
+.cta-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(79, 195, 247, 0.6);
+}
+
+.cta-secondary {
+    background: transparent;
+    color: var(--text-light);
+    border: 2px solid var(--primary);
+}
+
+.cta-secondary:hover {
+    background: var(--primary);
+    color: #000;
+}
+
+.hero-visual {
+    position: relative;
+    animation: slideInRight 1s ease-out;
+}
+
+.price-chart-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.price-chart-container::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: var(--gradient-primary);
+    border-radius: 20px;
+    z-index: -1;
+    opacity: 0.1;
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* Language Selector */
 .language-selector {
     position: absolute;
-    top: 1rem;
+    top: 2rem;
     right: 2rem;
-    z-index: 2;
+    z-index: 10;
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
 
-.language-selector label {
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
 .language-selector select {
-    background: var(--card);
+    background: rgba(27, 27, 58, 0.9);
     color: var(--text-light);
     border: 1px solid var(--border);
-    padding: 0.3rem 0.5rem;
-    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
     font-size: 0.9rem;
     cursor: pointer;
+    backdrop-filter: blur(10px);
 }
 
-.language-selector select:focus {
+/* Trading Interface */
+.trading-section {
+    padding: 4rem 0;
+    background: linear-gradient(180deg, var(--bg) 0%, #1a1a3a 100%);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.trading-interface {
+    background: rgba(27, 27, 58, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 25px;
+    padding: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.trading-interface::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+}
+
+.trading-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.trading-controls {
+    display: grid;
+    gap: 2rem;
+}
+
+.control-group {
+    background: rgba(17, 17, 50, 0.5);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.control-group h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 2px rgba(79, 195, 247, 0.3);
+    box-shadow: 0 0 0 3px rgba(79, 195, 247, 0.1);
+}
+
+.btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1rem;
+}
+
+.btn-buy {
+    background: var(--gradient-success);
+    color: #000;
+}
+
+.btn-buy:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 230, 118, 0.4);
+}
+
+.btn-sell {
+    background: var(--gradient-accent);
+    color: white;
+}
+
+.btn-sell:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(245, 0, 87, 0.4);
+}
+
+.btn-connect {
+    background: var(--gradient-primary);
+    color: #000;
+}
+
+.btn-connect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(79, 195, 247, 0.4);
+}
+
+.wallet-info {
+    background: rgba(17, 17, 50, 0.3);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.info-value {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Features Section */
+.features-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #1a1a3a 0%, #0d0d2b 100%);
+    position: relative;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.section-header h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: rgba(27, 27, 58, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--gradient-primary);
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(79, 195, 247, 0.2);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.feature-card h3 {
+    color: var(--primary);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+/* Price Prediction Section */
+.prediction-section {
+    padding: 6rem 0;
+    background: var(--bg);
+}
+
+.prediction-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.prediction-chart {
+    background: rgba(27, 27, 58, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    height: 400px;
+}
+
+.prediction-info {
+    padding: 2rem;
+}
+
+.prediction-info h2 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.prediction-highlights {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.highlight-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(27, 27, 58, 0.5);
+    border-radius: 10px;
+}
+
+.highlight-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-success);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+}
+
+/* Testimonials Section */
+.testimonials-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #1a1a3a 0%, #2d1b69 100%);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background: rgba(27, 27, 58, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.testimonial-card::before {
+    content: '"';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 4rem;
+    color: var(--primary);
+    font-family: serif;
+}
+
+.testimonial-text {
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+}
+
+.author-info h4 {
+    color: var(--text-light);
+    margin-bottom: 0.25rem;
+}
+
+.author-info p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Roadmap Section */
+.roadmap-section {
+    padding: 6rem 0;
+    background: var(--bg);
+}
+
+.roadmap-timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.roadmap-timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
+    background: var(--gradient-primary);
+}
+
+.roadmap-item {
+    position: relative;
+    margin-bottom: 4rem;
+    width: 45%;
+}
+
+.roadmap-item:nth-child(odd) {
+    left: 0;
+    padding-right: 2rem;
+}
+
+.roadmap-item:nth-child(even) {
+    left: 55%;
+    padding-left: 2rem;
+}
+
+.roadmap-content {
+    background: rgba(27, 27, 58, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.roadmap-date {
+    background: var(--gradient-primary);
+    color: #000;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.roadmap-icon {
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-weight: bold;
+    transform: translateY(-50%);
+}
+
+.roadmap-item:nth-child(odd) .roadmap-icon {
+    right: -20px;
+}
+
+.roadmap-item:nth-child(even) .roadmap-icon {
+    left: -20px;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #1a1a3a 0%, #0d0d2b 100%);
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: rgba(27, 27, 58, 0.8);
+    backdrop-filter: blur(20px);
+    margin-bottom: 1rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+    color: var(--primary);
+}
+
+.faq-answer {
+    padding: 0 2rem 1.5rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    display: none;
+}
+
+.faq-answer.active {
+    display: block;
+}
+
+.faq-icon {
+    transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(180deg);
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #2d1b69 0%, #4fc3f7 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+}
+
+.cta-content {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Footer */
+footer {
+    background: #0a0a1f;
+    padding: 4rem 0 2rem;
+    color: var(--text-muted);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h3 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: var(--primary);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.social-links a {
+    width: 50px;
+    height: 50px;
+    background: rgba(27, 27, 58, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    background: var(--primary);
+    color: #000;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+    }
+    
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+    
+    .trading-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .prediction-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .roadmap-item {
+        width: 100% !important;
+        left: 0 !important;
+        padding: 0 0 0 3rem !important;
+    }
+    
+    .roadmap-timeline::before {
+        left: 20px;
+    }
+    
+    .roadmap-icon {
+        left: 0 !important;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #29b6f6;
+}
+
+/* Loading animation */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: var(--primary);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Pulse animation for important elements */
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Glow effect */
+.glow {
+    box-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
 }
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
 </head>
 <body>
-<header>
-    <div class="particles" id="particles-js"></div>
-    <div class="trading-graph"></div>
-    <div class="header-content">
-        <div class="language-selector">
-            <label for="language-select">Language:</label>
-            <select id="language-select">
-                <option value="pt-BR">Português</option>
-                <option value="en">English</option>
-            </select>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-bg-animation"></div>
+    <div class="language-selector">
+        <select id="language-select">
+            <option value="pt-BR">🇧🇷 Português</option>
+            <option value="en">🇺🇸 English</option>
+        </select>
+    </div>
+    
+    <div class="hero-content">
+        <div class="hero-text">
+            <h1>Bitnest<br>BTN</h1>
+            <p class="subtitle" data-lang="pt-BR">Revolucione seus investimentos com liquidez algorítmica e recompensas automáticas de 10%</p>
+            <p class="subtitle" data-lang="en" style="display: none;">Revolutionize your investments with algorithmic liquidity and automatic 10% rewards</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <h3>10%</h3>
+                    <p data-lang="pt-BR">Recompensas Automáticas</p>
+                    <p data-lang="en" style="display: none;">Automatic Rewards</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>10%</h3>
+                    <p data-lang="pt-BR">Liquidez Garantida</p>
+                    <p data-lang="en" style="display: none;">Guaranteed Liquidity</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>0%</h3>
+                    <p data-lang="pt-BR">Taxas Ocultas</p>
+                    <p data-lang="en" style="display: none;">Hidden Fees</p>
+                </div>
+                <div class="hero-stat">
+                    <h3>∞</h3>
+                    <p data-lang="pt-BR">Segurança</p>
+                    <p data-lang="en" style="display: none;">Security</p>
+                </div>
+            </div>
+            
+            <div class="hero-ctas">
+                <a href="#trading" class="cta-primary pulse" data-lang="pt-BR">🚀 Comprar Agora</a>
+                <a href="#trading" class="cta-primary pulse" data-lang="en" style="display: none;">🚀 Buy Now</a>
+                <a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank" class="cta-secondary" data-lang="pt-BR">📊 Ver Contrato</a>
+                <a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank" class="cta-secondary" data-lang="en" style="display: none;">📊 View Contract</a>
+            </div>
         </div>
-        <h1>Bitnest BTN</h1>
-        <p data-lang="pt-BR">O Futuro dos Tokens de Liquidez Algorítmica</p>
-        <p data-lang="en" style="display: none;">The Future of Algorithmic Liquidity Tokens</p>
-        <a class="btn btn-buy" href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" rel="noopener" target="_blank">Contract on BscScan</a>
         
+</section>
+
+<!-- Trading Interface -->
+<section id="trading" class="trading-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 data-lang="pt-BR">Interface de Negociação</h2>
+            <h2 data-lang="en" style="display: none;">Trading Interface</h2>
+            <p data-lang="pt-BR">Negocie diretamente através do contrato inteligente com liquidez algorítmica</p>
+            <p data-lang="en" style="display: none;">Trade directly through the smart contract with algorithmic liquidity</p>
+        </div>
+        
+        <div class="trading-interface">
+            <div class="trading-grid">
+                <div class="trading-controls">
+                    <div class="control-group">
+                        <h3 data-lang="pt-BR">💰 Comprar BitNest BTN</h3>
+                        <h3 data-lang="en" style="display: none;">💰 Buy BitNest BTN</h3>
+                        <div class="input-group">
+                            <input id="bnbAmount" placeholder="Quantidade em BNB" type="number" step="0.001" min="0"/>
+                        </div>
+                        <button class="btn btn-buy" onclick="buyBTN()" data-lang="pt-BR">🛒 Comprar BitNest</button>
+                        <button class="btn btn-buy" onclick="buyBTN()" data-lang="en" style="display: none;">🛒 Buy BitNest</button>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3 data-lang="pt-BR">💱 Vender BitNest BTN</h3>
+                        <h3 data-lang="en" style="display: none;">💱 Sell BitNest BTN</h3>
+                        <div class="input-group">
+                            <input id="tokenAmount" placeholder="Quantidade BTN" type="number" step="0.001" min="0"/>
+                        </div>
+                        <button class="btn btn-sell" onclick="sellBTN()" data-lang="pt-BR">💸 Vender BitNest</button>
+                        <button class="btn btn-sell" onclick="sellBTN()" data-lang="en" style="display: none;">💸 Sell BitNest</button>
+                    </div>
+                    
+                    <div class="control-group">
+                        <button class="btn btn-connect" onclick="connectWallet()" data-lang="pt-BR">🔌 Conectar Carteira</button>
+                        <button class="btn btn-connect" onclick="connectWallet()" data-lang="en" style="display: none;">🔌 Connect Wallet</button>
+                        <button class="btn btn-connect" onclick="addTokenToWallet()" data-lang="pt-BR">➕ Adicionar à Carteira</button>
+                        <button class="btn btn-connect" onclick="addTokenToWallet()" data-lang="en" style="display: none;">➕ Add to Wallet</button>
+                    </div>
+                </div>
+                
+                <div class="wallet-info">
+                    <h3 data-lang="pt-BR">Informações da Carteira</h3>
+                    <h3 data-lang="en" style="display: none;">Wallet Information</h3>
+                    
+                    <div class="info-item">
+                        <span class="info-label" data-lang="pt-BR">Status:</span>
+                        <span class="info-label" data-lang="en" style="display: none;">Status:</span>
+                        <span id="account" class="info-value" data-lang="pt-BR">🔒 Não conectado</span>
+                        <span id="account_en" class="info-value" data-lang="en" style="display: none;">🔒 Not connected</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label" data-lang="pt-BR">Preço Atual:</span>
+                        <span class="info-label" data-lang="en" style="display: none;">Current Price:</span>
+                        <span id="price" class="info-value" data-lang="pt-BR">⏳ Carregando...</span>
+                        <span id="price_en" class="info-value" data-lang="en" style="display: none;">⏳ Loading...</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label" data-lang="pt-BR">Saldo BTN:</span>
+                        <span class="info-label" data-lang="en" style="display: none;">BTN Balance:</span>
+                        <span id="balance" class="info-value" data-lang="pt-BR">⏳ Carregando...</span>
+                        <span id="balance_en" class="info-value" data-lang="en" style="display: none;">⏳ Loading...</span>
+                    </div>
+                    
+                    <div class="info-item">
+                        <span class="info-label" data-lang="pt-BR">Contrato:</span>
+                        <span class="info-label" data-lang="en" style="display: none;">Contract:</span>
+                        <span class="info-value">0x98e3...19ED</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</header>
-<div class="container">
-<div class="section">
-<h2 data-lang="pt-BR">Interface de Compra/Venda</h2>
-<h2 data-lang="en" style="display: none;">Buy/Sell Interface</h2>
-<p id="account" data-lang="pt-BR">🔒 Carteira: não conectada</p>
-<p id="account_en" data-lang="en" style="display: none;">🔒 Wallet: not connected</p>
-<p id="price" data-lang="pt-BR">💲 Preço Atual do BTN: ...</p>
-<p id="price_en" data-lang="en" style="display: none;">💲 Current BTN Price: ...</p>
-<p id="balance" data-lang="pt-BR">💰 Saldo de BTN: ...</p>
-<p id="balance_en" data-lang="en" style="display: none;">💰 BTN Balance: ...</p>
-<div class="stats">
-<div class="stat">
-<h3>1B</h3>
-<p data-lang="pt-BR">Oferta Total</p>
-<p data-lang="en" style="display: none;">Total Supply</p>
-</div>
-<div class="stat">
-<h3>10%</h3>
-<p data-lang="pt-BR">Recompensas</p>
-<p data-lang="en" style="display: none;">Rewards</p>
-</div>
-<div class="stat">
-<h3>10%</h3>
-<p data-lang="pt-BR">Liquidez</p>
-<p data-lang="en" style="display: none;">Liquidity</p>
-</div>
-<div class="stat">
-<h3>0%</h3>
-<p data-lang="pt-BR">Taxas</p>
-<p data-lang="en" style="display: none;">Fees</p>
-</div>
-</div>
-<h3 data-lang="pt-BR">Comprar BitNest</h3>
-<h3 data-lang="en" style="display: none;">Buy BitNest</h3>
-<input id="bnbAmount" placeholder="Amount in BNB" type="number"/>
-<a class="btn btn-buy" href="javascript:buyBTN()" data-lang="pt-BR">🛒 Comprar BitNest</a>
-<a class="btn btn-buy" href="javascript:buyBTN()" data-lang="en" style="display: none;">🛒 Buy BitNest</a>
-<h3 data-lang="pt-BR">Vender BitNest</h3>
-<h3 data-lang="en" style="display: none;">Sell BitNest</h3>
-<input id="tokenAmount" placeholder="BTN amount" type="number"/>
-<a class="btn btn-sell" href="javascript:sellBTN()" data-lang="pt-BR">💱 Vender BitNest</a>
-<a class="btn btn-sell" href="javascript:sellBTN()" data-lang="en" style="display: none;">💱 Sell BitNest</a>
-<a class="btn btn-connect" href="javascript:connectWallet()" data-lang="pt-BR">🔌 Conectar Carteira</a>
-<a class="btn btn-connect" href="javascript:connectWallet()" data-lang="en" style="display: none;">🔌 Connect Wallet</a>
-<a class="btn btn-connect" href="javascript:addTokenToWallet()" data-lang="pt-BR">➕ Adicionar BitNest à Carteira</a>
-<a class="btn btn-connect" href="javascript:addTokenToWallet()" data-lang="en" style="display: none;">➕ Add BitNest to Wallet</a>
-<p data-lang="pt-BR"><strong>Contrato BitNest BTN:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
-<p data-lang="en" style="display: none;"><strong>BitNest BTN Contract:</strong> 0x98e30AC086ba850A81A24ABbdc46dE693f0719ED</p>
-</div>
-<div class="section">
-<h2 data-lang="pt-BR">O que é Bitnest BTN?</h2>
-<h2 data-lang="en" style="display: none;">What is Bitnest BTN?</h2>
-<p data-lang="pt-BR">O Bitnest BTN é um token revolucionário que combina liquidez algorítmica com recompensas automáticas, criando um ecossistema sustentável inspirado nos mecanismos inovadores dos tokens Pump Fun, mas com recursos aprimorados de segurança e estabilidade.</p>
-<p data-lang="en" style="display: none;">Bitnest BTN is a revolutionary token that combines algorithmic liquidity with automatic rewards, creating a sustainable ecosystem inspired by the innovative mechanisms of Pump Fun tokens, but with enhanced security and stability features.</p>
-<p data-lang="pt-BR">🚀 10% de recompensas + 10% de liquidez bloqueada em cada transação!</p>
-<p data-lang="en" style="display: none;">🚀 10% rewards + 10% locked liquidity on each transaction!</p>
-</div>
-<div class="section">
-<h2 data-lang="pt-BR">Inovações Chave</h2>
-<h2 data-lang="en" style="display: none;">Key Innovations</h2>
-<ul>
-<li data-lang="pt-BR">Liquidez algorítmica integrada com uma curva de ligação linear que ajusta o preço automaticamente com base na oferta e demanda</li>
-<li data-lang="en" style="display: none;">Algorithmic liquidity integrated with a linear bonding curve that automatically adjusts the price based on supply and demand</li>
-<li data-lang="pt-BR">10% de cada venda é permanentemente bloqueado no pool de liquidez do contrato, criando reservas sempre crescentes</li>
-<li data-lang="en" style="display: none;">10% of each sale is permanently locked in the contract's liquidity pool, creating ever-increasing reserves</li>
-<li data-lang="pt-BR">10% de recompensas automáticas distribuídas proporcionalmente entre todos os detentores em cada transação de compra</li>
-<li data-lang="en" style="display: none;">10% automatic rewards distributed proportionally among all holders on each buy transaction</li>
-<li data-lang="pt-BR">Design à prova de rug pulls - a liquidez não pode ser removida por ninguém, incluindo desenvolvedores</li>
-<li data-lang="en" style="display: none;">Rug-pull proof design - liquidity cannot be removed by anyone, including developers</li>
-<li data-lang="pt-BR">Sem necessidade de DEX externa - as negociações ocorrem diretamente pelo contrato inteligente</li>
-<li data-lang="en" style="display: none;">No external DEX required - trades occur directly through the smart contract</li>
-<li data-lang="pt-BR">Mecânica transparente e verificável na blockchain sem taxas ocultas</li>
-<li data-lang="en" style="display: none;">Transparent and verifiable mechanics on the blockchain with no hidden fees</li>
-<li data-lang="pt-BR">Estabilidade de preço por meio de uma curva de ligação matemática que previne volatilidade extrema</li>
-<li data-lang="en" style="display: none;">Price stability through a mathematical bonding curve that prevents extreme volatility</li>
-</ul>
-</div>
-<div class="section">
-<h2 data-lang="pt-BR">Como Funciona a Liquidez Algorítmica</h2>
-<h2 data-lang="en" style="display: none;">How Algorithmic Liquidity Works</h2>
-<div class="steps">
-<div class="step">
-<h3 data-lang="pt-BR">1</h3>
-<h3 data-lang="en" style="display: none;">1</h3>
-<h4 data-lang="pt-BR">Curva de Ligação Linear</h4>
-<h4 data-lang="en" style="display: none;">Linear Bonding Curve</h4>
-<p data-lang="pt-BR">O preço do token segue uma fórmula matemática previsível: Preço = Preço Base + (k * Oferta). Isso cria uma descoberta de preço justa sem manipulação.</p>
-<p data-lang="en" style="display: none;">The token price follows a predictable mathematical formula: Price = Base Price + (k * Supply). This creates fair price discovery without manipulation.</p>
-</div>
-<div class="step">
-<h3 data-lang="pt-BR">2</h3>
-<h3 data-lang="en" style="display: none;">2</h3>
-<h4 data-lang="pt-BR">Bloqueio Automático de Liquidez</h4>
-<h4 data-lang="en" style="display: none;">Automatic Liquidity Lock</h4>
-<p data-lang="pt-BR">10% de cada venda é permanentemente adicionado ao pool de liquidez do contrato. Isso aumenta as reservas ao longo do tempo, melhorando a estabilidade de preço.</p>
-<p data-lang="en" style="display: none;">10% of each sale is permanently added to the contract's liquidity pool. This increases reserves over time, improving price stability.</p>
-</div>
-<div class="step">
-<h3 data-lang="pt-BR">3</h3>
-<h3 data-lang="en" style="display: none;">3</h3>
-<h4 data-lang="pt-BR">Recompensas aos Detentores</h4>
-<h4 data-lang="en" style="display: none;">Rewards for Holders</h4>
-<p data-lang="pt-BR">10% de cada compra é distribuído aos detentores existentes proporcionalmente à sua participação. Quanto mais BTN você possui, mais você ganha.</p>
-<p data-lang="en" style="display: none;">10% of each purchase is distributed to existing holders proportionally to their share. The more BTN you own, the more you earn.</p>
-</div>
-</div>
-</div>
-<div class="section">
-<h2 data-lang="pt-BR">📈 Comparação da Economia do Token</h2>
-<h2 data-lang="en" style="display: none;">📈 Token Economy Comparison</h2>
-<p data-lang="pt-BR">O Bitnest BTN oferece vantagens significativas sobre tokens tradicionais:</p>
-<p data-lang="en" style="display: none;">Bitnest BTN offers significant advantages over traditional tokens:</p>
-<table>
-<tr>
-<th data-lang="pt-BR">Característica</th>
-<th data-lang="en" style="display: none;">Feature</th>
-<th data-lang="pt-BR">Token Padrão</th>
-<th data-lang="en" style="display: none;">Standard Token</th>
-<th data-lang="pt-BR">Bitnest BTN</th>
-<th data-lang="en" style="display: none;">Bitnest BTN</th>
-</tr>
-<tr>
-<td data-lang="pt-BR">Segurança de Liquidez</td>
-<td data-lang="en" style="display: none;">Liquidity Security</td>
-<td data-lang="pt-BR">❌ Vulnerável a rug pulls</td>
-<td data-lang="en" style="display: none;">❌ Vulnerable to rug pulls</td>
-<td data-lang="pt-BR">✅ Bloqueado algoritmicamente</td>
-<td data-lang="en" style="display: none;">✅ Algorithmically locked</td>
-</tr>
-<tr>
-<td data-lang="pt-BR">Descoberta de Preço</td>
-<td data-lang="en" style="display: none;">Price Discovery</td>
-<td data-lang="pt-BR">❌ Dependente da liquidez DEX</td>
-<td data-lang="en" style="display: none;">❌ Dependent on DEX liquidity</td>
-<td data-lang="pt-BR">✅ Curva de ligação matemática</td>
-<td data-lang="en" style="display: none;">✅ Mathematical bonding curve</td>
-</tr>
-<tr>
-<td data-lang="pt-BR">Recompensas aos Detentores</td>
-<td data-lang="en" style="display: none;">Rewards for Holders</td>
-<td data-lang="pt-BR">❌ Manuais ou inexistentes</td>
-<td data-lang="en" style="display: none;">❌ Manual or non-existent</td>
-<td data-lang="pt-BR">✅ 10% distribuído automaticamente</td>
-<td data-lang="en" style="display: none;">✅ 10% distributed automatically</td>
-</tr>
-<tr>
-<td data-lang="pt-BR">Crescimento de Liquidez</td>
-<td data-lang="en" style="display: none;">Liquidity Growth</td>
-<td data-lang="pt-BR">❌ Estático ou decrescente</td>
-<td data-lang="en" style="display: none;">❌ Static or decreasing</td>
-<td data-lang="pt-BR">✅ 10% auto-composto</td>
-<td data-lang="en" style="display: none;">✅ 10% auto-compounding</td>
-</tr>
-<tr>
-<td data-lang="pt-BR">Taxas de Transação</td>
-<td data-lang="en" style="display: none;">Transaction Fees</td>
-<td data-lang="pt-BR">❌ Geralmente 2-5%</td>
-<td data-lang="en" style="display: none;">❌ Usually 2-5%</td>
-<td data-lang="pt-BR">✅ 0% (apenas gás da rede)</td>
-<td data-lang="en" style="display: none;">✅ 0% (network gas only)</td>
-</tr>
-</table>
-</div>
-<div class="section">
-<h2 data-lang="pt-BR">Por que Escolher o Bitnest BTN?</h2>
-<h2 data-lang="en" style="display: none;">Why Choose Bitnest BTN?</h2>
-<p data-lang="pt-BR">O token BTN representa um novo paradigma em finanças descentralizadas ao combinar:</p>
-<p data-lang="en" style="display: none;">The BTN token represents a new paradigm in decentralized finance by combining:</p>
-<ul>
-<li data-lang="pt-BR">Segurança por meio de contratos inteligentes imutáveis e liquidez bloqueada</li>
-<li data-lang="en" style="display: none;">Security through immutable smart contracts and locked liquidity</li>
-<li data-lang="pt-BR">Sustentabilidade via ajustes algorítmicos de preço e reservas compostas</li>
-<li data-lang="en" style="display: none;">Sustainability via algorithmic price adjustments and compounded reserves</li>
-<li data-lang="pt-BR">Recompensas que beneficiam automaticamente os detentores de longo prazo</li>
-<li data-lang="en" style="display: none;">Rewards that automatically benefit long-term holders</li>
-<li data-lang="pt-BR">Transparência com todas as mecânicas visíveis na blockchain</li>
-<li data-lang="en" style="display: none;">Transparency with all mechanics visible on the blockchain</li>
-</ul>
-</div>
-<div class="section">
-<h2 data-lang="pt-BR">🔍 Análise Técnica</h2>
-<h2 data-lang="en" style="display: none;">🔍 Technical Analysis</h2>
-<h3 data-lang="pt-BR">Mecânica do Contrato Inteligente</h3>
-<h3 data-lang="en" style="display: none;">Smart Contract Mechanics</h3>
-<ul>
-<li data-lang="pt-BR">Fórmula da Curva de Ligação: O preço aumenta linearmente com a oferta segundo p = m*x + b, onde m é a inclinação e b é o preço base</li>
-<li data-lang="en" style="display: none;">Bonding Curve Formula: Price increases linearly with supply according to p = m*x + b, where m is the slope and b is the base price</li>
-<li data-lang="pt-BR">Bloqueio de Liquidez: 10% de todos os valores de venda são convertidos em BNB e permanentemente adicionados às reservas do contrato</li>
-<li data-lang="en" style="display: none;">Liquidity Lock: 10% of all sale values are converted to BNB and permanently added to the contract's reserves</li>
-<li data-lang="pt-BR">Distribuição de Recompensas: 10% dos valores de compra são distribuídos proporcionalmente aos detentores com base em sua porcentagem da oferta total</li>
-<li data-lang="en" style="display: none;">Reward Distribution: 10% of purchase values are distributed proportionally to holders based on their percentage of the total supply</li>
-<li data-lang="pt-BR">Sem Privilégios de Proprietário: O contrato é totalmente descentralizado, sem chaves de administrador ou backdoors</li>
-<li data-lang="en" style="display: none;">No Owner Privileges: The contract is fully decentralized, with no admin keys or backdoors</li>
-</ul>
-<h3 data-lang="pt-BR">Vantagens Econômicas</h3>
-<h3 data-lang="en" style="display: none;">Economic Advantages</h3>
-<div class="economy">
-<div class="economy-item" data-lang="pt-BR">↑ Preço sobe com a demanda</div>
-<div class="economy-item" data-lang="en" style="display: none;">↑ Price increases with demand</div>
-<div class="economy-item" data-lang="pt-BR">↓ Preço cai com a oferta</div>
-<div class="economy-item" data-lang="en" style="display: none;">↓ Price decreases with supply</div>
-<div class="economy-item" data-lang="pt-BR">∞ Profundidade de liquidez infinita</div>
-<div class="economy-item" data-lang="en" style="display: none;">∞ Infinite liquidity depth</div>
-<div class="economy-item" data-lang="pt-BR">≡ Preços previsíveis</div>
-<div class="economy-item" data-lang="en" style="display: none;">≡ Predictable prices</div>
-</div>
-<p data-lang="pt-BR">O modelo de liquidez algorítmica garante que:</p>
-<p data-lang="en" style="display: none;">The algorithmic liquidity model ensures that:</p>
-<ul>
-<li data-lang="pt-BR">Adotantes iniciais se beneficiam de preços de entrada mais baixos</li>
-<li data-lang="en" style="display: none;">Early adopters benefit from lower entry prices</li>
-<li data-lang="pt-BR">O sistema permanece líquido mesmo durante volatilidade de mercado</li>
-<li data-lang="en" style="display: none;">The system remains liquid even during market volatility</li>
-<li data-lang="pt-BR">Manipulação de preço por meio de wash trading é impossível</li>
-<li data-lang="en" style="display: none;">Price manipulation through wash trading is impossible</li>
-<li data-lang="pt-BR">O token não pode ser "despejado" a valor zero</li>
-<li data-lang="en" style="display: none;">The token cannot be "dumped" to zero value</li>
-</ul>
-</div>
+</section>
+
+<!-- Features Section -->
+<section class="features-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 data-lang="pt-BR">Por que escolher Bitnest BTN?</h2>
+            <h2 data-lang="en" style="display: none;">Why choose Bitnest BTN?</h2>
+            <p data-lang="pt-BR">Tecnologia revolucionária que redefine o futuro das finanças descentralizadas</p>
+            <p data-lang="en" style="display: none;">Revolutionary technology that redefines the future of decentralized finance</p>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 data-lang="pt-BR">100% Seguro</h3>
+                <h3 data-lang="en" style="display: none;">100% Secure</h3>
+                <p data-lang="pt-BR">Liquidez permanentemente bloqueada no contrato. Impossível de ser removida, eliminando completamente o risco de rug pulls.</p>
+                <p data-lang="en" style="display: none;">Liquidity permanently locked in the contract. Impossible to remove, completely eliminating rug pull risks.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 data-lang="pt-BR">Recompensas Automáticas</h3>
+                <h3 data-lang="en" style="display: none;">Automatic Rewards</h3>
+                <p data-lang="pt-BR">Ganhe 10% de cada compra distribuído automaticamente entre todos os holders. Quanto mais você possui, mais você ganha.</p>
+                <p data-lang="en" style="display: none;">Earn 10% of every purchase automatically distributed among all holders. The more you own, the more you earn.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3 data-lang="pt-BR">Curva de Ligação</h3>
+                <h3 data-lang="en" style="display: none;">Bonding Curve</h3>
+                <p data-lang="pt-BR">Preço determinado matematicamente pela oferta e demanda. Crescimento sustentável e previsível baseado em algoritmos.</p>
+                <p data-lang="en" style="display: none;">Price mathematically determined by supply and demand. Sustainable and predictable growth based on algorithms.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 data-lang="pt-BR">Zero Taxas</h3>
+                <h3 data-lang="en" style="display: none;">Zero Fees</h3>
+                <p data-lang="pt-BR">Sem taxas de transação ocultas. Você paga apenas o gas da rede Binance Smart Chain, mantendo seus lucros intactos.</p>
+                <p data-lang="en" style="display: none;">No hidden transaction fees. You only pay Binance Smart Chain network gas, keeping your profits intact.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3 data-lang="pt-BR">Liquidez Crescente</h3>
+                <h3 data-lang="en" style="display: none;">Growing Liquidity</h3>
+                <p data-lang="pt-BR">10% de cada venda aumenta permanentemente o pool de liquidez, criando estabilidade e valor crescente ao longo do tempo.</p>
+                <p data-lang="en" style="display: none;">10% of each sale permanently increases the liquidity pool, creating stability and growing value over time.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">🌐</div>
+                <h3 data-lang="pt-BR">Totalmente Descentralizado</h3>
+                <h3 data-lang="en" style="display: none;">Fully Decentralized</h3>
+                <p data-lang="pt-BR">Sem controle central ou chaves de administrador. O contrato opera autonomamente, garantindo transparência total.</p>
+                <p data-lang="en" style="display: none;">No central control or admin keys. The contract operates autonomously, ensuring complete transparency.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Price Prediction Section -->
+<section class="prediction-section">
+    <div class="container">
+        <div class="prediction-content">
+            <div class="prediction-info">
+                <h2 data-lang="pt-BR">Potencial de Crescimento</h2>
+                <h2 data-lang="en" style="display: none;">Growth Potential</h2>
+                <p data-lang="pt-BR">Baseado na mecânica da curva de ligação e adoção histórica de tokens similares, o BTN tem potencial para crescimento exponencial.</p>
+                <p data-lang="en" style="display: none;">Based on bonding curve mechanics and historical adoption of similar tokens, BTN has potential for exponential growth.</p>
+                
+                <div class="prediction-highlights">
+                    <div class="highlight-item">
+                        <div class="highlight-icon">🎯</div>
+                        <div>
+                            <strong data-lang="pt-BR">Adotantes Iniciais:</strong>
+                            <strong data-lang="en" style="display: none;">Early Adopters:</strong>
+                            <span data-lang="pt-BR">Preços mais baixos garantidos</span>
+                            <span data-lang="en" style="display: none;">Guaranteed lower prices</span>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-item">
+                        <div class="highlight-icon">📊</div>
+                        <div>
+                            <strong data-lang="pt-BR">Crescimento Sustentável:</strong>
+                            <strong data-lang="en" style="display: none;">Sustainable Growth:</strong>
+                            <span data-lang="pt-BR">Baseado em matemática, não especulação</span>
+                            <span data-lang="en" style="display: none;">Based on mathematics, not speculation</span>
+                        </div>
+                    </div>
+                    
+                    <div class="highlight-item">
+                        <div class="highlight-icon">💰</div>
+                        <div>
+                            <strong data-lang="pt-BR">Renda Passiva:</strong>
+                            <strong data-lang="en" style="display: none;">Passive Income:</strong>
+                            <span data-lang="pt-BR">Recompensas contínuas por apenas manter</span>
+                            <span data-lang="en" style="display: none;">Continuous rewards just for holding</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="prediction-chart">
+                <canvas id="predictionChart" width="400" height="300"></canvas>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 data-lang="pt-BR">O que dizem nossos investidores</h2>
+            <h2 data-lang="en" style="display: none;">What our investors say</h2>
+        </div>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text" data-lang="pt-BR">Finalmente um token que me dá retorno só por segurar! As recompensas automáticas são incrĂveis e o mecanismo de segurança me dá total tranquilidade.</p>
+                <p class="testimonial-text" data-lang="en" style="display: none;">Finally a token that gives me returns just for holding! The automatic rewards are incredible and the security mechanism gives me complete peace of mind.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">M</div>
+                    <div class="author-info">
+                        <h4>Marcus Silva</h4>
+                        <p data-lang="pt-BR">Investidor desde o lançamento</p>
+                        <p data-lang="en" style="display: none;">Investor since launch</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text" data-lang="pt-BR">A transparência do BTN é impressionante. Posso ver exatamente como funciona na blockchain e isso me dá confiança para investir mais.</p>
+                <p class="testimonial-text" data-lang="en" style="display: none;">BTN's transparency is impressive. I can see exactly how it works on the blockchain and that gives me confidence to invest more.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">A</div>
+                    <div class="author-info">
+                        <h4>Ana Costa</h4>
+                        <p data-lang="pt-BR">Trader profissional</p>
+                        <p data-lang="en" style="display: none;">Professional trader</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text" data-lang="pt-BR">Nunca vi um token com essa mecânica inovadora. O preço cresce naturalmente e ainda ganho recompensas. É o futuro das crypto!</p>
+                <p class="testimonial-text" data-lang="en" style="display: none;">I've never seen a token with such innovative mechanics. The price grows naturally and I still earn rewards. It's the future of crypto!</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">R</div>
+                    <div class="author-info">
+                        <h4>Roberto Lima</h4>
+                        <p data-lang="pt-BR">Entusiasta DeFi</p>
+                        <p data-lang="en" style="display: none;">DeFi enthusiast</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Roadmap Section -->
+<section class="roadmap-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 data-lang="pt-BR">Roadmap do Projeto</h2>
+            <h2 data-lang="en" style="display: none;">Project Roadmap</h2>
+        </div>
+        
+        <div class="roadmap-timeline">
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-date">Q1 2025</span>
+                    <h3 data-lang="pt-BR">Lançamento do Token</h3>
+                    <h3 data-lang="en" style="display: none;">Token Launch</h3>
+                    <p data-lang="pt-BR">Deploy do contrato inteligente na BSC com mecânica de liquidez algorítmica e sistema de recompensas automáticas.</p>
+                    <p data-lang="en" style="display: none;">Smart contract deployment on BSC with algorithmic liquidity mechanics and automatic rewards system.</p>
+                </div>
+                <div class="roadmap-icon">✅</div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-date">Q2 2025</span>
+                    <h3 data-lang="pt-BR">Auditoria de Segurança</h3>
+                    <h3 data-lang="en" style="display: none;">Security Audit</h3>
+                    <p data-lang="pt-BR">Auditoria completa do contrato por empresa especializada e publicação dos resultados para transparência total.</p>
+                    <p data-lang="en" style="display: none;">Complete contract audit by specialized company and publication of results for total transparency.</p>
+                </div>
+                <div class="roadmap-icon">✅</div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-date">Q3 2025</span>
+                    <h3 data-lang="pt-BR">Dashboard Avançado</h3>
+                    <h3 data-lang="en" style="display: none;">Advanced Dashboard</h3>
+                    <p data-lang="pt-BR">Lançamento de dashboard com analytics em tempo real, histórico de preços e calculadora de recompensas.</p>
+                    <p data-lang="en" style="display: none;">Launch of dashboard with real-time analytics, price history and rewards calculator.</p>
+                </div>
+                <div class="roadmap-icon">🔄</div>
+            </div>
+            
+            <div class="roadmap-item">
+                <div class="roadmap-content">
+                    <span class="roadmap-date">Q4 2025</span>
+                    <h3 data-lang="pt-BR">Expansão Multi-Chain</h3>
+                    <h3 data-lang="en" style="display: none;">Multi-Chain Expansion</h3>
+                    <p data-lang="pt-BR">Deploy em Ethereum e Polygon mantendo a mesma mecânica inovadora e interoperabilidade entre redes.</p>
+                    <p data-lang="en" style="display: none;">Deploy on Ethereum and Polygon maintaining the same innovative mechanics and interoperability between networks.</p>
+                </div>
+                <div class="roadmap-icon">🎯</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 data-lang="pt-BR">Perguntas Frequentes</h2>
+            <h2 data-lang="en" style="display: none;">Frequently Asked Questions</h2>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="pt-BR">Como funciona o sistema de recompensas automáticas?</span>
+                    <span data-lang="en" style="display: none;">How does the automatic rewards system work?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-lang="pt-BR">A cada compra de BTN, 10% do valor é automaticamente distribuído entre todos os holders proporcionalmente à quantidade de tokens que possuem. Isso acontece instantaneamente, sem necessidade de stake ou claim manual.</p>
+                    <p data-lang="en" style="display: none;">With each BTN purchase, 10% of the value is automatically distributed among all holders proportionally to the amount of tokens they own. This happens instantly, without the need for staking or manual claiming.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="pt-BR">O que é a curva de ligação e como ela funciona?</span>
+                    <span data-lang="en" style="display: none;">What is the bonding curve and how does it work?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-lang="pt-BR">A curva de ligação é uma fórmula matemática que determina o preço do token baseado na quantidade em circulação. Conforme mais tokens são comprados, o preço aumenta automaticamente. Isso garante crescimento sustentável e elimina manipulação de preços.</p>
+                    <p data-lang="en" style="display: none;">The bonding curve is a mathematical formula that determines the token price based on the amount in circulation. As more tokens are bought, the price increases automatically. This ensures sustainable growth and eliminates price manipulation.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="pt-BR">Por que o BTN é seguro contra rug pulls?</span>
+                    <span data-lang="en" style="display: none;">Why is BTN safe against rug pulls?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-lang="pt-BR">A liquidez do BTN é permanentemente bloqueada no próprio contrato inteligente. Nem os desenvolvedores nem ninguém pode remover essa liquidez. Além disso, 10% de cada venda aumenta automaticamente o pool, tornando o token cada vez mais seguro.</p>
+                    <p data-lang="en" style="display: none;">BTN's liquidity is permanently locked in the smart contract itself. Neither developers nor anyone else can remove this liquidity. Additionally, 10% of each sale automatically increases the pool, making the token increasingly secure.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <span data-lang="pt-BR">Quais são as taxas para comprar e vender BTN?</span>
+                    <span data-lang="en" style="display: none;">What are the fees for buying and selling BTN?</span>
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    <p data-lang="pt-BR">O BTN não cobra taxas de transação. Você paga apenas o gas da rede Binance Smart Chain. Isso significa que 100% do seu investimento vai para o token, maximizando seus retornos.</p>
+                    <p data-lang="en" style="display: none;">BTN charges no transaction fees. You only pay Binance Smart Chain network gas. This means 100% of your investment goes to the token, maximizing your returns.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Final CTA Section -->
+<section class="cta-section">
+    <div class="cta-content">
+        <h2 data-lang="pt-BR">Não perca essa oportunidade!</h2>
+        <h2 data-lang="en" style="display: none;">Don't miss this opportunity!</h2>
+        <p data-lang="pt-BR">Junte-se aos investidores inteligentes que já descobriram o futuro das finanças descentralizadas</p>
+        <p data-lang="en" style="display: none;">Join the smart investors who have already discovered the future of decentralized finance</p>
+        <div class="hero-ctas">
+            <a href="#trading" class="cta-primary pulse" data-lang="pt-BR">🚀 Investir Agora</a>
+            <a href="#trading" class="cta-primary pulse" data-lang="en" style="display: none;">🚀 Invest Now</a>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
 <footer>
-  <div class="footer-content">
-    <h3 style="color: #fff;">Share this Bitnest Crypto:</h3>
-    <div style="margin: 1rem 0;">
-      <a href="https://x.com/intent/tweet?url=https://bitnest.netlify.app&text=Check+out+Bitnest+BTN!" target="_blank" style="margin: 0 5px;">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/x.svg" alt="X" style="width: 40px; height: 40px; border-radius: 50%; background: #1DA1F2; padding: 7px;">
-      </a>
-      <a href="https://www.facebook.com/sharer/sharer.php?u=https://bitnest.netlify.app" target="_blank" style="margin: 0 5px;">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/facebook.svg" alt="Facebook" style="width: 40px; height: 40px; border-radius: 50%; background: #3b5998; padding: 7px;">
-      </a>
-      <a href="https://www.instagram.com/submit?url=https://bitnest.netlify.app&title=Bitnest+BTN" target="_blank" style="margin: 0 5px;">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/instagram.svg" alt="Instagram" style="width: 40px; height: 40px; border-radius: 50%; background: #E4405F; padding: 7px;">
-      </a>
-      <a href="https://reddit.com/submit?url=https://bitnest.netlify.app&title=Bitnest+BTN" target="_blank" style="margin: 0 5px;">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/reddit.svg" alt="Reddit" style="width: 40px; height: 40px; border-radius: 50%; background: #FF4500; padding: 7px;">
-      </a>
-      <a href="https://t.me/share/url?url=https://bitnest.netlify.app&text=Confira+o+Bitnest+BTN!" target="_blank" style="margin: 0 5px;">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/telegram.svg" alt="Telegram" style="width: 40px; height: 40px; border-radius: 50%; background: #0088cc; padding: 7px;">
-      </a>
-      <a href="https://wa.me/?text=Confira+o+Bitnest+BTN:+https://bitnest.netlify.app" target="_blank" style="margin: 0 5px;">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/whatsapp.svg" alt="WhatsApp" style="width: 40px; height: 40px; border-radius: 50%; background: #25D366; padding: 7px;">
-      </a>
-    </div>
-        <p data-lang="pt-BR">O Bitnest BTN é um token que implementa mecânicas DeFi inovadoras. Embora o contrato inteligente tenha sido auditado, investimentos em criptomoedas envolvem riscos inerentes. Invista apenas o que você pode perder. O mecanismo de curva de ligação proporciona estabilidade de preço, mas não garante lucros.</p>
-        <p data-lang="en" style="display: none;">Bitnest BTN is a token that implements innovative DeFi mechanics. While the smart contract has been audited, cryptocurrency investments involve inherent risks. Invest only what you can afford to lose. The bonding curve mechanism provides price stability but does not guarantee profits.</p>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Bitnest BTN</h3>
+                <p data-lang="pt-BR">O token revolucionário com liquidez algorítmica e recompensas automáticas.</p>
+                <p data-lang="en" style="display: none;">The revolutionary token with algorithmic liquidity and automatic rewards.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h3 data-lang="pt-BR">Links Rápidos</h3>
+                <h3 data-lang="en" style="display: none;">Quick Links</h3>
+                <ul>
+                    <li><a href="#trading" data-lang="pt-BR">Negociar</a></li>
+                    <li><a href="#trading" data-lang="en" style="display: none;">Trade</a></li>
+                    <li><a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank" data-lang="pt-BR">Contrato</a></li>
+                    <li><a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank" data-lang="en" style="display: none;">Contract</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 data-lang="pt-BR">Suporte</h3>
+                <h3 data-lang="en" style="display: none;">Support</h3>
+                <ul>
+                    <li><a href="#faq" data-lang="pt-BR">FAQ</a></li>
+                    <li><a href="#faq" data-lang="en" style="display: none;">FAQ</a></li>
+                    <li><a href="mailto:support@bitnest.com" data-lang="pt-BR">Contato</a></li>
+                    <li><a href="mailto:support@bitnest.com" data-lang="en" style="display: none;">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="social-links">
+            <a href="https://x.com/intent/tweet?url=https://bitnest.netlify.app&text=Check+out+Bitnest+BTN!" target="_blank">🐦</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://bitnest.netlify.app" target="_blank">📘</a>
+            <a href="https://t.me/share/url?url=https://bitnest.netlify.app&text=Confira+o+Bitnest+BTN!" target="_blank">📱</a>
+            <a href="https://wa.me/?text=Confira+o+Bitnest+BTN:+https://bitnest.netlify.app" target="_blank">💬</a>
+        </div>
+        
+        <div class="footer-bottom">
+            <p data-lang="pt-BR">© 2025 Bitnest BTN. Todos os direitos reservados. Investimentos em criptomoedas envolvem riscos. Invista com responsabilidade.</p>
+            <p data-lang="en" style="display: none;">© 2025 Bitnest BTN. All rights reserved. Cryptocurrency investments involve risks. Invest responsibly.</p>
+        </div>
     </div>
 </footer>
-</div>
+
 <script>
-        let web3, contract;
-        const contractAddress = "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED";
-        const ABI = [
-            {
-                "inputs": [],
-                "stateMutability": "nonpayable",
-                "type": "constructor"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "buyer",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "amountSpent",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "tokensBought",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Buy",
-                "type": "event"
-            },
-            {
-                "anonymous": false,
-                "inputs": [
-                    {
-                        "indexed": true,
-                        "internalType": "address",
-                        "name": "seller",
-                        "type": "address"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "tokensSold",
-                        "type": "uint256"
-                    },
-                    {
-                        "indexed": false,
-                        "internalType": "uint256",
-                        "name": "amountReturned",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "Sell",
-                "type": "event"
-            },
-            {
-                "inputs": [],
-                "name": "buy",
-                "outputs": [],
-                "stateMutability": "payable",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "amount",
-                        "type": "uint256"
-                    }
-                ],
-                "name": "sell",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [],
-                "name": "getCurrentPrice",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            },
-            {
-                "inputs": [
-                    {
-                        "internalType": "address",
-                        "name": "account",
-                        "type": "address"
-                    }
-                ],
-                "name": "balanceOf",
-                "outputs": [
-                    {
-                        "internalType": "uint256",
-                        "name": "",
-                        "type": "uint256"
-                    }
-                ],
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
-
-        // Função para criar partículas
-        function createParticles() {
-            const container = document.getElementById('particles-js');
-            const particleCount = 30; /* Reduzido para evitar sobrecarga visual com o novo efeito */
-            
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                
-                // Tamanho aleatório entre 2px e 5px
-                const size = Math.random() * 3 + 2;
-                particle.style.width = `${size}px`;
-                particle.style.height = `${size}px`;
-                
-                // Posição inicial aleatória
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.top = `${Math.random() * 100}%`;
-                
-                // Opacidade aleatória
-                particle.style.opacity = Math.random() * 0.5 + 0.1;
-                
-                // Duração da animação aleatória
-                const duration = Math.random() * 20 + 10;
-                particle.style.animationDuration = `${duration}s`;
-                
-                // Atraso inicial aleatório
-                particle.style.animationDelay = `${Math.random() * 5}s`;
-                
-                container.appendChild(particle);
-            }
-        }
-
-        async function connectWallet() {
-            if (window.ethereum) {
-                try {
-                    await window.ethereum.request({ method: "eth_requestAccounts" });
-                    web3 = new Web3(window.ethereum);
-                    const accounts = await web3.eth.getAccounts();
-                    const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
-                    document.getElementById("account").innerText = "🔓 Carteira: " + shortAccount;
-                    // Update English version if exists
-                    const accountEn = document.getElementById("account_en");
-                    if (accountEn) accountEn.innerText = "🔓 Wallet: " + shortAccount;
-
-                    contract = new web3.eth.Contract(ABI, contractAddress);
-                    getPrice();
-                    getBalance();
-                } catch (error) {
-                    alert("Error connecting wallet: " + error.message);
+    let web3, contract;
+    const contractAddress = "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED";
+    const ABI = [
+        {
+            "inputs": [],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "buyer",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "amountSpent",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "tokensBought",
+                    "type": "uint256"
                 }
-            } else {
-                alert("Please install MetaMask to connect your wallet!");
-            }
-        }
-
-        async function addTokenToWallet() {
-            if (!window.ethereum) {
-                alert("MetaMask is not installed!");
-                return;
-            }
-
-            try {
-                const accounts = await window.ethereum.request({ method: 'eth_accounts' });
-                if (accounts.length === 0) {
-                    await connectWallet();
+            ],
+            "name": "Buy",
+            "type": "event"
+        },
+        {
+            "anonymous": false,
+            "inputs": [
+                {
+                    "indexed": true,
+                    "internalType": "address",
+                    "name": "seller",
+                    "type": "address"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "tokensSold",
+                    "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "internalType": "uint256",
+                    "name": "amountReturned",
+                    "type": "uint256"
                 }
+            ],
+            "name": "Sell",
+            "type": "event"
+        },
+        {
+            "inputs": [],
+            "name": "buy",
+            "outputs": [],
+            "stateMutability": "payable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "amount",
+                    "type": "uint256"
+                }
+            ],
+            "name": "sell",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "getCurrentPrice",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "address",
+                    "name": "account",
+                    "type": "address"
+                }
+            ],
+            "name": "balanceOf",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        }
+    ];
 
-                await window.ethereum.request({
-                    method: 'wallet_watchAsset',
-                    params: {
-                        type: 'ERC20',
-                        options: {
-                            address: "0x98e30AC086ba850A81A24ABbdc46dE693f0719ED",
-                            symbol: 'BTN',
-                            decimals: 18,
-                            image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgVPPc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png',
+    // Initialize Charts
+    function initializeCharts() {
+        // Hero Chart
+        const heroCtx = document.getElementById('heroChart');
+        if (heroCtx) {
+            new Chart(heroCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    datasets: [{
+                        label: 'BTN Price Projection',
+                        data: [0.001, 0.002, 0.005, 0.012, 0.025, 0.045, 0.08, 0.15, 0.28, 0.5, 0.85, 1.5],
+                        borderColor: '#4fc3f7',
+                        backgroundColor: 'rgba(79, 195, 247, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#a0aec0'
+                            }
                         },
-                    },
-                });
-            } catch (error) {
-                console.error(error);
-                alert("Error adding token: " + error.message);
-            }
-        }
-
-        async function getPrice() {
-            if (!contract) return;
-            try {
-                const price = await contract.methods.getCurrentPrice().call();
-                const formattedPrice = web3.utils.fromWei(price, "ether") + " BNB";
-                document.getElementById("price").innerText = "💲 Preço Atual do BTN: " + formattedPrice;
-                const priceEn = document.getElementById("price_en");
-                if (priceEn) priceEn.innerText = "💲 Current BTN Price: " + formattedPrice;
-            } catch (error) {
-                console.error("Erro ao obter o preço:", error);
-                document.getElementById("price").innerText = "💲 Preço Atual do BTN: Erro ao carregar";
-                const priceEn = document.getElementById("price_en");
-                if (priceEn) priceEn.innerText = "💲 Current BTN Price: Error loading";
-            }
-        }
-
-        async function getBalance() {
-            if (!web3 || !contract) return;
-            try {
-                const accounts = await web3.eth.getAccounts();
-                if (accounts.length === 0) {
-                    document.getElementById("balance").innerText = "💰 Saldo de BTN: Conecte sua carteira";
-                    const balanceEn = document.getElementById("balance_en");
-                    if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Connect your wallet";
-                    return;
-                }
-                const balance = await contract.methods.balanceOf(accounts[0]).call();
-                const formattedBalance = web3.utils.fromWei(balance, "ether") + " BTN";
-                document.getElementById("balance").innerText = "💰 Saldo de BTN: " + formattedBalance;
-                const balanceEn = document.getElementById("balance_en");
-                if (balanceEn) balanceEn.innerText = "💰 BTN Balance: " + formattedBalance;
-            } catch (error) {
-                console.error("Erro ao obter o saldo:", error);
-                document.getElementById("balance").innerText = "💰 Saldo de BTN: Erro ao carregar";
-                const balanceEn = document.getElementById("balance_en");
-                if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Error loading";
-            }
-        }
-
-        async function buyBTN() {
-            if (!web3 || !contract) {
-                alert("Please connect your wallet first.");
-                return;
-            }
-            const accounts = await web3.eth.getAccounts();
-            const bnbAmount = document.getElementById("bnbAmount").value;
-            if (!bnbAmount || bnbAmount <= 0) {
-                alert("Enter a valid amount in BNB.");
-                return;
-            }
-            try {
-                await contract.methods.buy().send({
-                    from: accounts[0],
-                    value: web3.utils.toWei(bnbAmount, "ether")
-                });
-                alert("Purchase successful! Your rewards will start accumulating automatically.");
-                getPrice();
-                getBalance();
-            } catch (error) {
-                    if (error.code === 4001) { // User rejected transaction
-                        alert("Transaction rejected by user.");
-                    } else if (error.message.includes("insufficient funds")) {
-                        alert("Insufficient funds for this transaction.");
-                    } else {
-                        alert("Purchase error: " + error.message);
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: '#a0aec0'
+                            }
+                        }
                     }
-            }
-        }
-
-        async function sellBTN() {
-            if (!web3 || !contract) {
-                alert("Please connect your wallet first.");
-                return;
-            }
-            const accounts = await web3.eth.getAccounts();
-            const tokenAmount = document.getElementById("tokenAmount").value;
-            if (!tokenAmount || tokenAmount <= 0) {
-                alert("Enter a valid BTN amount.");
-                return;
-            }
-            try {
-                const amountInWei = web3.utils.toWei(tokenAmount, "ether");
-                await contract.methods.sell(amountInWei).send({ from: accounts[0] });
-                alert("Sale completed successfully!");
-                getPrice();
-                getBalance();
-            } catch (error) {
-                 if (error.code === 4001) { // User rejected transaction
-                        alert("Transaction rejected by user.");
-                    } else if (error.message.includes("ERC20: transfer amount exceeds balance")) {
-                        alert("Insufficient BTN balance for this sale.");
-                    } else {
-                        alert("Erro na venda: " + error.message);
-                    }
-            }
-        }
-
-        // Language selection function
-        function setLanguage(lang) {
-            document.documentElement.lang = lang; // Set HTML lang attribute
-            localStorage.setItem('preferredLanguage', lang); // Store preference
-
-            document.querySelectorAll('[data-lang]').forEach(element => {
-                if (element.getAttribute('data-lang') === lang) {
-                    element.style.display = ''; // Show elements for the selected language
-                } else {
-                    element.style.display = 'none'; // Hide elements for other languages
                 }
             });
-
-            // Specific updates for dynamically changing text with IDs (if any)
-            // For example, if you have elements like <p id="greeting">Hello</p>
-            // and you want to change its text, you would do:
-            // if (lang === 'en') {
-            //     document.getElementById('someId').innerText = 'English text';
-            // } else if (lang === 'pt-BR') {
-            //     document.getElementById('someId').innerText = 'Texto em Português';
-            // }
-            // Note: For 'account', 'price', 'balance' which are updated by wallet functions,
-            // the update logic is added directly within those functions.
         }
 
-        window.addEventListener('load', async () => {
-            createParticles(); /* Chamada para criar as partículas */
-            
-            // Language initialization
-            const languageSelect = document.getElementById('language-select');
-            if (languageSelect) {
-                // Set initial language based on localStorage or default to pt-BR
-                const savedLanguage = localStorage.getItem('preferredLanguage') || 'pt-BR';
-                languageSelect.value = savedLanguage;
-                setLanguage(savedLanguage); // Apply the saved language immediately on load
-
-                // Add event listener for language selector
-                languageSelect.addEventListener('change', (event) => {
-                    setLanguage(event.target.value);
-                });
-            }
-
-            if (window.ethereum) {
-                web3 = new Web3(window.ethereum);
-                contract = new web3.eth.Contract(ABI, contractAddress);
-                getPrice();
-                
-                const accounts = await web3.eth.getAccounts();
-                if (accounts.length > 0) {
-                    const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
-                    document.getElementById("account").innerText = "🔓 Carteira: " + shortAccount;
-                    const accountEn = document.getElementById("account_en");
-                    if (accountEn) accountEn.innerText = "🔓 Wallet: " + shortAccount;
-                    getBalance();
+        // Prediction Chart
+        const predictionCtx = document.getElementById('predictionChart');
+        if (predictionCtx) {
+            new Chart(predictionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Holders Rewards', 'Liquidity Pool', 'Trading Volume', 'Market Cap Growth'],
+                    datasets: [{
+                        data: [25, 35, 20, 20],
+                        backgroundColor: [
+                            '#4fc3f7',
+                            '#f50057',
+                            '#00e676',
+                            '#ffab00'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: '#ffffff',
+                                padding: 20
+                            }
+                        }
+                    }
                 }
-            } else {
-                document.getElementById("price").innerText = "💲 Preço Atual do BTN: Instale MetaMask para ver";
-                const priceEn = document.getElementById("price_en");
-                if (priceEn) priceEn.innerText = "💲 Current BTN Price: Install MetaMask to view";
+            });
+        }
+    }
 
-                document.getElementById("balance").innerText = "💰 Saldo de BTN: Instale MetaMask para ver";
-                const balanceEn = document.getElementById("balance_en");
-                if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Install MetaMask to view";
-            }
+    // FAQ Toggle Function
+    function toggleFaq(element) {
+        const faqItem = element.parentElement;
+        const answer = faqItem.querySelector('.faq-answer');
+        const isActive = faqItem.classList.contains('active');
+
+        // Close all other FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+            item.querySelector('.faq-answer').style.display = 'none';
         });
 
-        if (window.ethereum) {
-            window.ethereum.on('accountsChanged', (accounts) => {
-                if (accounts.length > 0) {
-                    const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
-                    document.getElementById("account").innerText = "🔓 Carteira: " + shortAccount;
-                    const accountEn = document.getElementById("account_en");
-                    if (accountEn) accountEn.innerText = "🔓 Wallet: " + shortAccount;
-                    getBalance();
-                } else {
-                    document.getElementById("account").innerText = "🔒 Carteira: não conectada";
-                    const accountEn = document.getElementById("account_en");
-                    if (accountEn) accountEn.innerText = "🔒 Wallet: not connected";
-                    document.getElementById("balance").innerText = "💰 Saldo de BTN: Conecte sua carteira";
-                    const balanceEn = document.getElementById("balance_en");
-                    if (balanceEn) balanceEn.innerText = "💰 BTN Balance: Connect your wallet";
+        // Toggle current item
+        if (!isActive) {
+            faqItem.classList.add('active');
+            answer.style.display = 'block';
+        }
+    }
+
+    // Smooth scrolling for anchor links
+    function initializeSmoothScrolling() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
-            window.ethereum.on('chainChanged', (chainId) => {
-                window.location.reload(); 
+        });
+    }
+
+    // Language Management
+    function setLanguage(lang) {
+        document.documentElement.lang = lang;
+        localStorage.setItem('preferredLanguage', lang);
+
+        document.querySelectorAll('[data-lang]').forEach(element => {
+            if (element.getAttribute('data-lang') === lang) {
+                element.style.display = '';
+            } else {
+                element.style.display = 'none';
+            }
+        });
+    }
+
+    // Wallet Functions
+    async function connectWallet() {
+        if (window.ethereum) {
+            try {
+                await window.ethereum.request({ method: "eth_requestAccounts" });
+                web3 = new Web3(window.ethereum);
+                const accounts = await web3.eth.getAccounts();
+                const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                
+                document.getElementById("account").innerText = "🔓 " + shortAccount;
+                const accountEn = document.getElementById("account_en");
+                if (accountEn) accountEn.innerText = "🔓 " + shortAccount;
+
+                contract = new web3.eth.Contract(ABI, contractAddress);
+                await getPrice();
+                await getBalance();
+                
+                // Show success message
+                showNotification('Carteira conectada com sucesso! / Wallet connected successfully!', 'success');
+            } catch (error) {
+                showNotification("Erro ao conectar carteira: " + error.message, 'error');
+            }
+        } else {
+            showNotification("Por favor, instale o MetaMask! / Please install MetaMask!", 'error');
+        }
+    }
+
+    async function addTokenToWallet() {
+        if (!window.ethereum) {
+            showNotification("MetaMask não está instalado! / MetaMask is not installed!", 'error');
+            return;
+        }
+
+        try {
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+            if (accounts.length === 0) {
+                await connectWallet();
+            }
+
+            await window.ethereum.request({
+                method: 'wallet_watchAsset',
+                params: {
+                    type: 'ERC20',
+                    options: {
+                        address: contractAddress,
+                        symbol: 'BTN',
+                        decimals: 18,
+                        image: 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMreTaGs8U3aBzar4DxsFoFccAo_jyLUfwuKuGKO_nEPtOdpgUWUNS_4IZYlclJlUN33fdeXDayWpHl8zM6WX-agVG2N_i2W_S_2HVGwEtgVPPc9kIAwrPISiFJjTRq0gF0hcM2tdQISr8lTBgC47tQN1I2P4ln9nKNttb-xXbcw0POfCoBpVuT3EgQ/s99/btn.png',
+                    },
+                },
+            });
+            showNotification('Token adicionado à carteira! / Token added to wallet!', 'success');
+        } catch (error) {
+            console.error(error);
+            showNotification("Erro ao adicionar token: " + error.message, 'error');
+        }
+    }
+
+    async function getPrice() {
+        if (!contract) return;
+        try {
+            const price = await contract.methods.getCurrentPrice().call();
+            const formattedPrice = parseFloat(web3.utils.fromWei(price, "ether")).toFixed(8) + " BNB";
+            document.getElementById("price").innerText = "💲 " + formattedPrice;
+            const priceEn = document.getElementById("price_en");
+            if (priceEn) priceEn.innerText = "💲 " + formattedPrice;
+        } catch (error) {
+            console.error("Erro ao obter o preço:", error);
+            document.getElementById("price").innerText = "💲 Erro ao carregar";
+            const priceEn = document.getElementById("price_en");
+            if (priceEn) priceEn.innerText = "💲 Error loading";
+        }
+    }
+
+    async function getBalance() {
+        if (!web3 || !contract) return;
+        try {
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length === 0) {
+                document.getElementById("balance").innerText = "💰 Conecte sua carteira";
+                const balanceEn = document.getElementById("balance_en");
+                if (balanceEn) balanceEn.innerText = "💰 Connect your wallet";
+                return;
+            }
+            const balance = await contract.methods.balanceOf(accounts[0]).call();
+            const formattedBalance = parseFloat(web3.utils.fromWei(balance, "ether")).toFixed(4) + " BTN";
+            document.getElementById("balance").innerText = "💰 " + formattedBalance;
+            const balanceEn = document.getElementById("balance_en");
+            if (balanceEn) balanceEn.innerText = "💰 " + formattedBalance;
+        } catch (error) {
+            console.error("Erro ao obter o saldo:", error);
+            document.getElementById("balance").innerText = "💰 Erro ao carregar";
+            const balanceEn = document.getElementById("balance_en");
+            if (balanceEn) balanceEn.innerText = "💰 Error loading";
+        }
+    }
+
+    async function buyBTN() {
+        if (!web3 || !contract) {
+            showNotification("Por favor, conecte sua carteira primeiro. / Please connect your wallet first.", 'error');
+            return;
+        }
+        
+        const accounts = await web3.eth.getAccounts();
+        const bnbAmount = document.getElementById("bnbAmount").value;
+        
+        if (!bnbAmount || bnbAmount <= 0) {
+            showNotification("Digite uma quantidade válida em BNB. / Enter a valid amount in BNB.", 'error');
+            return;
+        }
+        
+        try {
+            showNotification("Processando compra... / Processing purchase...", 'info');
+            
+            await contract.methods.buy().send({
+                from: accounts[0],
+                value: web3.utils.toWei(bnbAmount, "ether")
+            });
+            
+            showNotification("Compra realizada com sucesso! Suas recompensas começarão a se acumular automaticamente. / Purchase successful! Your rewards will start accumulating automatically.", 'success');
+            
+            await getPrice();
+            await getBalance();
+            document.getElementById("bnbAmount").value = '';
+        } catch (error) {
+            if (error.code === 4001) {
+                showNotification("Transação rejeitada pelo usuário. / Transaction rejected by user.", 'error');
+            } else if (error.message.includes("insufficient funds")) {
+                showNotification("Fundos insuficientes para esta transação. / Insufficient funds for this transaction.", 'error');
+            } else {
+                showNotification("Erro na compra: " + error.message, 'error');
+            }
+        }
+    }
+
+    async function sellBTN() {
+        if (!web3 || !contract) {
+            showNotification("Por favor, conecte sua carteira primeiro. / Please connect your wallet first.", 'error');
+            return;
+        }
+        
+        const accounts = await web3.eth.getAccounts();
+        const tokenAmount = document.getElementById("tokenAmount").value;
+        
+        if (!tokenAmount || tokenAmount <= 0) {
+            showNotification("Digite uma quantidade válida de BTN. / Enter a valid BTN amount.", 'error');
+            return;
+        }
+        
+        try {
+            showNotification("Processando venda... / Processing sale...", 'info');
+            
+            const amountInWei = web3.utils.toWei(tokenAmount, "ether");
+            await contract.methods.sell(amountInWei).send({ from: accounts[0] });
+            
+            showNotification("Venda concluída com sucesso! / Sale completed successfully!", 'success');
+            
+            await getPrice();
+            await getBalance();
+            document.getElementById("tokenAmount").value = '';
+        } catch (error) {
+            if (error.code === 4001) {
+                showNotification("Transação rejeitada pelo usuário. / Transaction rejected by user.", 'error');
+            } else if (error.message.includes("ERC20: transfer amount exceeds balance")) {
+                showNotification("Saldo de BTN insuficiente para esta venda. / Insufficient BTN balance for this sale.", 'error');
+            } else {
+                showNotification("Erro na venda: " + error.message, 'error');
+            }
+        }
+    }
+
+    // Notification System
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 10000;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        `;
+        
+        switch(type) {
+            case 'success':
+                notification.style.background = 'linear-gradient(135deg, #00e676, #00c853)';
+                break;
+            case 'error':
+                notification.style.background = 'linear-gradient(135deg, #f50057, #e91e63)';
+                break;
+            case 'info':
+                notification.style.background = 'linear-gradient(135deg, #4fc3f7, #29b6f6)';
+                break;
+        }
+        
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 5000);
+    }
+
+    // Event listeners for MetaMask
+    if (window.ethereum) {
+        window.ethereum.on('accountsChanged', async (accounts) => {
+            if (accounts.length > 0) {
+                const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                document.getElementById("account").innerText = "🔓 " + shortAccount;
+                const accountEn = document.getElementById("account_en");
+                if (accountEn) accountEn.innerText = "🔓 " + shortAccount;
+                await getBalance();
+            } else {
+                document.getElementById("account").innerText = "🔒 Não conectado";
+                const accountEn = document.getElementById("account_en");
+                if (accountEn) accountEn.innerText = "🔒 Not connected";
+                document.getElementById("balance").innerText = "💰 Conecte sua carteira";
+                const balanceEn = document.getElementById("balance_en");
+                if (balanceEn) balanceEn.innerText = "💰 Connect your wallet";
+            }
+        });
+        
+        window.ethereum.on('chainChanged', (chainId) => {
+            window.location.reload();
+        });
+    }
+
+    // Initialize everything when page loads
+    window.addEventListener('load', async () => {
+        // Initialize charts
+        initializeCharts();
+        
+        // Initialize smooth scrolling
+        initializeSmoothScrolling();
+        
+        // Language initialization
+        const languageSelect = document.getElementById('language-select');
+        if (languageSelect) {
+            const savedLanguage = localStorage.getItem('preferredLanguage') || 'pt-BR';
+            languageSelect.value = savedLanguage;
+            setLanguage(savedLanguage);
+
+            languageSelect.addEventListener('change', (event) => {
+                setLanguage(event.target.value);
             });
         }
 
-    </script>
-</body>
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4953692,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
+        // Initialize Web3 if available
+        if (window.ethereum) {
+            web3 = new Web3(window.ethereum);
+            contract = new web3.eth.Contract(ABI, contractAddress);
+            await getPrice();
+            
+            const accounts = await web3.eth.getAccounts();
+            if (accounts.length > 0) {
+                const shortAccount = accounts[0].substring(0, 6) + "..." + accounts[0].substring(38);
+                document.getElementById("account").innerText = "🔓 " + shortAccount;
+                const accountEn = document.getElementById("account_en");
+                if (accountEn) accountEn.innerText = "🔓 " + shortAccount;
+                await getBalance();
+            }
+        } else {
+            document.getElementById("price").innerText = "💲 Instale MetaMask";
+            const priceEn = document.getElementById("price_en");
+            if (priceEn) priceEn.innerText = "💲 Install MetaMask";
+
+            document.getElementById("balance").innerText = "💰 Instale MetaMask";
+            const balanceEn = document.getElementById("balance_en");
+            if (balanceEn) balanceEn.innerText = "💰 Install MetaMask";
+        }
+    });
+
+    // Animate elements on scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Add animation classes to elements
+    document.addEventListener('DOMContentLoaded', () => {
+        const animatedElements = document.querySelectorAll('.feature-card, .testimonial-card, .roadmap-item');
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    });
+</script>
+
+<!-- Analytics Script -->
+<script type="text/javascript">
+    var _Hasync= _Hasync|| [];
+    _Hasync.push(['Histats.start', '1,4953692,4,0,0,0,00010000']);
+    _Hasync.push(['Histats.fasi', '1']);
+    _Hasync.push(['Histats.track_hits', '']);
+    (function() {
+        var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+        hs.src = ('//s10.histats.com/js15_as.js');
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+    })();
+</script>
 <noscript><a href="/" target="_blank"><img alt="" border="0" src="//sstatic1.histats.com/0.gif?4953692&amp;101"/></a></noscript>
+
+</body>
 </html>

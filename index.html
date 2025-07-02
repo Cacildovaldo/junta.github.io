@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta name="google-site-verification" content="L4FtNz0XjN1oBZQ2B157lpF7FW1pdwmU9eTlclK_33Y" />
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Bitnest BTN - The Future of Algorithmic Liquidity Tokens</title>
+<title>Bitnest BTN - O Futuro dos Tokens de Liquidez Algorítmica</title>
 <link href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYWSMTE5QoIkovztIxLioAn5iER0oPFLLlq6POkcS88IqNRn0KqV5jXwCTRFpOYVvWaDJZVg8Dl8Tw35xi8d-S820BGCOGYKWAfvCdjd5GabaCorWZt2KwYJTiPWL0HuNDcE26tp1JKlpFmGC4XsPE4xCMfMET9YM-OxzXNtJs2Jfkw6CzrpxZMcZxRlI/w109-h157/Bitnest-BTN.png" rel="icon" type="image/x-icon"/>
 <script src="https://cdn.jsdelivr.net/npm/web3@1.8.2/dist/web3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -962,7 +962,162 @@ footer {
                 <a href="https://bscscan.com/token/0x98e30ac086ba850a81a24abbdc46de693f0719ed" target="_blank" class="cta-secondary" data-lang="en" style="display: none;">📊 View Contract</a>
             </div>
         </div>
-       <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_LIkSrTL3QFM80iYYvsPmX4jTR5adUZ5-RDZ2EcCjwzh5pZd5prXgOZPV7qpX-2MFATpWCiyZj8xMxBx9vtjNj737_i0O4jaHUh3MZ9FlU-NXn4rfKhHb13Br0mHsfWxT3RIlgde3wNegbzVUYbJxIR8WirkHXcb4y-qhi9g2jH8zp01kDa0cdNxOJD0/w640-h360/01btn.png" /></a></center> 
+       <center><meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carrossel de Imagens</title>
+    <style>
+        .carrossel {
+            position: relative;
+            max-width: 840px;
+            margin: auto;
+            overflow: hidden;
+            border: 0px solid #ddd;
+            border-radius: 0px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .carrossel-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carrossel-slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .carrossel-slide img {
+            width: 100%;
+            display: block;
+        }
+        
+        .carrossel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 0%;
+            font-size: 18px;
+            z-index: 10;
+        }
+        
+        .carrossel-btn:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        
+        #prevBtn {
+            left: 10px;
+        }
+        
+        #nextBtn {
+            right: 10px;
+        }
+        
+        .carrossel-indicadores {
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        .indicador {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 0%;
+            cursor: pointer;
+        }
+        
+        .indicador.ativo {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="carrossel">
+        <div class="carrossel-container">
+            <div class="carrossel-slide">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_LIkSrTL3QFM80iYYvsPmX4jTR5adUZ5-RDZ2EcCjwzh5pZd5prXgOZPV7qpX-2MFATpWCiyZj8xMxBx9vtjNj737_i0O4jaHUh3MZ9FlU-NXn4rfKhHb13Br0mHsfWxT3RIlgde3wNegbzVUYbJxIR8WirkHXcb4y-qhi9g2jH8zp01kDa0cdNxOJD0/w640-h360/01btn.png" alt="Imagem 1">
+            </div>
+            <div class="carrossel-slide">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTu3CA9cAO0lQQA5UzhyaPCmVvWYZjkNolTwP073Cs5JqXp-R8odNqxZNQOADTWhYMbGQM8tNl6Wgohh-rNy2qkcImuiqdmB8KB-byEQK5X6vBQlbzJVG4wTenBvvvclNE7ZoBIR-BxyNDdoJ0h6oSvwSGM2WnFlihigIWiWtwEd0SiEchO5Gx70zYMGs/w543-h640/01BTN.png" alt="Imagem 2">
+            </div>
+        </div>
+        
+        <button class="carrossel-btn" id="prevBtn">&#10094;</button>
+        <button class="carrossel-btn" id="nextBtn">&#10095;</button>
+        
+        <div class="carrossel-indicadores">
+            <span class="indicador ativo"></span>
+            <span class="indicador"></span>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.querySelector('.carrossel-container');
+            const slides = document.querySelectorAll('.carrossel-slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const indicadores = document.querySelectorAll('.indicador');
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            
+            function updateCarrossel() {
+                container.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Atualiza indicadores
+                indicadores.forEach((ind, index) => {
+                    if (index === currentIndex) {
+                        ind.classList.add('ativo');
+                    } else {
+                        ind.classList.remove('ativo');
+                    }
+                });
+            }
+            
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % totalSlides;
+                updateCarrossel();
+            }
+            
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+                updateCarrossel();
+            }
+            
+            // Event listeners para botões
+            nextBtn.addEventListener('click', nextSlide);
+            prevBtn.addEventListener('click', prevSlide);
+            
+            // Event listeners para indicadores
+            indicadores.forEach((ind, index) => {
+                ind.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateCarrossel();
+                });
+            });
+            
+            // Auto-play (opcional)
+            let intervalo = setInterval(nextSlide, 3000);
+            
+            // Pausa auto-play quando o mouse está sobre o carrossel
+            document.querySelector('.carrossel').addEventListener('mouseenter', () => {
+                clearInterval(intervalo);
+            });
+            
+            // Retoma auto-play quando o mouse sai do carrossel
+            document.querySelector('.carrossel').addEventListener('mouseleave', () => {
+                intervalo = setInterval(nextSlide, 3000);
+            });
+        });
+    </script>
+</body></center>
 </section>
 
 <!-- Trading Interface -->
